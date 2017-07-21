@@ -1,7 +1,7 @@
 #' Neuroc DESCRIPTION File
 #'
 #' @param path path to DESCRIPTION file
-#' @param path Path to the table of packages for neuroconductor
+#' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
 #'
 #' @return Path to new DESCRIPTION file
@@ -11,6 +11,7 @@
 #' neuroconductor, add the neuroconductor remotes (in order),
 #' adds \code{biocViews} field (for Travis), puts the \code{covr} in Suggests for
 #' code coverage if not already in Imports/Suggests/Depends.
+#' @importFrom desc description
 neuroc_desc = function(
   path = "DESCRIPTION",
   # table_path = "https://neuroconductor.org/neurocPackages",
