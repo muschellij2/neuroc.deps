@@ -6,7 +6,7 @@
 \alias{use_neuroc_appveyor_template}
 \alias{neuroc_key}
 \alias{add_neuroc_keys}
-\title{Use Neuroconductor CI Template}
+\title{Use Neuroconductor Template}
 \usage{
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = "https://neuroconductor.org/neurocPackages",
@@ -40,5 +40,5 @@ add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
 Copy the template to the current directory
 }
 \description{
-Use Neuroconductor CI Template
+Use Neuroconductor Template
 }
