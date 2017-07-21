@@ -15,23 +15,25 @@ use_neuroc_template = function(
   dev = FALSE,
   ...) {
 
-
-  ci = match.arg(ci)
-
-  template_file = neuroc_ci_template(path = path, ci = ci, ...)
-  template = add_neuroc_keys(template_file,
-                             ci = ci,
-                             dev = dev)
-  outfile = switch(
-    ci,
-    travis = ".travis.yml",
-    appveyor = "appveyor.yml")
-  if (!file.exists(outfile)) {
-    bak = paste0(outfile, ".bak")
-    file.copy(outfile, bak)
+  outfiles = rep(NA, length = length(ci))
+  names(outfiles) = ci
+  for (ici in ci) {
+    template_file = neuroc_ci_template(path = path, ci = ici, ...)
+    template = add_neuroc_keys(template_file,
+                               ci = ici,
+                               dev = dev)
+    outfile = switch(
+      ici,
+      travis = ".travis.yml",
+      appveyor = "appveyor.yml")
+    if (!file.exists(outfile)) {
+      bak = paste0(outfile, ".bak")
+      file.copy(outfile, bak)
+    }
+    writeLines(text = template, con = outfile)
+    outfiles[ici] = outfile
   }
-  writeLines(text = template, con = outfile)
-  return(outfile)
+  return(outfiles)
 }
 
 #' @rdname use_neuroc_template
