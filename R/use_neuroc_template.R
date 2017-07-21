@@ -6,6 +6,8 @@
 #' @param ... Additional arguments to pass to
 #' \code{\link{neuroc_ci_template_path}}
 #' @param template_file file to template
+#' @param table_path Path to the table of packages for neuroconductor
+#' @param release Stable or development version
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -13,7 +15,24 @@ use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
   dev = FALSE,
+  table_path = "https://neuroconductor.org/neurocPackages",
+  release = c("stable", "current"),
   ...) {
+
+
+  if (dev) {
+    table_path = sub("^https", "http", table_path)
+    table_path = sub("[.]org/", ".org:8080/", table_path)
+  }
+
+  # overwriting description file
+  new_desc = neuroc_desc(path = path,
+                         table_path = table_path,
+                         release = release)
+  bak = paste0(path, ".bak")
+  file.copy(path, bak)
+  file.copy(new_desc, path, overwrite = TRUE)
+
 
   outfiles = rep(NA, length = length(ci))
   names(outfiles) = ci

@@ -9,7 +9,8 @@
 \title{Use Neuroconductor CI Template}
 \usage{
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
-  dev = FALSE, ...)
+  dev = FALSE, table_path = "https://neuroconductor.org/neurocPackages",
+  release = c("stable", "current"), ...)
 
 use_neuroc_travis_template(...)
 
@@ -25,6 +26,10 @@ add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
 \item{ci}{Which continuous integration system}
 
 \item{dev}{Development Site vs. not?}
+
+\item{table_path}{Path to the table of packages for neuroconductor}
+
+\item{release}{Stable or development version}
 
 \item{...}{Additional arguments to pass to
 \code{\link{neuroc_ci_template_path}}}
