@@ -5,6 +5,7 @@
 #' @param dev Development Site vs. not?
 #' @param ... Additional arguments to pass to
 #' \code{\link{neuroc_ci_template_path}}
+#' @param template_file file to template
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -17,10 +18,10 @@ use_neuroc_template = function(
 
   ci = match.arg(ci)
 
-
-
   template_file = neuroc_ci_template(path = path, ci = ci, ...)
-
+  template = add_neuroc_keys(template_file,
+                             ci = ci,
+                             dev = dev)
   outfile = switch(
     ci,
     travis = ".travis.yml",
@@ -29,7 +30,8 @@ use_neuroc_template = function(
     bak = paste0(outfile, ".bak")
     file.copy(outfile, bak)
   }
-  file.copy(infile, outfile, overwrite = TRUE)
+  writeLines(text = template, con = outfile)
+  return(outfile)
 }
 
 #' @rdname use_neuroc_template

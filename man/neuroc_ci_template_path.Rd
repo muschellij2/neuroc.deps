@@ -26,11 +26,11 @@ File path of YAML file
 Neuroconductor CI Template Paths
 }
 \examples{
-neuroc_ci_template()
-neuroc_appveyor_template()
-neuroc_ci_template(ants = TRUE)
-neuroc_travis_template()
-neuroc_travis_template(ants = TRUE)
-neuroc_appveyor_template()
-neuroc_appveyor_template(ants = TRUE)
+neuroc_ci_template_path()
+neuroc_appveyor_template_path()
+neuroc_ci_template_path(ants = TRUE)
+neuroc_travis_template_path()
+neuroc_travis_template_path(ants = TRUE)
+neuroc_appveyor_template_path()
+neuroc_appveyor_template_path(ants = TRUE)
 }

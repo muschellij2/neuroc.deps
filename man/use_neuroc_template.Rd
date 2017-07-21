@@ -28,6 +28,8 @@ add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
 
 \item{...}{Additional arguments to pass to
 \code{\link{neuroc_ci_template_path}}}
+
+\item{template_file}{file to template}
 }
 \value{
 Copy the template to the current directory

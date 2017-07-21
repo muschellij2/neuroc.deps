@@ -26,6 +26,3 @@ File path of YAML file
 \description{
 Neuroconductor CI Template
 }
-\examples{
-
-}

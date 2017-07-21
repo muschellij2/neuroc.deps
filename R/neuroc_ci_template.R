@@ -8,8 +8,6 @@
 #' @return File path of YAML file
 #' @export
 #'
-#' @examples
-#'
 neuroc_ci_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
