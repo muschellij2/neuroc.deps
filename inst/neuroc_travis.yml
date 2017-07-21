@@ -1,0 +1,58 @@
+language: r
+sudo: false
+cache: packages
+warnings_are_errors: true
+use_bioc: true
+bioc_required: true
+cran: http://cran.rstudio.com
+
+os:
+  - linux
+  - osx
+
+r_check_args: "--as-cran --install-args=--build"
+
+before_install:
+  - export PROJ_DIR=`basename $PWD`    
+  - wget -O travis_helpers.sh http://bit.ly/travis_helpers
+  - source travis_helpers.sh
+  - rm travis_helpers.sh
+  - remove_neuroc_packages
+  - export ants_user=neuroconductor
+  - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
+  - echo "Done Installing Missing Deps"
+  - gh_binary_install ${ants_user}/ITKR
+  - gh_binary_install ${ants_user}/ANTsRCore
+  - gh_binary_install ${ants_user}/ANTsR
+  - cat DESCRIPTION
+  - install_remotes_no_dep
+  - cat DESCRIPTION
+  # check if ANTsR 
+  - export PACKAGE_NAME=`package_name`
+
+after_success:
+  - Rscript -e 'covr::coveralls(type = "all")'
+
+after_failure:
+  - cat ${PACKAGE_NAME}.Rcheck/00install.out
+  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: ${NEUROCKEY}
+  file_glob: true
+  file: ${PACKAGE_NAME}*.t*gz
+  on:
+    tags: true
+
+
+
+# r:
+#   - release
+#   - devel
+
+# matrix:
+#   allow_failures:
+#   - r: devel

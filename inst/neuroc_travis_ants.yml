@@ -1,0 +1,70 @@
+language: r
+sudo: false
+cache: packages
+warnings_are_errors: true
+use_bioc: true
+bioc_required: true
+cran: http://cran.rstudio.com
+
+os:
+  - linux
+  - osx
+
+env:
+  global:
+  - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+  - R_CHECK_ARGS="--as-cran --install-args=--build"
+
+before_install:
+  - export PROJ_DIR=`basename $PWD`  
+  - export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
+  - wget -O travis_helpers.sh http://bit.ly/travis_helpers
+  - source travis_helpers.sh
+  - rm travis_helpers.sh
+  - remove_neuroc_packages  
+  # does all the clang exports
+  - clang_cxx
+  - export cmake_version="3.4"
+  - cmake --version
+  - cmake_setup
+  - cmake --version
+  - export ants_user=neuroconductor
+  - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
+  - echo "Done Installing Missing Deps"
+  - gh_binary_install ${ants_user}/ITKR
+  - gh_binary_install ${ants_user}/ANTsRCore
+  - gh_binary_install ${ants_user}/ANTsR
+  - cat DESCRIPTION
+  - install_remotes_no_dep
+  - cat DESCRIPTION
+  - export PACKAGE_NAME=`package_name`
+  - export PATH=$HOME/bin/:$PATH
+
+script:
+  - source ~/.R/Makevars
+  - export_clang_cxx      
+  - cd ..
+  - travis_wait 100 R CMD build ${PROJ_DIR} ${R_BUILD_ARGS}
+  - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+  - ls
+  - if [[ ${#TRAVIS_TAG} -eq 0 ]]; 
+    then 
+    travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_FILE_NAME}"; 
+    fi
+
+after_failure:
+  - cat ${PACKAGE_NAME}.Rcheck/00install.out
+  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: ${NEUROCKEY}
+  file_glob: true
+  file: ${PACKAGE_NAME}*.t*gz
+  on:
+    tags: true
+
+after_deploy:
+  - Rscript -e 'covr::coveralls(type = "all")'

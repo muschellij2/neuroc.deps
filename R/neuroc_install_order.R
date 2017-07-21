@@ -29,7 +29,8 @@ neuroc_install_order = function(
 
   dep_mat = get_repo_dep_mat(repos)
   install_ord = install_order(dep_mat)
-  L = list(install_order = install_ord,
+  L = list(install_order_list = install_ord,
+           install_order = unlist(install_ord),
            dep_mat = dep_mat,
            remotes = repos)
   return(L)
