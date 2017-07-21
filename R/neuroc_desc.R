@@ -14,8 +14,7 @@
 #' @importFrom desc description
 neuroc_desc = function(
   path = "DESCRIPTION",
-  # table_path = "https://neuroconductor.org/neurocPackages",
-  table_path = "http://neuroconductor.org/sites/default/files/neuroc_packages.txt",
+  table_path = "https://neuroconductor.org/neurocPackages",
   release = c("stable", "current")
 ){
 
