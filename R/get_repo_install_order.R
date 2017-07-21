@@ -1,0 +1,114 @@
+#' @title Get Install Order of Repositories
+#' @description Get
+#' @param repos Repositories to find the install order
+#' @param dep_type Dependency types to check against
+#'
+#' @return List of dependency order
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' repos = get_repo_names(username = "neuroconductor")
+#' repos = paste0("neuroconductor/", repos)
+#' order = get_repo_install_order(repos)
+#' }
+#' @importFrom igraph graph_from_adjacency_matrix degree
+#' @importFrom ghtravis remote_package_dcf split_remotes get_remote_package_dcf
+get_repo_dep_mat = function(
+  repos,
+  dep_type =  c("Depends", "Imports",
+                "Suggests")) {
+
+  dcfs = get_remote_package_dcf(repos)
+
+  info = lapply(dcfs, function(tmp) {
+    if (is.na(tmp)) {
+      L = list(Package = NA,
+               Version = NA)
+    } else {
+      L = ghtravis::read_dcf(tmp)$dcf
+    }
+    return(L)
+  })
+
+  pkgs = sapply(info, function(x) {
+    x$Package
+  })
+  stopifnot(!any(is.na(pkgs)))
+
+  dep_mat = sapply(info, function(xx) {
+    run_pack = xx$Package
+    # print(run_pack)
+    grab = names(xx) %in% dep_type
+    if (any(grab)) {
+      res = xx[grab]
+      res = lapply(res, function(x) {
+        if (length(x) > 0) {
+          x = strsplit(x, " ")[[1]]
+          return(split_remotes(x))
+        } else {
+          return("")
+        }
+      })
+
+      all_deps = unique(unlist(res))
+      tab = (pkgs %in% all_deps)
+      names(tab) = pkgs
+      return(tab)
+    } else {
+      tab = rep(FALSE, length = length(pkgs))
+    }
+  })
+  colnames(dep_mat) = pkgs
+
+  return(dep_mat)
+}
+
+#' @rdname get_repo_dep_mat
+#' @export
+#' @param dep_mat Logial Dependency matrix
+install_order = function(dep_mat) {
+  pkgs = colnames(dep_mat)
+
+  ograph = graph_from_adjacency_matrix(
+    dep_mat,
+    mode = "directed")
+
+  neuro_deps = pkgs
+  install_order = list()
+  i = 1
+  while (length(neuro_deps) > 0) {
+    graph = graph_from_adjacency_matrix(
+      dep_mat,
+      mode = "directed")
+
+    outs = degree(graph, mode = "in")
+    installer = names(outs)[outs == 0]
+    install_order = c(install_order,
+                      list(installer))
+    # no_dep = names(deg)[deg == 0]
+
+    keep = !(neuro_deps %in% installer)
+    dep_mat = dep_mat[keep, keep, drop = FALSE]
+    neuro_deps = neuro_deps[keep]
+    i = i + 1
+    if (i > 200) {
+      stop("something is wrong")
+    }
+  }
+
+  # list_install_order = install_order
+  return(install_order)
+}
+
+#' @rdname get_repo_dep_mat
+#' @export
+get_repo_install_order = function(
+  repos,
+  dep_type =
+    c("Depends", "Imports",
+      "Suggests")) {
+  dep_mat = get_repo_dep_mat(repos = repos, dep_type = dep_type)
+  ord = install_order(dep_mat = dep_mat)
+  return(ord)
+}
