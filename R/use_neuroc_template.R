@@ -1,4 +1,4 @@
-#' Use Neuroconductor CI Template
+#' Use Neuroconductor Template
 #'
 #' @param path path to DESCRIPTION file
 #' @param ci Which continuous integration system
