@@ -14,7 +14,7 @@ Imports:
     httr,
     ghtravis,
     remotes,
-    neurocInstall
+    neurocInstall (>= 0.7)
 Remotes: muschellij2/ghtravis, r-lib/gh, muschellij2/neurocInstall
 License: GPL-2
 Encoding: UTF-8
