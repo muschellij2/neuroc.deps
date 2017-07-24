@@ -118,6 +118,6 @@ neuroc_desc = function(
   out_path = tempfile()
   desc$write(out_path)
 
-  return(path)
+  return(out_path)
 
 }

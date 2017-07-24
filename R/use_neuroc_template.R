@@ -30,7 +30,7 @@ use_neuroc_template = function(
                          table_path = table_path,
                          release = release)
   bak = paste0(path, ".bak")
-  file.copy(path, bak)
+  file.copy(path, bak, overwrite = TRUE)
   file.copy(new_desc, path, overwrite = TRUE)
 
 
