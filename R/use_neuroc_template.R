@@ -28,7 +28,8 @@ use_neuroc_template = function(
   # overwriting description file
   new_desc = neuroc_desc(path = path,
                          table_path = table_path,
-                         release = release)
+                         release = release,
+                         dev = dev)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   file.copy(new_desc, path, overwrite = TRUE)

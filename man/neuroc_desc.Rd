@@ -6,7 +6,7 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION",
   table_path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"))
+  release = c("stable", "current"), dev = FALSE)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}

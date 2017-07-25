@@ -15,7 +15,8 @@
 neuroc_desc = function(
   path = "DESCRIPTION",
   table_path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current")
+  release = c("stable", "current"),
+  dev = FALSE
 ){
 
   release = match.arg(release)
@@ -23,7 +24,8 @@ neuroc_desc = function(
   #############################################
   # Get the installation order for Neuroc
   #############################################
-  ord = neuroc_install_order(path = table_path, release = release)
+  ord = neuroc_install_order(path = table_path, release = release,
+                             dev = dev)
   ord_packs = ord$install_order
 
   #############################################
@@ -43,8 +45,12 @@ neuroc_desc = function(
   #############################################
   # Make proper remote
   #############################################
+  user = "neuroconductor"
+  if (dev) {
+    user = paste0(user, "-devel")
+  }
   all_neuro_deps$remote = paste0(
-    "neuroconductor/",
+    user, "/",
     all_neuro_deps$repo,
     "@", all_neuro_deps$commit
   )
@@ -87,7 +93,8 @@ neuroc_desc = function(
 
   # Look at ANTsR
   deps = desc$get_deps()
-  deps = deps[ deps$type %in% c("Imports", "Depends", "Suggests"), , drop = FALSE]
+  deps = deps[ deps$type %in% c("Imports", "Depends", "Suggests"), ,
+               drop = FALSE]
   deps = deps$package
 
   #########################################
@@ -102,7 +109,7 @@ neuroc_desc = function(
   # run if have neuroconductor dependencies
   if (nrow(neuro_deps) > 0) {
 
-    add_remotes = paste0("neuroconductor/",
+    add_remotes = paste0(user, "/",
                          neuro_deps$repo,
                          "@", neuro_deps$commit
     )

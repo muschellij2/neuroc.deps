@@ -15,9 +15,9 @@ r_check_args: "--as-cran --install-args=--build"
 
 before_install:
   - export PROJ_DIR=`basename $PWD`    
-  - wget -O travis_helpers.sh http://bit.ly/travis_helpers
-  - source travis_helpers.sh
-  - rm travis_helpers.sh
+  - fname=travis_helpers.sh
+  - wget -O ${fname} http://bit.ly/travis_helpers
+  - cat ${fname}; source ${fname}; rm ${fname}  
   - remove_neuroc_packages
   - export ants_user=neuroconductor
   - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR

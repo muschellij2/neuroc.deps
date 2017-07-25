@@ -4,6 +4,7 @@
 #' and repos parsed
 #' @param path Path to the table of package
 #' @param release Stable or development version
+#' @param dev Development version or not?
 #' @export
 #'
 #' @examples \dontrun{
@@ -12,7 +13,8 @@
 #' @importFrom neurocInstall neuro_package_table
 neuroc_install_order = function(
   path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current")
+  release = c("stable", "current"),
+  dev = FALSE
 ){
   #############################
   # Match release
@@ -21,7 +23,11 @@ neuroc_install_order = function(
 
   neuro_deps = neuro_package_table(path = path, long = TRUE)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
-  all_neuro_deps$remote = paste0("neuroconductor/",
+  user = "neuroconductor"
+  if (dev) {
+    user = paste0(user, "-devel")
+  }
+  all_neuro_deps$remote = paste0(user, "/",
                                  all_neuro_deps$repo,
                                  "@", all_neuro_deps$commit
   )

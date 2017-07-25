@@ -34,7 +34,13 @@ get_repo_dep_mat = function(
   pkgs = sapply(info, function(x) {
     x$Package
   })
-  stopifnot(!any(is.na(pkgs)))
+  bad_pack = is.na(pkgs)
+  if (any(bad_pack)) {
+    bad_repo = repos[bad_pack]
+    msg = paste0("Repos: ", paste(bad_repo, collapse = ", "),
+                 "have no DESCRIPTION file for the package name!")
+    stop(msg)
+  }
 
   dep_mat = sapply(info, function(xx) {
     run_pack = xx$Package

@@ -5,12 +5,14 @@
 \title{Neuroconductor Package Install Order}
 \usage{
 neuroc_install_order(path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"))
+  release = c("stable", "current"), dev = FALSE)
 }
 \arguments{
 \item{path}{Path to the table of package}
 
 \item{release}{Stable or development version}
+
+\item{dev}{Development version or not?}
 }
 \value{
 \code{list} of package install order, the dependency matrix,
