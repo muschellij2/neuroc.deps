@@ -11,7 +11,7 @@ os:
   - linux
   - osx
 
-r_check_args: "--as-cran --install-args=--build"
+# r_check_args: "--as-cran --install-args=--build"
 
 before_install:
   - export PROJ_DIR=`basename $PWD`    
@@ -39,20 +39,24 @@ after_failure:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
   - cat ${PACKAGE_NAME}.Rcheck/00check.log
 
+# need this explicitly
+# for naming convention
+before_deploy:
+  - R CMD INSTALL --build ${PKG_TARBALL}
+
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: ${NEUROCKEY}
+    secure: "${NEUROCKEY}"
   file_glob: true
   file: ${PACKAGE_NAME}*.t*gz
   on:
     tags: true
 
-
-
 after_deploy:
   - Rscript -e 'covr::coveralls(type = "all")'
+
 
 
 # r:
