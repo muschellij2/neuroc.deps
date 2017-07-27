@@ -29,7 +29,14 @@ neuroc_dep_ants = function(
 
 
   get_a_dep = function(packs) {
-    names(which(colSums(dep_mat[packs,]) > 0))
+    if (is.null(packs)) {
+      return(NULL)
+    }
+    packs = intersect(packs, rownames(dep_mat))
+    if (length(packs) == 0 ) {
+      return(NULL)
+    }
+    names(which(colSums(dep_mat[packs,, drop = FALSE]) > 0))
   }
   # diag(dep_mat) = TRUE
   require_ants = get_a_dep(bin_packages)
