@@ -12,6 +12,7 @@
 #'
 #' @return Copy the template to the current directory
 #' @export
+#' @importFrom utils download.file
 use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
