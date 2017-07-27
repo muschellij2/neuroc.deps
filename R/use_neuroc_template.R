@@ -27,6 +27,12 @@ use_neuroc_template = function(
     table_path = sub("[.]org/", ".org:8080/", table_path)
   }
 
+  if (grep("^http", table_path)) {
+    destfile = tempfile(fileext = ".txt")
+    download.file(url = table_path, destfile = destfile)
+    table_path = destfile
+  }
+
   # overwriting description file
   new_desc = neuroc_desc(path = path,
                          table_path = table_path,
