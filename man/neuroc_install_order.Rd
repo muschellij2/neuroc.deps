@@ -2,17 +2,21 @@
 % Please edit documentation in R/neuroc_install_order.R
 \name{neuroc_install_order}
 \alias{neuroc_install_order}
+\alias{neuroc_dep_mat}
 \title{Neuroconductor Package Install Order}
 \usage{
-neuroc_install_order(path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"), dev = FALSE)
+neuroc_install_order(release = c("stable", "current"), dev = FALSE,
+  table_path = NULL)
+
+neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
+  table_path = NULL)
 }
 \arguments{
-\item{path}{Path to the table of package}
-
 \item{release}{Stable or development version}
 
 \item{dev}{Development version or not?}
+
+\item{table_path}{path to table of packages}
 }
 \value{
 \code{list} of package install order, the dependency matrix,

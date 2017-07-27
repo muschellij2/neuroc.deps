@@ -14,6 +14,8 @@ neuroc_desc(path = "DESCRIPTION",
 \item{table_path}{Path to the table of packages for neuroconductor}
 
 \item{release}{Stable or development version}
+
+\item{dev}{Development Site vs. not?}
 }
 \value{
 Path to new DESCRIPTION file

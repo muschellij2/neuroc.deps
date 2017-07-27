@@ -3,6 +3,7 @@
 #' @param path path to DESCRIPTION file
 #' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
+#' @param dev Development Site vs. not?
 #'
 #' @return Path to new DESCRIPTION file
 #' @export
@@ -24,7 +25,7 @@ neuroc_desc = function(
   #############################################
   # Get the installation order for Neuroc
   #############################################
-  ord = neuroc_install_order(path = table_path, release = release,
+  ord = neuroc_install_order(table_path = table_path, release = release,
                              dev = dev)
   ord_packs = ord$install_order
 

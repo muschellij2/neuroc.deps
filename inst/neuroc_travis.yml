@@ -1,4 +1,4 @@
-# Neuroconductor Template
+# Neuroconductor Template no ANTs
 language: r
 sudo: false
 cache: packages
@@ -19,12 +19,12 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
   - remove_neuroc_packages
-  - export ants_user=neuroconductor
-  - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
-  - echo "Done Installing Missing Deps"
-  - gh_binary_install ${ants_user}/ITKR
-  - gh_binary_install ${ants_user}/ANTsRCore
-  - gh_binary_install ${ants_user}/ANTsR
+  # - export ants_user=neuroconductor
+  # - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
+  # - echo "Done Installing Missing Deps"
+  # - gh_binary_install ${ants_user}/ITKR
+  # - gh_binary_install ${ants_user}/ANTsRCore
+  # - gh_binary_install ${ants_user}/ANTsR
   - cat DESCRIPTION
   - install_remotes_no_dep
   - cat DESCRIPTION
@@ -32,7 +32,8 @@ before_install:
   - export PACKAGE_NAME=`package_name`
 
 after_success:
-  - Rscript -e 'covr::coveralls(type = "all")'
+  - cat ${PACKAGE_NAME}.Rcheck/00install.out
+  - cat ${PACKAGE_NAME}.Rcheck/00check.log
 
 after_failure:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
@@ -48,6 +49,10 @@ deploy:
   on:
     tags: true
 
+
+
+after_deploy:
+  - Rscript -e 'covr::coveralls(type = "all")'
 
 
 # r:

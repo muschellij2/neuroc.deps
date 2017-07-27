@@ -8,6 +8,7 @@
 #' @param template_file file to template
 #' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
+#' @param bin_packages Binaries packages required
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -17,6 +18,7 @@ use_neuroc_template = function(
   dev = FALSE,
   table_path = "https://neuroconductor.org/neurocPackages",
   release = c("stable", "current"),
+  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   ...) {
 
 
@@ -34,11 +36,31 @@ use_neuroc_template = function(
   file.copy(path, bak, overwrite = TRUE)
   file.copy(new_desc, path, overwrite = TRUE)
 
+  desc = description$new(file = path)
+  # Look at ANTsR
+  deps = desc$get_deps()
+  deps = deps[
+    deps$type %in% c("Imports", "Depends", "Suggests"), ,
+    drop = FALSE]
+  deps = deps$package
+
+  ants_dep = neuroc_dep_ants(
+    release = release,
+    dev = dev,
+    bin_packages = bin_packages,
+    table_path = table_path
+  )
+  ants = any(deps %in% ants_dep) || any(deps %in% bin_packages)
+
 
   outfiles = rep(NA, length = length(ci))
   names(outfiles) = ci
   for (ici in ci) {
-    template_file = neuroc_ci_template(path = path, ci = ici, ...)
+    # template_file = neuroc_ci_template(path = path, ci = ici, ...)
+
+    template_file = neuroc_ci_template_path(
+      ci = ici,
+      ants = ants)
     template = add_neuroc_keys(template_file,
                                ci = ici,
                                dev = dev)
@@ -98,7 +120,7 @@ add_neuroc_keys = function(
   key = neuroc_key(
     ci = ci,
     dev = dev
-    )
+  )
 
   tfile = tempfile()
   file.copy(template_file, tfile)

@@ -10,6 +10,8 @@
 #' \dontrun{
 #' repos = get_repo_names(username = "neuroconductor")
 #' repos = paste0("neuroconductor/", repos)
+#' dep_mat = get_repo_dep_mat(repos)
+#' ord1 = install_order(dep_mat)
 #' order = get_repo_install_order(repos)
 #' }
 #' @importFrom igraph graph_from_adjacency_matrix degree
