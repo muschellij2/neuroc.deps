@@ -6,7 +6,7 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION",
   table_path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"), dev = FALSE)
+  release = c("stable", "current"), dev = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -16,6 +16,8 @@ neuroc_desc(path = "DESCRIPTION",
 \item{release}{Stable or development version}
 
 \item{dev}{Development Site vs. not?}
+
+\item{verbose}{print diagnostic messages}
 }
 \value{
 Path to new DESCRIPTION file

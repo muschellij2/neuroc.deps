@@ -9,6 +9,7 @@
 #' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
 #' @param bin_packages Binaries packages required
+#' @param verbose print diagnostic messages
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -20,6 +21,7 @@ use_neuroc_template = function(
   table_path = "https://neuroconductor.org/neurocPackages",
   release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
+  verbose = TRUE,
   ...) {
 
 
@@ -29,20 +31,32 @@ use_neuroc_template = function(
   }
 
   if (grep("^http", table_path)) {
+    if (verbose) {
+      message("Downloading Table of packages")
+    }
     destfile = tempfile(fileext = ".txt")
-    download.file(url = table_path, destfile = destfile)
+    download.file(url = table_path, destfile = destfile, quiet = !verbose)
     table_path = destfile
   }
 
+  if (verbose) {
+    message("Rewriting DESCRIPTION")
+  }
   # overwriting description file
   new_desc = neuroc_desc(path = path,
                          table_path = table_path,
                          release = release,
-                         dev = dev)
+                         dev = dev,
+                         verbose = verbose)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   file.copy(new_desc, path, overwrite = TRUE)
 
+  if (verbose) {
+    message(paste0("Checking Dependencies against ",
+                   paste(bin_packages, collapse = ", "), " required binaries")
+    )
+  }
   desc = description$new(file = path)
   # Look at ANTsR
   deps = desc$get_deps()
@@ -59,7 +73,10 @@ use_neuroc_template = function(
   )
   ants = any(deps %in% ants_dep) || any(deps %in% bin_packages)
 
-
+  if (verbose) {
+    message(paste0("Writing CI files")
+    )
+  }
   outfiles = rep(NA, length = length(ci))
   names(outfiles) = ci
   for (ici in ci) {

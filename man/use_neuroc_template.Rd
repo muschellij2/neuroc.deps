@@ -11,7 +11,7 @@
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = "https://neuroconductor.org/neurocPackages",
   release = c("stable", "current"), bin_packages = c("ITKR", "ANTsR",
-  "ANTsRCore"), ...)
+  "ANTsRCore"), verbose = TRUE, ...)
 
 use_neuroc_travis_template(...)
 
@@ -33,6 +33,8 @@ add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
 \item{release}{Stable or development version}
 
 \item{bin_packages}{Binaries packages required}
+
+\item{verbose}{print diagnostic messages}
 
 \item{...}{Additional arguments to pass to
 \code{\link{neuroc_ci_template_path}}}

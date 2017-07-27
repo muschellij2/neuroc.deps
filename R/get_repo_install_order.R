@@ -67,6 +67,10 @@ get_repo_dep_mat = function(
       tab = rep(FALSE, length = length(pkgs))
     }
   })
+  if (length(repos) == 1) {
+    dep_mat = matrix(dep_mat, nrow = 1, ncol = 1)
+    rownames(dep_mat) = pkgs
+  }
   colnames(dep_mat) = pkgs
 
   return(dep_mat)
