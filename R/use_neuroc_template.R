@@ -138,7 +138,7 @@ neuroc_key = function(
 #' @export
 add_neuroc_keys = function(
   template_file,
-  ci = c("travis", "appveyor"),
+  ci = c("appveyor"),
   dev = FALSE) {
 
   key = neuroc_key(
