@@ -10,6 +10,7 @@ init:
 
 environment:
   global:
+    USE_RTOOLS: true    
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch"
 
 
@@ -52,8 +53,8 @@ test_script:
   - travis-tool.sh run_tests
   - ls
   - ls ../
-  - cp ../*.zip ./
-  - cp -r C:\run\* %APPVEYOR_BUILD_FOLDER%
+  # - cp ../*.zip ./
+  - cp -r C:/run/* %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
 
 on_failure:
