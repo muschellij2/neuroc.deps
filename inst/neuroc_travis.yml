@@ -44,6 +44,13 @@ after_failure:
 before_deploy:
   - R CMD INSTALL --build ${PKG_TARBALL}
 
+# so no overwrite of linux build
+before_deploy:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ];
+    then
+    rm -f *.tar.gz
+  fi
+
 deploy:
   provider: releases
   skip_cleanup: true
