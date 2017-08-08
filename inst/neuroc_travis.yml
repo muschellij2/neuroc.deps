@@ -19,16 +19,9 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
   - remove_neuroc_packages
-  # - export ants_user=neuroconductor
-  # - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
-  # - echo "Done Installing Missing Deps"
-  # - gh_binary_install ${ants_user}/ITKR
-  # - gh_binary_install ${ants_user}/ANTsRCore
-  # - gh_binary_install ${ants_user}/ANTsR
   - cat DESCRIPTION
   - install_remotes_no_dep
   - cat DESCRIPTION
-  # check if ANTsR 
   - export PACKAGE_NAME=`package_name`
 
 after_success:
@@ -43,9 +36,7 @@ after_failure:
 # for naming convention
 before_deploy:
   - R CMD INSTALL --build ${PKG_TARBALL}
-
-# so no overwrite of linux build
-before_deploy:
+  # so no overwrite of linux build
   - if [ "$TRAVIS_OS_NAME" == "osx" ];
     then
     rm -f *.tar.gz
@@ -63,7 +54,6 @@ deploy:
 
 after_deploy:
   - Rscript -e 'covr::coveralls(type = "all")'
-
 
 
 # r:
