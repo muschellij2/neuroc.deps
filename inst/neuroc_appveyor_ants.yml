@@ -12,6 +12,7 @@ environment:
   global:
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
+    WARNINGS_ARE_ERORRS: 1
 
 install:
   - ps: Bootstrap
