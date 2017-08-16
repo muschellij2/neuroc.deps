@@ -18,6 +18,7 @@ before_install:
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
+  - cat DESCRIPTION
   - remove_neuroc_packages
   - cat DESCRIPTION
   - install_remotes_no_dep
