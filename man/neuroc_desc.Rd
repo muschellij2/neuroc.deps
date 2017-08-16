@@ -4,9 +4,8 @@
 \alias{neuroc_desc}
 \title{Neuroc DESCRIPTION File}
 \usage{
-neuroc_desc(path = "DESCRIPTION",
-  table_path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"), dev = FALSE, verbose = TRUE)
+neuroc_desc(path = "DESCRIPTION", table_path = NULL, release = c("stable",
+  "current"), dev = FALSE, verbose = TRUE, user = NULL)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -18,6 +17,8 @@ neuroc_desc(path = "DESCRIPTION",
 \item{dev}{Development Site vs. not?}
 
 \item{verbose}{print diagnostic messages}
+
+\item{user}{GitHub username for repos}
 }
 \value{
 Path to new DESCRIPTION file

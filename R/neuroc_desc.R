@@ -5,6 +5,7 @@
 #' @param release Stable or development version
 #' @param dev Development Site vs. not?
 #' @param verbose print diagnostic messages
+#' @param user GitHub username for repos
 #'
 #' @return Path to new DESCRIPTION file
 #' @export
@@ -16,10 +17,11 @@
 #' @importFrom desc description
 neuroc_desc = function(
   path = "DESCRIPTION",
-  table_path = "https://neuroconductor.org/neurocPackages",
+  table_path = NULL,
   release = c("stable", "current"),
   dev = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  user = NULL
 ){
 
   release = match.arg(release)
@@ -31,9 +33,11 @@ neuroc_desc = function(
     msg = paste0("Getting Installation Order")
     message(msg)
   }
+  table_path = neuroc_table_path(table_path = table_path, dev = dev)
   ord = neuroc_install_order(table_path = table_path, release = release,
-                             dev = dev)
+                             dev = dev, user = user)
   ord_packs = ord$install_order
+
 
   #############################################
   # subset the df for the stable/current
@@ -44,18 +48,17 @@ neuroc_desc = function(
   #############################################
   # reorder this so it's in order (easier later)
   #############################################
-  all_neuro_deps = all_neuro_deps[ all_neuro_deps$release %in% release, ]
+  all_neuro_deps = all_neuro_deps[ all_neuro_deps$release %in% release, ,
+                                   drop = FALSE]
   rownames(all_neuro_deps) = all_neuro_deps$repo
-  all_neuro_deps = all_neuro_deps[ord_packs, ]
+  all_neuro_deps = all_neuro_deps[ord_packs, ,
+                                  drop = FALSE]
   rownames(all_neuro_deps) = NULL
 
   #############################################
   # Make proper remote
   #############################################
-  user = "neuroconductor"
-  if (dev) {
-    user = paste0(user, "-devel")
-  }
+  user = neuroc_user(user = user, dev = dev)
   all_neuro_deps$remote = paste0(
     user, "/",
     all_neuro_deps$repo,
@@ -136,8 +139,13 @@ neuroc_desc = function(
                          neuro_deps$repo,
                          "@", neuro_deps$commit
     )
-    desc$add_remotes(remotes = add_remotes)
+    remotes = c(remotes, add_remotes)
   }
+  # Fixes Github issue #82
+  if (length(remotes) > 0) {
+    desc$add_remotes(remotes = remotes)
+  }
+
 
   if (verbose) {
     msg = paste0("Adding biocViews")

@@ -5,6 +5,7 @@
 #' @param release Stable or development version
 #' @param dev Development version or not?
 #' @param table_path path to table of packages
+#' @param user GitHub username for repos
 #' @export
 #'
 #' @examples \dontrun{
@@ -14,10 +15,13 @@
 neuroc_install_order = function(
   release = c("stable", "current"),
   dev = FALSE,
-  table_path = NULL
+  table_path = NULL,
+  user = NULL
 ){
 
-  dep_mat = neuroc_dep_mat(release = release, dev = dev, table_path = table_path)
+  dep_mat = neuroc_dep_mat(release = release,
+                           dev = dev, table_path = table_path,
+                           user = user)
   repos = names(colnames(dep_mat))
   install_ord = install_order(dep_mat)
   L = list(install_order_list = install_ord,
@@ -32,23 +36,17 @@ neuroc_install_order = function(
 neuroc_dep_mat = function(
   release = c("stable", "current"),
   dev = FALSE,
-  table_path = NULL) {
+  table_path = NULL,
+  user = NULL) {
   #############################
   # Match release
   #############################
   release = match.arg(release)
 
 
-  if (is.null(table_path)) {
-    table_path = "https://neuroconductor.org/neurocPackages"
-    if (dev) {
-      table_path = "http://neuroconductor.org:8080/neurocPackages"
-    }
-  }
-  user = "neuroconductor"
-  if (dev) {
-    user = paste0(user, "-devel")
-  }
+  table_path = neuroc_table_path(table_path = table_path, dev = dev)
+
+  user = neuroc_user(user = user, dev = dev)
 
   neuro_deps = neuro_package_table(path = table_path, long = TRUE)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]

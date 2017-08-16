@@ -6,10 +6,10 @@
 \title{Neuroconductor Package Install Order}
 \usage{
 neuroc_install_order(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL)
+  table_path = NULL, user = NULL)
 
 neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL)
+  table_path = NULL, user = NULL)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -17,6 +17,8 @@ neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
 \item{dev}{Development version or not?}
 
 \item{table_path}{path to table of packages}
+
+\item{user}{GitHub username for repos}
 }
 \value{
 \code{list} of package install order, the dependency matrix,
