@@ -6,12 +6,13 @@
 \alias{use_neuroc_appveyor_template}
 \alias{neuroc_key}
 \alias{add_neuroc_keys}
+\alias{remove_neuroc_packages}
 \title{Use Neuroconductor Template}
 \usage{
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
-  dev = FALSE, table_path = "https://neuroconductor.org/neurocPackages",
-  release = c("stable", "current"), bin_packages = c("ITKR", "ANTsR",
-  "ANTsRCore"), verbose = TRUE, ...)
+  dev = FALSE, table_path = NULL, release = c("stable", "current"),
+  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
+  user = c("neuroconductor", "osler"), ...)
 
 use_neuroc_travis_template(...)
 
@@ -19,7 +20,10 @@ use_neuroc_appveyor_template(...)
 
 neuroc_key(ci = c("travis", "appveyor"), dev = FALSE)
 
-add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
+add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE,
+  user = c("neuroconductor", "osler"))
+
+remove_neuroc_packages(...)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -35,6 +39,8 @@ add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE)
 \item{bin_packages}{Binaries packages required}
 
 \item{verbose}{print diagnostic messages}
+
+\item{user}{User for the repositories}
 
 \item{...}{Additional arguments to pass to
 \code{\link{neuroc_ci_template_path}}}

@@ -4,12 +4,15 @@
 \alias{neuroc_table_path}
 \title{Path to Neuroconductor Remote Commits}
 \usage{
-neuroc_table_path(table_path = NULL, dev = FALSE)
+neuroc_table_path(table_path = NULL, dev = FALSE,
+  user = c("neuroconductor", "osler"))
 }
 \arguments{
 \item{table_path}{Path to the table.  If unspecified, uses defaults}
 
 \item{dev}{Whether development should be used or not}
+
+\item{user}{User for the repositories}
 }
 \value{
 Character Vector
@@ -23,4 +26,6 @@ neuroc_table_path(dev = TRUE)
 neuroc_table_path(dev = FALSE)
 neuroc_table_path(table_path = "blah")
 neuroc_table_path(table_path = "blah", dev = TRUE)
+neuroc_table_path(dev = TRUE, user = "osler")
+neuroc_table_path(dev = FALSE, user = "osler")
 }

@@ -10,6 +10,7 @@
 #' @param release Stable or development version
 #' @param bin_packages Binaries packages required
 #' @param verbose print diagnostic messages
+#' @param user User for the repositories
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -18,17 +19,18 @@ use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
   dev = FALSE,
-  table_path = "https://neuroconductor.org/neurocPackages",
+  table_path = NULL,
   release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
+  user = c("neuroconductor",
+           "osler"),
   ...) {
 
-
-  if (dev) {
-    table_path = sub("^https", "http", table_path)
-    table_path = sub("[.]org/", ".org:8080/", table_path)
-  }
+  table_path = neuroc_table_path(
+    table_path = table_path,
+    dev = dev,
+    user = user)
 
   if (grep("^http", table_path)) {
     if (verbose) {
@@ -85,9 +87,10 @@ use_neuroc_template = function(
     template_file = neuroc_ci_template_path(
       ci = ici,
       ants = ants)
-    template = add_neuroc_keys(template_file,
-                               ci = ici,
-                               dev = dev)
+    template = add_neuroc_keys(
+      template_file,
+      ci = ici,
+      dev = dev)
     outfile = switch(
       ici,
       travis = ".travis.yml",
@@ -139,7 +142,9 @@ neuroc_key = function(
 add_neuroc_keys = function(
   template_file,
   ci = c("travis", "appveyor"),
-  dev = FALSE) {
+  dev = FALSE,
+  user = c("neuroconductor",
+           "osler")) {
 
   key = neuroc_key(
     ci = ci,
@@ -149,12 +154,30 @@ add_neuroc_keys = function(
   tfile = tempfile()
   file.copy(template_file, tfile)
   x = readLines(tfile)
+  user = match.arg(user)
   if (dev) {
     x = gsub(
-      "ants_user=neuroconductor",
-      "ants_user=neuroconductor-devel",
+      paste0("ants_user=", user),
+      paste0("ants_user=", user, "-devel"),
       x)
   }
   x = gsub("${NEUROCKEY}", key, x, fixed = TRUE)
   return(x)
+}
+
+
+#' @rdname use_neuroc_template
+#' @export
+#' @importFrom utils installed.packages read.csv remove.packages
+remove_neuroc_packages = function(...) {
+
+  table_path = neuroc_table_path(...)
+  tab = utils::read.csv(table_path, as.is = TRUE)
+  rm_packs = tab[,1]
+  check = rm_packs %in% utils::installed.packages()
+  if (any(check)) {
+    rm_packs = rm_packs[check]
+    utils::remove.packages(rm_packs)
+  }
+  return(invisible(NULL))
 }
