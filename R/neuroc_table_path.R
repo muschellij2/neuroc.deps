@@ -29,7 +29,7 @@ neuroc_table_path = function(
       osler = "https://oslerinhealth.org/oslerPackages"
     )
     if (dev) {
-      table_path = sub("org/", ".org:8080/", table_path)
+      table_path = sub("[.]org/", ".org:8080/", table_path)
     }
   }
   return(table_path)
