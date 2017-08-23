@@ -3,7 +3,6 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: true
-r_check_args: --as-cran
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
@@ -12,7 +11,7 @@ os:
   - linux
   - osx
 
-# r_check_args: "--as-cran --install-args=--build"
+r_check_args: "--as-cran --install-args=--build"
 
 before_install:
   - export PROJ_DIR=`basename $PWD`    
