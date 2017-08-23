@@ -27,6 +27,10 @@ use_neuroc_template = function(
            "osler"),
   ...) {
 
+  if (!file.exists(path)) {
+    stop(paste0("File passed into path argument: ", path,
+                "does not exist!"))
+  }
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,

@@ -30,6 +30,7 @@ neuroc_table_path = function(
     )
     if (dev) {
       table_path = sub("[.]org/", ".org:8080/", table_path)
+      table_path = sub("https://", "http://", table_path)
     }
   }
   return(table_path)
