@@ -19,9 +19,11 @@ neuroc_install_order = function(
   user = NULL
 ){
 
-  dep_mat = neuroc_dep_mat(release = release,
-                           dev = dev, table_path = table_path,
-                           user = user)
+  dep_mat = neuroc_dep_mat(
+    release = release,
+    dev = dev,
+    table_path = table_path,
+    user = user)
   repos = names(colnames(dep_mat))
   install_ord = install_order(dep_mat)
   L = list(install_order_list = install_ord,
@@ -50,12 +52,14 @@ neuroc_dep_mat = function(
 
   neuro_deps = neuro_package_table(path = table_path, long = TRUE)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
-
-  all_neuro_deps$remote = paste0(user, "/",
-                                 all_neuro_deps$repo,
-                                 "@", all_neuro_deps$commit
-  )
-  repos = all_neuro_deps$remote
-  dep_mat = get_repo_dep_mat(repos)
+  if (nrow(all_neuro_deps) > 0 ) {
+    all_neuro_deps$remote = paste0(user, "/",
+                                   all_neuro_deps$repo,
+                                   "@", all_neuro_deps$commit)
+    repos = all_neuro_deps$remote
+    dep_mat = get_repo_dep_mat(repos)
+  } else {
+    dep_mat = matrix(NA, nrow = 0, ncol = 0)
+  }
   return(dep_mat)
 }

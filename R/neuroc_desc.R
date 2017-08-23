@@ -59,11 +59,12 @@ neuroc_desc = function(
   # Make proper remote
   #############################################
   user = neuroc_user(user = user, dev = dev)
-  all_neuro_deps$remote = paste0(
+  if (nrow(all_neuro_deps) > 0) {
+    all_neuro_deps$remote = paste0(
     user, "/",
     all_neuro_deps$repo,
-    "@", all_neuro_deps$commit
-  )
+    "@", all_neuro_deps$commit)
+  }
 
   #############################################
   # Parse Description
@@ -72,7 +73,7 @@ neuroc_desc = function(
     msg = paste0("Parsing DESCRIPTION file")
     message(msg)
   }
-  desc = description$new(file = path)
+  desc = desc::description$new(file = path)
 
 
   #############################################
@@ -99,7 +100,7 @@ neuroc_desc = function(
       if (!file.exists(tmp)) {
         return(NA)
       }
-      d = description$new(file = tmp)
+      d = desc::description$new(file = tmp)
       unname(d$get("Package"))
     }
     packs = sapply(dcfs, get_pack)
