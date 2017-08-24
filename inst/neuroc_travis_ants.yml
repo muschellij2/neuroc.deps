@@ -47,7 +47,7 @@ before_install:
   - echo $PATH ;
 
 script:
-  - source ~/.R/Makevars
+  # - source ~/.R/Makevars
   - x=`export_clang_cxx`; eval ${x}
   - cd ..
   - travis_wait 100 R CMD build ${PROJ_DIR} ${R_BUILD_ARGS}
@@ -68,7 +68,7 @@ after_success:
 
 # so no overwrite of linux build
 before_deploy:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ];
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
     rm -f *.tar.gz
     fi
