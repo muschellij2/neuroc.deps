@@ -172,12 +172,16 @@ add_neuroc_keys = function(
 
 #' @rdname use_neuroc_template
 #' @export
+#' @param keep_packs Packages to keep when removing all neuroc packages
 #' @importFrom utils installed.packages read.csv remove.packages
-remove_neuroc_packages = function(...) {
+remove_neuroc_packages = function(
+  ...,
+  keep_packs = c("neuroc.deps", "ghtravis", "neurocInstall")) {
 
   table_path = neuroc_table_path(...)
   tab = utils::read.csv(table_path, as.is = TRUE)
   rm_packs = tab[,1]
+  rm_packs = setdiff(rm_packs, keep_packs)
   check = rm_packs %in% utils::installed.packages()
   if (any(check)) {
     rm_packs = rm_packs[check]

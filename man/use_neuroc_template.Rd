@@ -23,7 +23,8 @@ neuroc_key(ci = c("travis", "appveyor"), dev = FALSE)
 add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE,
   user = c("neuroconductor", "osler"))
 
-remove_neuroc_packages(...)
+remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
+  "neurocInstall"))
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -46,6 +47,8 @@ remove_neuroc_packages(...)
 \code{\link{neuroc_ci_template_path}}}
 
 \item{template_file}{file to template}
+
+\item{keep_packs}{Packages to keep when removing all neuroc packages}
 }
 \value{
 Copy the template to the current directory
