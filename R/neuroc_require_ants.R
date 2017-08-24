@@ -6,6 +6,7 @@
 #' @param dev Development version or not?
 #' @param bin_packages Packages that require binaries
 #' @param table_path path to table of packages
+#' @param user GitHub username for repos
 #'
 #' @export
 #'
@@ -16,13 +17,15 @@ neuroc_dep_ants = function(
   release = c("stable", "current"),
   dev = FALSE,
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
-  table_path = NULL
+  table_path = NULL,
+  user = NULL
 ){
 
   dep_mat = neuroc_dep_mat(
     release = release,
     dev = dev,
-    table_path = table_path)
+    table_path = table_path,
+    user = user)
   # dep_mat = cbind(dep_mat, fake = FALSE)
   # dep_mat = rbind(dep_mat, fake = FALSE)
   # dep_mat["extrantsr", "fake"] = TRUE

@@ -46,7 +46,9 @@ neuroc_dep_mat = function(
   release = match.arg(release)
 
 
-  table_path = neuroc_table_path(table_path = table_path, dev = dev)
+  table_path = neuroc_table_path(
+    table_path = table_path,
+    dev = dev, user = user)
 
   user = neuroc_user(user = user, dev = dev)
 

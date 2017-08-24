@@ -5,7 +5,8 @@
 \title{Neuroconductor ANTsR Dependency}
 \usage{
 neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
-  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), table_path = NULL)
+  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), table_path = NULL,
+  user = NULL)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -15,6 +16,8 @@ neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
 \item{bin_packages}{Packages that require binaries}
 
 \item{table_path}{path to table of packages}
+
+\item{user}{GitHub username for repos}
 }
 \value{
 Character vector of packages

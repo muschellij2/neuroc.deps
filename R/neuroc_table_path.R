@@ -14,19 +14,21 @@
 #' neuroc_table_path(dev = FALSE)
 #' neuroc_table_path(table_path = "blah")
 #' neuroc_table_path(table_path = "blah", dev = TRUE)
-#' neuroc_table_path(dev = TRUE, user = "osler")
-#' neuroc_table_path(dev = FALSE, user = "osler")
+#' neuroc_table_path(dev = TRUE, user = "oslerinhealth")
+#' neuroc_table_path(dev = FALSE, user = "oslerinhealth")
 neuroc_table_path = function(
   table_path = NULL,
   dev = FALSE,
   user = c("neuroconductor",
-           "osler")) {
-  user = match.arg(user)
+           "oslerinhealth")) {
+  if (!is.null(user)) {
+    user = match.arg(user)
+  }
   if (is.null(table_path)) {
     table_path = switch(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
-      osler = "https://oslerinhealth.org/oslerPackages"
+      oslerinhealth = "https://oslerinhealth.org/oslerPackages"
     )
     if (dev) {
       table_path = sub("[.]org/", ".org:8080/", table_path)

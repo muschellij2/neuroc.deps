@@ -24,24 +24,27 @@ use_neuroc_template = function(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = c("neuroconductor",
-           "osler"),
+           "oslerinhealth"),
   ...) {
 
   if (!file.exists(path)) {
     stop(paste0("File passed into path argument: ", path,
                 "does not exist!"))
   }
+  pkg_directory = dirname(path)
+
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,
     user = user)
 
-  if (grep("^http", table_path)) {
+  if (grepl("^http", table_path)) {
     if (verbose) {
       message("Downloading Table of packages")
     }
     destfile = tempfile(fileext = ".txt")
-    download.file(url = table_path, destfile = destfile, quiet = !verbose)
+    download.file(url = table_path, destfile = destfile,
+                  quiet = !verbose)
     table_path = destfile
   }
 
@@ -49,11 +52,13 @@ use_neuroc_template = function(
     message("Rewriting DESCRIPTION")
   }
   # overwriting description file
-  new_desc = neuroc_desc(path = path,
-                         table_path = table_path,
-                         release = release,
-                         dev = dev,
-                         verbose = verbose)
+  new_desc = neuroc_desc(
+    path = path,
+    table_path = table_path,
+    release = release,
+    dev = dev,
+    verbose = verbose,
+    user = user)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   file.copy(new_desc, path, overwrite = TRUE)
@@ -75,7 +80,8 @@ use_neuroc_template = function(
     release = release,
     dev = dev,
     bin_packages = bin_packages,
-    table_path = table_path
+    table_path = table_path,
+    user = user
   )
   ants = any(deps %in% ants_dep) || any(deps %in% bin_packages)
 
@@ -90,16 +96,19 @@ use_neuroc_template = function(
 
     template_file = neuroc_ci_template_path(
       ci = ici,
-      ants = ants)
+      ants = ants,
+      user = user)
     template = add_neuroc_keys(
       template_file,
       ci = ici,
-      dev = dev)
+      dev = dev,
+      user = user)
     outfile = switch(
       ici,
       travis = ".travis.yml",
       appveyor = "appveyor.yml")
-    if (!file.exists(outfile)) {
+    outfile = file.path(pkg_directory, outfile)
+    if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
       file.copy(outfile, bak)
     }
@@ -125,14 +134,20 @@ use_neuroc_appveyor_template = function(...){
 #' @export
 neuroc_key = function(
   ci = c("travis", "appveyor"),
-  dev = FALSE) {
+  dev = FALSE,
+  user = c("neuroconductor", "oslerinhealth")) {
 
   ci = match.arg(ci)
   outdev = ""
   if (dev) {
     outdev = "DEVEL_"
   }
-  key_val = paste0("NEUROC_", outdev, toupper(ci), "_KEY")
+  user = match.arg(user)
+  prefix = switch(
+    user,
+    neuroconductor = "NEUROC",
+    oslerinhealth = "OSLER")
+  key_val = paste0(prefix, "_", outdev, toupper(ci), "_KEY")
   key = Sys.getenv(key_val)
   if (is.na(key) || key == "") {
     stop(paste0(key_val, " not set!"))
@@ -148,7 +163,7 @@ add_neuroc_keys = function(
   ci = c("travis", "appveyor"),
   dev = FALSE,
   user = c("neuroconductor",
-           "osler")) {
+           "oslerinhealth")) {
 
   key = neuroc_key(
     ci = ci,
@@ -159,6 +174,7 @@ add_neuroc_keys = function(
   file.copy(template_file, tfile)
   x = readLines(tfile)
   user = match.arg(user)
+
   if (dev) {
     x = gsub(
       paste0("ants_user=", user),

@@ -33,9 +33,13 @@ neuroc_desc = function(
     msg = paste0("Getting Installation Order")
     message(msg)
   }
-  table_path = neuroc_table_path(table_path = table_path, dev = dev)
-  ord = neuroc_install_order(table_path = table_path, release = release,
-                             dev = dev, user = user)
+  table_path = neuroc_table_path(
+    table_path = table_path,
+    dev = dev,
+    user = user)
+  ord = neuroc_install_order(
+    table_path = table_path, release = release,
+    dev = dev, user = user)
   ord_packs = ord$install_order
 
 
@@ -61,9 +65,9 @@ neuroc_desc = function(
   user = neuroc_user(user = user, dev = dev)
   if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(
-    user, "/",
-    all_neuro_deps$repo,
-    "@", all_neuro_deps$commit)
+      user, "/",
+      all_neuro_deps$repo,
+      "@", all_neuro_deps$commit)
   }
 
   #############################################

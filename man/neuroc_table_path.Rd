@@ -5,7 +5,7 @@
 \title{Path to Neuroconductor Remote Commits}
 \usage{
 neuroc_table_path(table_path = NULL, dev = FALSE,
-  user = c("neuroconductor", "osler"))
+  user = c("neuroconductor", "oslerinhealth"))
 }
 \arguments{
 \item{table_path}{Path to the table.  If unspecified, uses defaults}
@@ -26,6 +26,6 @@ neuroc_table_path(dev = TRUE)
 neuroc_table_path(dev = FALSE)
 neuroc_table_path(table_path = "blah")
 neuroc_table_path(table_path = "blah", dev = TRUE)
-neuroc_table_path(dev = TRUE, user = "osler")
-neuroc_table_path(dev = FALSE, user = "osler")
+neuroc_table_path(dev = TRUE, user = "oslerinhealth")
+neuroc_table_path(dev = FALSE, user = "oslerinhealth")
 }

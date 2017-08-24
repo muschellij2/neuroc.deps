@@ -6,7 +6,8 @@
 \alias{neuroc_appveyor_template_path}
 \title{Neuroconductor CI Template Paths}
 \usage{
-neuroc_ci_template_path(ci = c("travis", "appveyor"), ants = FALSE)
+neuroc_ci_template_path(ci = c("travis", "appveyor"), ants = FALSE,
+  user = c("neuroconductor", "oslerinhealth"))
 
 neuroc_travis_template_path(...)
 
@@ -16,6 +17,8 @@ neuroc_appveyor_template_path(...)
 \item{ci}{Which continuous integration system}
 
 \item{ants}{Does the package depend on ANTs or ANTsR}
+
+\item{user}{GitHub username for repos}
 
 \item{...}{not used}
 }
