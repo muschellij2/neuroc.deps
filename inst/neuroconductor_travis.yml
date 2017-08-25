@@ -7,6 +7,9 @@ use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
 
+env:
+  global: RGL_USE_NULL=TRUE
+
 os:
   - linux
   - osx
