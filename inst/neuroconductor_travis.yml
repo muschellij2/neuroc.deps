@@ -8,7 +8,9 @@ bioc_required: true
 cran: http://cran.rstudio.com
 
 env:
-  global: RGL_USE_NULL=TRUE
+  global: 
+    - RGL_USE_NULL=TRUE
+    - PROJECT_NAME=neuroconductor
 
 os:
   - linux
