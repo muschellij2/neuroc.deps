@@ -33,6 +33,8 @@ neuroc_desc = function(
     msg = paste0("Getting Installation Order")
     message(msg)
   }
+  user = neuroc_user(user = user, dev = dev)
+
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,
@@ -62,7 +64,6 @@ neuroc_desc = function(
   #############################################
   # Make proper remote
   #############################################
-  user = neuroc_user(user = user, dev = dev)
   if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(
       user, "/",
