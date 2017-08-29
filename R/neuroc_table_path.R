@@ -28,7 +28,7 @@ neuroc_table_path = function(
     table_path = switch(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
-      oslerinhealth = "https://oslerinhealth.org/oslerPackages"
+      oslerinhealth = "http://oslerinhealth.org/oslerPackages"
     )
     if (dev) {
       table_path = sub("[.]org/", ".org:8080/", table_path)
