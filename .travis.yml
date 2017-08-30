@@ -11,7 +11,6 @@ before_install:
   - wget -O travis_helpers.sh http://bit.ly/travis_helpers
   - source travis_helpers.sh
   - rm travis_helpers.sh
-  - Rscript -e 'source("https://install-github.me/mangothecat/callr")'    
   - remove_package neurocInstall
   - PACKAGE_NAME=`package_name`
   - PACKAGE_DIRECTORY=`basename ${PWD}`

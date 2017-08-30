@@ -3,6 +3,7 @@
 #' @param ci Which continuous integration system
 #' @param ants Does the package depend on ANTs or ANTsR
 #' @param user GitHub username for repos
+#' @param dev Development Site vs. not?
 #' @param ... not used
 #'
 #' @return File path of YAML file
@@ -19,9 +20,16 @@
 neuroc_ci_template_path = function(
   ci = c("travis", "appveyor"),
   ants = FALSE,
-  user = c("neuroconductor", "oslerinhealth")) {
+  dev = FALSE,
+  user = NULL) {
   ci = match.arg(ci)
-  user = match.arg(user)
+
+  user = neuroc_user(user = user, dev = dev)
+  user = switch(user,
+    "neuroconductor" = "neuroconductor",
+    "neuroconductor-devel" = "neuroconductor",
+    "oslerinhealth" = "oslerinhealth"
+  )
 
   file = paste0(user, "_", ci, ifelse(ants, "_ants", ""), ".yml")
   file = system.file(file, package = "neuroc.deps", mustWork = TRUE)

@@ -21,10 +21,11 @@ neuroc_user = function(user = NULL, dev = FALSE) {
     }
   }
   if (is.null(user)) {
-    user = "neuroconductor"
+    choices = c("neuroconductor", "oslerinhealth")
     if (dev) {
-      user = paste0(user, "-devel")
+      choices = c("neuroconductor-devel",  "oslerinhealth")
     }
+    user = match.arg(user, choices = choices)
   }
   return(user)
 }

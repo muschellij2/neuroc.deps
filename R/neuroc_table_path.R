@@ -19,19 +19,17 @@
 neuroc_table_path = function(
   table_path = NULL,
   dev = FALSE,
-  user = c("neuroconductor",
-           "oslerinhealth")) {
-  if (!is.null(user)) {
-    user = match.arg(user)
-  }
+  user = NULL) {
+
+  user = neuroc_user(user = user, dev = dev)
   if (is.null(table_path)) {
     table_path = switch(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
+      "neuroconductor-devel" = "http://neuroconductor.org:8080/neurocPackages",
       oslerinhealth = "http://oslerinhealth.org/oslerPackages"
     )
     if (dev) {
-      table_path = sub("[.]org/", ".org:8080/", table_path)
       table_path = sub("https://", "http://", table_path)
     }
   }

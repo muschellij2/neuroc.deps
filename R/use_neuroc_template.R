@@ -23,8 +23,7 @@ use_neuroc_template = function(
   release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
-  user = c("neuroconductor",
-           "oslerinhealth"),
+  user = NULL,
   ...) {
 
   if (!file.exists(path)) {
@@ -32,6 +31,7 @@ use_neuroc_template = function(
                 "does not exist!"))
   }
   pkg_directory = dirname(path)
+  user = neuroc_user(user = user, dev = dev)
 
   table_path = neuroc_table_path(
     table_path = table_path,
@@ -47,7 +47,6 @@ use_neuroc_template = function(
                   quiet = !verbose)
     table_path = destfile
   }
-
   if (verbose) {
     message("Rewriting DESCRIPTION")
   }
@@ -64,8 +63,10 @@ use_neuroc_template = function(
   file.copy(new_desc, path, overwrite = TRUE)
 
   if (verbose) {
-    message(paste0("Checking Dependencies against ",
-                   paste(bin_packages, collapse = ", "), " required binaries")
+    message(
+      paste0("Checking Dependencies against ",
+             paste(bin_packages, collapse = ", "),
+             " required binaries")
     )
   }
   desc = description$new(file = path)
@@ -135,17 +136,20 @@ use_neuroc_appveyor_template = function(...){
 neuroc_key = function(
   ci = c("travis", "appveyor"),
   dev = FALSE,
-  user = c("neuroconductor", "oslerinhealth")) {
+  user = NULL) {
 
   ci = match.arg(ci)
   outdev = ""
   if (dev) {
     outdev = "DEVEL_"
   }
-  user = match.arg(user)
+  user = neuroc_user(
+    user = user,
+    dev = dev)
   prefix = switch(
     user,
     neuroconductor = "NEUROC",
+    "neuroconductor-devel" = "NEUROC",
     oslerinhealth = "OSLER")
   key_val = paste0(prefix, "_", outdev, toupper(ci), "_KEY")
   key = Sys.getenv(key_val)
@@ -162,25 +166,24 @@ add_neuroc_keys = function(
   template_file,
   ci = c("travis", "appveyor"),
   dev = FALSE,
-  user = c("neuroconductor",
-           "oslerinhealth")) {
+  user = NULL) {
+
+  user = neuroc_user(user = user, dev = dev)
 
   key = neuroc_key(
     ci = ci,
-    dev = dev
+    dev = dev,
+    user = user
   )
 
   tfile = tempfile()
   file.copy(template_file, tfile)
   x = readLines(tfile)
-  user = match.arg(user)
 
-  if (dev) {
-    x = gsub(
-      paste0("ants_user=", user),
-      paste0("ants_user=", user, "-devel"),
-      x)
-  }
+  x = gsub(
+    "ants_user=(.*)",
+    paste0("ants_user=", user),
+    x)
   x = gsub("${NEUROCKEY}", key, x, fixed = TRUE)
   return(x)
 }

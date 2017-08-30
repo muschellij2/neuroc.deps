@@ -12,17 +12,16 @@
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
-  user = c("neuroconductor", "oslerinhealth"), ...)
+  user = NULL, ...)
 
 use_neuroc_travis_template(...)
 
 use_neuroc_appveyor_template(...)
 
-neuroc_key(ci = c("travis", "appveyor"), dev = FALSE,
-  user = c("neuroconductor", "oslerinhealth"))
+neuroc_key(ci = c("travis", "appveyor"), dev = FALSE, user = NULL)
 
 add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE,
-  user = c("neuroconductor", "oslerinhealth"))
+  user = NULL)
 
 remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
   "neurocInstall"))

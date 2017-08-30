@@ -45,16 +45,15 @@ neuroc_dep_mat = function(
   #############################
   release = match.arg(release)
 
-
+  user = neuroc_user(user = user, dev = dev)
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev, user = user)
 
-  user = neuroc_user(user = user, dev = dev)
 
   neuro_deps = neuro_package_table(path = table_path, long = TRUE)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
-  if (nrow(all_neuro_deps) > 0 ) {
+  if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(user, "/",
                                    all_neuro_deps$repo,
                                    "@", all_neuro_deps$commit)
