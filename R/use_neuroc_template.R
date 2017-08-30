@@ -104,6 +104,12 @@ use_neuroc_template = function(
       ci = ici,
       dev = dev,
       user = user)
+
+    template = change_package_name(
+      template,
+      dev = dev,
+      user = user)
+
     outfile = switch(
       ici,
       travis = ".travis.yml",
