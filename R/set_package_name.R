@@ -6,7 +6,7 @@
 #'
 #' @return Chnage the PROJECT_NAME to the user
 #' @export
-change_package_name = function(
+set_package_name = function(
   x,
   dev = FALSE,
   user = NULL) {
