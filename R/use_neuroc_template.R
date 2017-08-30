@@ -104,7 +104,7 @@ use_neuroc_template = function(
       ci = ici,
       dev = dev,
       user = user)
-    template = set_package_name(
+    template = set_env_package_name(
       template,
       dev = dev,
       user = user)

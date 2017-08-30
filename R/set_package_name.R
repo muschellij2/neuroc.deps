@@ -1,4 +1,4 @@
-#' Change PACKAGE_NAME
+#' Set PACKAGE_NAME Environment Variable
 #'
 #' @param dev Development Site vs. not?
 #' @param x character of vector
@@ -6,7 +6,7 @@
 #'
 #' @return Chnage the PROJECT_NAME to the user
 #' @export
-set_package_name = function(
+set_env_package_name = function(
   x,
   dev = FALSE,
   user = NULL) {
