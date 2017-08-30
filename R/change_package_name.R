@@ -1,4 +1,10 @@
-#' @rdname use_neuroc_template
+#' Change PACKAGE_NAME
+#'
+#' @param dev Development Site vs. not?
+#' @param x character of vector
+#' @param user User for the repositories
+#'
+#' @return Chnage the PROJECT_NAME to the user
 #' @export
 change_package_name = function(
   x,
