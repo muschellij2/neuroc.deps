@@ -34,4 +34,17 @@ test_that("checking non-ants Neuroc Package", {
   })
 
 
+  L = neuroc.deps::example_package(package = "ITKR")
+
+  testthat::expect_true({
+    neuroc_require_ants(
+      path = L$description_file,
+      table_path = table_path,
+      user = "neuroconductor",
+      dev = FALSE,
+      bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
+      verbose = FALSE)
+  })
+
+
 })

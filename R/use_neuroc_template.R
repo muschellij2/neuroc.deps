@@ -69,22 +69,14 @@ use_neuroc_template = function(
              " required binaries")
     )
   }
-  desc = description$new(file = path)
-  # Look at ANTsR
-  deps = desc$get_deps()
-  deps = deps[
-    deps$type %in% c("Imports", "Depends", "Suggests"), ,
-    drop = FALSE]
-  deps = deps$package
-
-  ants_dep = neuroc_dep_ants(
-    release = release,
+  ants = neuroc_require_ants(
+    path = path,
     dev = dev,
-    bin_packages = bin_packages,
     table_path = table_path,
-    user = user
-  )
-  ants = any(deps %in% ants_dep) || any(deps %in% bin_packages)
+    release = release,
+    bin_packages = bin_packages,
+    verbose = verbose,
+    user = user)
 
   if (verbose) {
     message(paste0("Writing CI files")

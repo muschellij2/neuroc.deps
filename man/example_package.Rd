@@ -4,7 +4,7 @@
 \alias{example_package}
 \title{Make Example Package for testing}
 \usage{
-example_package(package = c("extrantsr", "cifti", "spotgear"))
+example_package(package = c("extrantsr", "cifti", "spotgear", "ITKR"))
 }
 \arguments{
 \item{package}{packages in \code{neuroc.deps} that have an example}

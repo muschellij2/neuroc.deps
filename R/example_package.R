@@ -9,7 +9,7 @@
 #' @examples
 #' example_package(package = "cifti")
 example_package = function(
-  package = c("extrantsr", "cifti", "spotgear")
+  package = c("extrantsr", "cifti", "spotgear", "ITKR")
   ) {
   tfile = tempfile()
   dir.create(tfile)
