@@ -3,6 +3,7 @@
 #' @param repo Repository Name, in the form of user/repo
 #' @param username Username to add as a collaborator
 #' @param .token Github personal authentication token (PAT)
+#' @param ... additional arguments to \code{\link{gh}}
 #'
 #' @return Object of class \code{gh_response}
 #' @export

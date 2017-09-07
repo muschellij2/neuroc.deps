@@ -13,6 +13,8 @@ gh_add_collaborator(repo = "neuroconductor/ANTsR", username = "muschellij2",
 \item{username}{Username to add as a collaborator}
 
 \item{.token}{Github personal authentication token (PAT)}
+
+\item{...}{additional arguments to \code{\link{gh}}}
 }
 \value{
 Object of class \code{gh_response}
