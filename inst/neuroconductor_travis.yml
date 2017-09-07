@@ -43,7 +43,7 @@ after_failure:
 # need this explicitly
 # for naming convention
 before_deploy:
-  - R CMD INSTALL --build ${PKG_TARBALL}
+  - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
   # so no overwrite of linux build
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then

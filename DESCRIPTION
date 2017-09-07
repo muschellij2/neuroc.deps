@@ -14,6 +14,7 @@ Imports:
     igraph,
     httr,
     ghtravis,
+    devtools,
     remotes,
     neurocInstall (>= 0.7.1)
 Remotes: muschellij2/ghtravis, r-lib/gh, muschellij2/neurocInstall

@@ -20,11 +20,12 @@ env:
   - PROJECT_NAME=neuroconductor
 
 before_install:
-  - export PROJ_DIR=`basename $PWD`    
+  - export PROJ_DIR=`basename $PWD`
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
+  - export PACKAGE_NAME=`package_name`  
   - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
   - remove_neuroc_packages
   - export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
@@ -41,12 +42,17 @@ before_install:
   - install_missing_remote_deps ${ants_user}/ITKR ${ants_user}/ANTsRCore ${ants_user}/ANTsR
   - echo "Done Installing Missing Deps"
   - gh_binary_install ${ants_user}/ITKR
-  - gh_binary_install ${ants_user}/ANTsRCore
-  - gh_binary_install ${ants_user}/ANTsR
+  - if [[ "${PACKAGE_NAME}" != "ITKR" ]]; 
+    then
+      gh_binary_install ${ants_user}/ANTsRCore
+    fi
+  - if [[ "${PACKAGE_NAME}" != "ANTsRCore" && "${PACKAGE_NAME}" != "ITKR" ]]; 
+    then
+      gh_binary_install ${ants_user}/ANTsR
+    fi    
   - cat DESCRIPTION
   - install_remotes_no_dep
   - cat DESCRIPTION
-  - export PACKAGE_NAME=`package_name`
   - echo $PATH ;
 
 script:
