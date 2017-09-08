@@ -1,6 +1,6 @@
 test_that("checking non-ants Neuroc Package", {
 
-  L = neuroc.deps::example_package(package = "cifti")
+  L = neuroc.deps::neuroc_example_description(package = "cifti")
 
   table_path = neuroc_table_path(user = "neuroconductor")
   destfile = tempfile(fileext = ".txt")
@@ -22,7 +22,7 @@ test_that("checking non-ants Neuroc Package", {
   ##############################################
   # Testing ANTsR Dep
   ##############################################
-  L = neuroc.deps::example_package(package = "extrantsr")
+  L = neuroc.deps::neuroc_example_description(package = "extrantsr")
 
   testthat::expect_silent({
     use_neuroc_template(
@@ -34,7 +34,7 @@ test_that("checking non-ants Neuroc Package", {
   })
 
 
-  L = neuroc.deps::example_package(package = "ITKR")
+  L = neuroc.deps::neuroc_example_description(package = "ITKR")
 
   testthat::expect_true({
     neuroc_require_ants(
@@ -45,6 +45,25 @@ test_that("checking non-ants Neuroc Package", {
       bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
       verbose = FALSE)
   })
+
+
+  L = neuroc.deps::neuroc_example_description(package = "mimosa")
+  travis = neuroc.deps::neuroc_example_travis(package = "mimosa")
+  out_travis_file = file.path(L$directory, ".travis.yml")
+  file.copy(travis$travis_file,
+            out_travis_file,
+            overwrite = TRUE)
+
+  testthat::expect_silent({
+    result = use_neuroc_template(
+      path = L$description_file,
+      table_path = table_path,
+      user = "neuroconductor",
+      dev = FALSE,
+      verbose = FALSE,
+      merge_ci = TRUE)
+  })
+
 
 
 })

@@ -12,7 +12,7 @@
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
-  user = NULL, ...)
+  user = NULL, merge_ci = FALSE, ...)
 
 use_neuroc_travis_template(...)
 
@@ -43,8 +43,12 @@ remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
 
 \item{user}{User for the repositories}
 
+\item{merge_ci}{Should CI fields be merged?  If so,
+\code{\link{extract_ci_fields}} is called to grab the relevant fields.
+Fields cannot currently be a list}
+
 \item{...}{Additional arguments to pass to
-\code{\link{neuroc_ci_template_path}}}
+\code{\link{extract_ci_fields}}}
 
 \item{template_file}{file to template}
 

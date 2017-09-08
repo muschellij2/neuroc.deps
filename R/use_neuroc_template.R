@@ -4,17 +4,20 @@
 #' @param ci Which continuous integration system
 #' @param dev Development Site vs. not?
 #' @param ... Additional arguments to pass to
-#' \code{\link{neuroc_ci_template_path}}
-#' @param template_file file to template
+#' \code{\link{extract_ci_fields}}
 #' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
 #' @param bin_packages Binaries packages required
 #' @param verbose print diagnostic messages
 #' @param user User for the repositories
+#' @param merge_ci Should CI fields be merged?  If so,
+#' \code{\link{extract_ci_fields}} is called to grab the relevant fields.
+#' Fields cannot currently be a list
 #'
 #' @return Copy the template to the current directory
 #' @export
 #' @importFrom utils download.file
+#' @importFrom yaml yaml.load as.yaml
 use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
@@ -24,6 +27,7 @@ use_neuroc_template = function(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
+  merge_ci = FALSE,
   ...) {
 
   if (!file.exists(path)) {
@@ -107,7 +111,16 @@ use_neuroc_template = function(
     outfile = file.path(pkg_directory, outfile)
     if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
-      file.copy(outfile, bak)
+      file.copy(outfile, bak, overwrite = TRUE)
+      ############################
+      # Merging CI fields
+      ############################
+      if (merge_ci) {
+        template = merge_ci_fields(file = outfile, template = template, ...)
+      }
+      ############################
+      # End Merging CI fields
+      ############################
     }
     writeLines(text = template, con = outfile)
     outfiles[ici] = outfile
@@ -157,6 +170,7 @@ neuroc_key = function(
 }
 
 #' @rdname use_neuroc_template
+#' @param template_file file to template
 #' @export
 add_neuroc_keys = function(
   template_file,
