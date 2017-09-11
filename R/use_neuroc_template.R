@@ -70,7 +70,7 @@ use_neuroc_template = function(
   ####################
   usethis::use_build_ignore(
     basename(bak),
-    pkg = pkg_directory
+    base_path = pkg_directory
   )
   file.copy(new_desc, path, overwrite = TRUE)
 
@@ -119,7 +119,7 @@ use_neuroc_template = function(
     ####################
     # Adding build ignoring
     ####################
-    usethis::use_build_ignore(outfile, pkg = pkg_directory)
+    usethis::use_build_ignore(outfile, base_path = pkg_directory)
     outfile = file.path(pkg_directory, outfile)
     if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
@@ -128,7 +128,7 @@ use_neuroc_template = function(
       ####################
       # Adding build ignoring
       ####################
-      usethis::use_build_ignore(bak, pkg = pkg_directory)
+      usethis::use_build_ignore(bak, base_path = pkg_directory)
 
       ############################
       # Merging CI fields

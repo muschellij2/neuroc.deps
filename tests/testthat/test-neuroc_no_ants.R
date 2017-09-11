@@ -10,6 +10,11 @@ test_that("checking non-ants Neuroc Package", {
   Sys.setenv("NEUROC_TRAVIS_KEY" = "asdfdsdf")
   Sys.setenv("NEUROC_APPVEYOR_KEY" = "asdfdsdf")
 
+  tester = function(object) {
+    testthat::expect_that(object, testthat::not(testthat::gives_warning()))
+    testthat::expect_that(object, testthat::not(testthat::throws_error()))
+  }
+
   # testthat::expect_silent({
   #   use_neuroc_template(
   #     path = L$description_file,
@@ -24,7 +29,7 @@ test_that("checking non-ants Neuroc Package", {
   ##############################################
   L = neuroc.deps::neuroc_example_description(package = "extrantsr")
 
-  testthat::expect_silent({
+  tester({
     use_neuroc_template(
       path = L$description_file,
       table_path = table_path,
@@ -36,7 +41,17 @@ test_that("checking non-ants Neuroc Package", {
 
   L = neuroc.deps::neuroc_example_description(package = "ITKR")
 
-  testthat::expect_true({
+  tester({
+      neuroc_require_ants(
+      path = L$description_file,
+      table_path = table_path,
+      user = "neuroconductor",
+      dev = FALSE,
+      bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
+      verbose = FALSE)
+  })
+
+  tester({
     neuroc_require_ants(
       path = L$description_file,
       table_path = table_path,
@@ -54,7 +69,7 @@ test_that("checking non-ants Neuroc Package", {
             out_travis_file,
             overwrite = TRUE)
 
-  testthat::expect_silent({
+  tester({
     result = use_neuroc_template(
       path = L$description_file,
       table_path = table_path,

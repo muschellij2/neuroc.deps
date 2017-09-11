@@ -1,7 +1,7 @@
 Package: neuroc.deps
 Type: Package
 Title: Parses Dependencies for GitHub Packges
-Version: 0.12
+Version: 0.12.1
 Author: John Muschelli
 Maintainer: John Muschelli <muschellij2@gmail.com>
 Description: Uses functions to interface with 'GitHub' to 
@@ -14,9 +14,8 @@ Imports:
     igraph,
     httr,
     ghtravis,
-    devtools,
     remotes,
-    usethis,
+    usethis (>= 0.0.0.9000),
     neurocInstall (>= 0.7.1),
     yaml
 Remotes: muschellij2/ghtravis, r-lib/gh, muschellij2/neurocInstall

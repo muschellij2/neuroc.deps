@@ -14,7 +14,6 @@
 #' username = "muschellij2")
 #' }
 #'
-#' @importFrom devtools github_pat
 gh_add_collaborator = function(
   repo = "neuroconductor/ANTsR",
   username = "muschellij2",
@@ -22,7 +21,7 @@ gh_add_collaborator = function(
   ...
 ){
   if (is.null(.token)) {
-    .token = devtools::github_pat()
+    .token = github_pat()
   }
   endpoint = paste0("PUT /repos/", repo, "/collaborators/", username)
   res = gh(endpoint = endpoint, .token = .token, ...)
