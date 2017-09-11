@@ -18,7 +18,7 @@
 #' @export
 #' @importFrom utils download.file
 #' @importFrom yaml yaml.load as.yaml
-#' @importFrom devtools use_build_ignore
+#' @importFrom usethis use_build_ignore
 use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
@@ -68,7 +68,7 @@ use_neuroc_template = function(
   ####################
   # Adding build ignoring
   ####################
-  devtools::use_build_ignore(
+  usethis::use_build_ignore(
     basename(bak),
     pkg = pkg_directory
   )
@@ -119,7 +119,7 @@ use_neuroc_template = function(
     ####################
     # Adding build ignoring
     ####################
-    devtools::use_build_ignore(outfile, pkg = pkg_directory)
+    usethis::use_build_ignore(outfile, pkg = pkg_directory)
     outfile = file.path(pkg_directory, outfile)
     if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
@@ -128,7 +128,7 @@ use_neuroc_template = function(
       ####################
       # Adding build ignoring
       ####################
-      devtools::use_build_ignore(bak, pkg = pkg_directory)
+      usethis::use_build_ignore(bak, pkg = pkg_directory)
 
       ############################
       # Merging CI fields
