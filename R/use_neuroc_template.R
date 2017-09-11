@@ -18,6 +18,7 @@
 #' @export
 #' @importFrom utils download.file
 #' @importFrom yaml yaml.load as.yaml
+#' @importFrom devtools use_build_ignore
 use_neuroc_template = function(
   path = "DESCRIPTION",
   ci = c("travis", "appveyor"),
@@ -64,6 +65,13 @@ use_neuroc_template = function(
     user = user)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
+  ####################
+  # Adding build ignoring
+  ####################
+  devtools::use_build_ignore(
+    basename(bak),
+    pkg = pkg_directory
+  )
   file.copy(new_desc, path, overwrite = TRUE)
 
   if (verbose) {
@@ -108,10 +116,20 @@ use_neuroc_template = function(
       ici,
       travis = ".travis.yml",
       appveyor = "appveyor.yml")
+    ####################
+    # Adding build ignoring
+    ####################
+    devtools::use_build_ignore(outfile, pkg = pkg_directory)
     outfile = file.path(pkg_directory, outfile)
     if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
       file.copy(outfile, bak, overwrite = TRUE)
+
+      ####################
+      # Adding build ignoring
+      ####################
+      devtools::use_build_ignore(bak, pkg = pkg_directory)
+
       ############################
       # Merging CI fields
       ############################
