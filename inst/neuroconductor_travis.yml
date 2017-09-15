@@ -7,14 +7,14 @@ use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
 
+os:
+  - linux
+  - osx
+
 env:
   global: 
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=neuroconductor
-
-os:
-  - linux
-  - osx
 
 r_check_args: --as-cran
 # r_check_args: "--as-cran --install-args=--build"
