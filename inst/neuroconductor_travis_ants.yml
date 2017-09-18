@@ -92,5 +92,5 @@ deploy:
   on:
     tags: true
 
-after_deploy:
-  - Rscript -e 'covr::coveralls(type = "all")'
+# after_deploy:
+#   - Rscript -e 'covr::coveralls(type = "all")'
