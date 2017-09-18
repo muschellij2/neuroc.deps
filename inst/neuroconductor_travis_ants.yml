@@ -93,4 +93,4 @@ deploy:
     tags: true
 
 # after_deploy:
-#   - Rscript -e 'covr::coveralls(type = "all")'
+#   - travis_wait 100 Rscript -e 'covr::coveralls(type = "all")'
