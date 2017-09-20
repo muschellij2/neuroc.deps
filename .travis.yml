@@ -5,7 +5,7 @@ warnings_are_errors: true
 
 os:
   - linux
-  - osx
+  # - osx
 
 before_install:
   - wget -O travis_helpers.sh http://bit.ly/travis_helpers
