@@ -109,6 +109,22 @@ neuroc_desc = function(
       unname(d$get("Package"))
     }
     packs = sapply(dcfs, get_pack)
+    na_packs = is.na(packs)
+    # fixing issue with commit that went awry and is gone
+    if (any(na_packs)) {
+      bad_rem = remotes[na_packs]
+      bad_rem = sapply(bad_rem, function(x) {
+        gsub("(.*)@.*", "\\1", x )
+      })
+      bad_rem = sapply(bad_rem, function(x) {
+        gsub("(.*)#.*", "\\1", x )
+      })
+      bad_rem = strsplit(bad_rem, "/")
+      bad_rem = sapply(bad_rem, function(x) {
+        x[length(x)]
+      })
+      packs[na_packs] = bad_rem
+    }
     names(remotes) = packs
     drop_repos = packs %in% all_neuro_deps$repo
     remotes = remotes[ !drop_repos]
