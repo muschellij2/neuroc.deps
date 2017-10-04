@@ -11,8 +11,9 @@ test_that("checking non-ants Neuroc Package", {
   Sys.setenv("NEUROC_APPVEYOR_KEY" = "asdfdsdf")
 
   tester = function(object) {
-    testthat::expect_that(object, testthat::not(testthat::gives_warning()))
-    testthat::expect_that(object, testthat::not(testthat::throws_error()))
+    # testthat::expect_that(object, !testthat::gives_warning())
+    testthat::expect_failure(expect_warning(object))
+    testthat::expect_failure(expect_error(object))
   }
 
   # testthat::expect_silent({
