@@ -26,6 +26,7 @@ before_install:
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`  
+  - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
   - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
   - remove_neuroc_packages
   - export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
@@ -62,14 +63,21 @@ before_install:
   - install_remotes_no_dep
   - cat DESCRIPTION
   - echo $PATH ;
+  - install_deps_no_suggests
 
 script:
   # - source ~/.R/Makevars
   - x=`export_clang_cxx`; eval ${x}
   - travis_wait 100 R CMD build ${R_BUILD_ARGS} . 
+  - rm -f travis_wait*.log
   - PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1)
   - ls
   - travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_TARBALL}"; CHECK_RET=$? ;
+  - rm -f travis_wait*.log
+  - check_fail
+  - check_warnings
+  # - Rscript -e "message(devtools::check_failures(path = \"${RCHECK_DIR}\"))" ;
+  # - grep -q -R "WARNING" "${RCHECK_DIR}/00check.log" ; if [[ $? -eq 0 ]]; error 1; fi  
   # - if [[ ${#TRAVIS_TAG} -eq 0 ]]; 
   #   then 
   #   travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_TARBALL}"; 
