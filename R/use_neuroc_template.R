@@ -206,7 +206,9 @@ add_neuroc_keys = function(
 
   tfile = tempfile()
   file.copy(template_file, tfile)
-  x = readLines(tfile)
+  suppressWarnings({
+    x = readLines(tfile)
+  })
 
   x = gsub(
     "ants_user=(.*)",
