@@ -108,5 +108,7 @@ deploy:
   on:
     tags: true
 
-# after_deploy:
-#   - travis_wait 100 Rscript -e 'covr::coveralls(type = "all")'
+after_deploy:
+  - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" ]]; 
+      Rscript -e 'covr::coveralls(type = "all")' ;
+    fi 
