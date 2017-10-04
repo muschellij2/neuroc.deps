@@ -31,6 +31,10 @@ before_install:
   - install_remotes_no_dep
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
+  - if [[ "${PACKAGE_NAME}" == "waveslim" ]]; 
+    then
+      fftw_install ;
+    fi
 
 after_success:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
