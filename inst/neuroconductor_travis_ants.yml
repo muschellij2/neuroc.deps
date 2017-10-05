@@ -22,6 +22,7 @@ env:
 
 before_install:
   - export PROJ_DIR=`basename $PWD`
+  - echo "travis_wait*\.log$" >> .Rbuildignore
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
