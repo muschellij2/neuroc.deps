@@ -111,6 +111,7 @@ deploy:
 
 after_deploy:
   - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" ]]; 
+    then
       Rscript -e 'covr::coveralls(type = "all")' ;
     fi
 
