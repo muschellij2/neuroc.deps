@@ -19,8 +19,10 @@ env:
   - RGL_USE_NULL=TRUE
   - WARNINGS_ARE_ERRORS=1 
   - PROJECT_NAME=neuroconductor
+  - DISPLAY=:99.0
 
 before_install:
+  - start_xvfb() ;  
   - export PROJ_DIR=`basename $PWD`
   - echo "travis_wait*\.log$" >> .Rbuildignore
   - fname=travis_helpers.sh

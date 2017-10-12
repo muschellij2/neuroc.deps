@@ -20,12 +20,12 @@ env:
   global: 
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=neuroconductor
-    - export DISPLAY=:99.0
+    - DISPLAY=:99.0
 r_check_args: --as-cran
 # r_check_args: "--as-cran --install-args=--build"
 
 before_install:
-  - sh -e /etc/init.d/xvfb start ;
+  - start_xvfb() ;
   - export PROJ_DIR=`basename $PWD`    
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
