@@ -11,6 +11,8 @@ dist: precise
 os:
   - linux
   - osx
+osx_image: xcode9 
+dist: trusty
 
 env:
   global:
