@@ -11,6 +11,7 @@ addons:
   apt:
     packages:
     - libfftw3-dev
+    - gsl-bin
 
 os:
   - linux
@@ -43,6 +44,10 @@ before_install:
   - if [[ "${PACKAGE_NAME}" == "waveslim" ]]; 
     then
       fftw_install ;
+    fi
+  - if [[ "${PACKAGE_NAME}" == "dti" ]]; 
+    then
+      gsl_install ;
     fi
 
 after_success:
