@@ -36,6 +36,11 @@ use_neuroc_template = function(
                 "does not exist!"))
   }
   pkg_directory = dirname(path)
+  owd = getwd()
+  on.exit({
+    setwd(owd)
+  })
+  setwd(pkg_directory)
   user = neuroc_user(user = user, dev = dev)
 
   table_path = neuroc_table_path(
@@ -69,8 +74,7 @@ use_neuroc_template = function(
   # Adding build ignoring
   ####################
   usethis::use_build_ignore(
-    basename(bak),
-    base_path = pkg_directory
+    basename(bak)
   )
   file.copy(new_desc, path, overwrite = TRUE)
 
@@ -119,7 +123,7 @@ use_neuroc_template = function(
     ####################
     # Adding build ignoring
     ####################
-    usethis::use_build_ignore(outfile, base_path = pkg_directory)
+    usethis::use_build_ignore(outfile)
     outfile = file.path(pkg_directory, outfile)
     if (file.exists(outfile)) {
       bak = paste0(outfile, ".bak")
@@ -128,7 +132,7 @@ use_neuroc_template = function(
       ####################
       # Adding build ignoring
       ####################
-      usethis::use_build_ignore(bak, base_path = pkg_directory)
+      usethis::use_build_ignore(bak)
 
       ############################
       # Merging CI fields
