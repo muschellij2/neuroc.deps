@@ -77,7 +77,7 @@ deploy:
 after_deploy:
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
     then
-      travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
+      Rscript -e 'covr::coveralls(type = "all")' ;
     fi
 
 
