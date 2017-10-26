@@ -189,9 +189,9 @@ neuroc_desc = function(
   sysreqs_df = read.csv('https://goo.gl/x7rcCD',stringsAsFactors = FALSE)
   rownames(sysreqs_df) <- sysreqs_df$Package
   if (unname(desc$get("Package")) %in% sysreqs_df$Package) {
-    if(sysreqs_df[unname(desc$get("Package")),]$Recommended.System.Requirements != "") {
-      new_sysreq = sysreqs_df[unname(desc$get("Package")),]$Recommended.System.Requirements
-      if(!is.na(new_sysreq))desc$set(SystemRequirements = new_sysreq)
+    new_sysreq = sysreqs_df[unname(desc$get("Package")),]$Recommended.System.Requirements
+    if (!is.na(new_sysreq) & new_sysreq != "") {
+        desc$set(SystemRequirements = new_sysreq)
     }
   }
 
