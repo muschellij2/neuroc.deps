@@ -13,7 +13,9 @@
 #' The function will parse a description, delete any remotes for packages in
 #' neuroconductor, add the neuroconductor remotes (in order),
 #' adds \code{biocViews} field (for Travis), puts the \code{covr} in Suggests for
-#' code coverage if not already in Imports/Suggests/Depends.
+#' code coverage if not already in Imports/Suggests/Depends,
+#' replaces the SystemRequirements field with the suggested value(s) from
+#' https://goo.gl/x7rcCD
 #' @importFrom desc description
 neuroc_desc = function(
   path = "DESCRIPTION",
@@ -176,6 +178,21 @@ neuroc_desc = function(
   bc_views = desc$get("biocViews")
   if (is.na(bc_views)) {
     desc$set(biocViews = "")
+  }
+
+  # read and reformat SystemRequirements (if needed)
+  if (verbose) {
+    msg = paste0("Adjust SystemRequirements")
+    message(msg)
+  }
+
+  sysreqs_df = read.csv('https://goo.gl/x7rcCD',stringsAsFactors = FALSE)
+  rownames(sysreqs_df) <- sysreqs_df$Package
+  if (unname(desc$get("Package")) %in% sysreqs_df$Package) {
+    if(sysreqs_df[unname(desc$get("Package")),]$Recommended.System.Requirements != "") {
+      new_sysreq = sysreqs_df[unname(desc$get("Package")),]$Recommended.System.Requirements
+      if(!is.na(new_sysreq))desc$set(SystemRequirements = new_sysreq)
+    }
   }
 
   out_path = tempfile()
