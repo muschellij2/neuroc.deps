@@ -21,6 +21,6 @@ OSLER)
 \examples{
 neuroc_user(user = "neuroconductor")
 neuroc_user(user = "neuroconductor", dev = TRUE)
-neuroc_user(user = "neuroconductor-devel")
+neuroc_user(dev = TRUE)
 neuroc_user(user = "oslerinhealth")
 }

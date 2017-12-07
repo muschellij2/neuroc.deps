@@ -11,7 +11,7 @@
 #' @examples
 #' neuroc_user(user = "neuroconductor")
 #' neuroc_user(user = "neuroconductor", dev = TRUE)
-#' neuroc_user(user = "neuroconductor-devel")
+#' neuroc_user(dev = TRUE)
 #' neuroc_user(user = "oslerinhealth")
 neuroc_user = function(user = NULL, dev = FALSE) {
   if (is.null(user)) {
@@ -20,7 +20,7 @@ neuroc_user = function(user = NULL, dev = FALSE) {
       user = NULL
     }
   }
-  if (is.null(user)) {
+  if (!is.null(user)) {
     choices = c("neuroconductor", "oslerinhealth")
     if (dev) {
       choices = c("neuroconductor-devel",  "oslerinhealth")
