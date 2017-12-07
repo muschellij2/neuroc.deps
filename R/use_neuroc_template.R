@@ -106,7 +106,8 @@ use_neuroc_template = function(
     template_file = neuroc_ci_template_path(
       ci = ici,
       ants = ants,
-      user = user)
+      user = user,
+      dev = dev)
     template = add_neuroc_keys(
       template_file,
       ci = ici,
