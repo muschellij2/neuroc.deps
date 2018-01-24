@@ -14,7 +14,6 @@ addons:
     - libgsl0-dev
     - libgsl0ldbl
 
-
 os:
   - linux
   - osx
@@ -51,6 +50,7 @@ before_install:
     then
       gsl_install ;
     fi
+  - ralias
 
 after_success:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
@@ -84,7 +84,7 @@ after_deploy:
   # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
     then
-      Rscript -e 'covr::coveralls(type = "all")' ;
+      travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
     fi
 
 
