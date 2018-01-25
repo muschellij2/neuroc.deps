@@ -50,7 +50,15 @@ before_install:
     then
       gsl_install ;
     fi
-  - ralias
+  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" ]]; 
+    then
+      shopt -s expand_aliases ;
+      x=`Rscript -e "cat(Sys.which('R'))"` ;
+      alias R="travis_wait 100 ${x}" ;
+      x=`Rscript -e "cat(Sys.which('Rscript'))"` ;
+      alias Rscript="travis_wait 100 ${x}" ;
+    fi
+  # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
