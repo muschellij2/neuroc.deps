@@ -55,8 +55,6 @@ before_install:
       shopt -s expand_aliases ;
       x=`Rscript -e "cat(Sys.which('R'))"` ;
       alias R="travis_wait 100 ${x}" ;
-      x=`Rscript -e "cat(Sys.which('Rscript'))"` ;
-      alias Rscript="travis_wait 100 ${x}" ;
     fi
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
