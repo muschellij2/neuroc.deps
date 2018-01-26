@@ -17,11 +17,11 @@ addons:
 os:
   - linux
   - osx
-osx_image: xcode9 
+osx_image: xcode9
 dist: trusty
 
 env:
-  global: 
+  global:
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=neuroconductor
     - DISPLAY=:99.0
@@ -29,34 +29,32 @@ r_check_args: --as-cran
 # r_check_args: "--as-cran --install-args=--build"
 
 before_install:
-  - export PROJ_DIR=`basename $PWD`    
+  - export PROJ_DIR=`basename $PWD`
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
-  - cat ${fname}; source ${fname}; rm ${fname}  
+  - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
   - start_xvfb ;
-  - no_open_mp ; 
+  - no_open_mp ;
   - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
-  - remove_neuroc_packages 
+  - remove_neuroc_packages
   - cat DESCRIPTION
   - install_remotes_no_dep
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
-  - if [[ "${PACKAGE_NAME}" == "waveslim" ]]; 
+  - if [[ "${PACKAGE_NAME}" == "waveslim" ]];
     then
       fftw_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "dti" ]]; 
+  - if [[ "${PACKAGE_NAME}" == "dti" ]];
     then
       gsl_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" ]]; 
+  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" ]];
     then
       shopt -s expand_aliases ;
       x=`Rscript -e "cat(Sys.which('R'))"` ;
       alias R="travis_wait 100 ${x}" ;
-      x=`Rscript -e "cat(Sys.which('Rscript'))"` ;
-      alias Rscript="travis_wait 100 ${x}" ;
     fi
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
@@ -90,7 +88,7 @@ deploy:
 
 after_deploy:
   # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
-  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
     then
       travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
     fi
