@@ -90,7 +90,7 @@ after_deploy:
   # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
     then
-      Rscript -e 'covr::coveralls(type = "all")' ;
+      travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
     fi
 
 
