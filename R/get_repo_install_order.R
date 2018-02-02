@@ -46,11 +46,13 @@ get_repo_dep_mat = function(
 
   dep_mat = sapply(info, function(xx) {
     run_pack = xx$Package
-    # print(run_pack)
+    print(run_pack)
     grab = names(xx) %in% dep_type
     if (any(grab)) {
       res = xx[grab]
       res = lapply(res, function(x) {
+        x = unlist(x)
+        x = paste(x, collapse = ", ")
         if (length(x) > 0) {
           x = strsplit(x, " ")[[1]]
           return(split_remotes(x))
