@@ -88,7 +88,8 @@ script:
     then
       echo "R CMD check failed"; 
       check_fail; 
-      exit 1; 
+      # exit 1; 
+      travis_terminate 1;
     fi  
   - check_warnings
   # - Rscript -e "message(devtools::check_failures(path = \"${RCHECK_DIR}\"))" ;
