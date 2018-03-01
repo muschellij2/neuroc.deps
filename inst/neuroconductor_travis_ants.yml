@@ -90,7 +90,6 @@ script:
       echo "R CMD check failed"; 
       check_fail; 
       dump_logs; 
-      # exit 1; 
       travis_terminate 1;
     fi  
   - check_warnings
