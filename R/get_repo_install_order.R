@@ -46,7 +46,7 @@ get_repo_dep_mat = function(
 
   dep_mat = sapply(info, function(xx) {
     run_pack = xx$Package
-    print(run_pack)
+    # print(run_pack)
     grab = names(xx) %in% dep_type
     if (any(grab)) {
       res = xx[grab]

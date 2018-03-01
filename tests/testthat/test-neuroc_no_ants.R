@@ -1,3 +1,5 @@
+context("testing use_neuroc")
+
 test_that("checking non-ants Neuroc Package", {
 
   L = neuroc.deps::neuroc_example_description(package = "cifti")
@@ -30,7 +32,7 @@ test_that("checking non-ants Neuroc Package", {
   ##############################################
   L = neuroc.deps::neuroc_example_description(package = "extrantsr")
 
-  tester({
+  tester(function() {
     use_neuroc_template(
       path = L$description_file,
       table_path = table_path,
@@ -42,7 +44,7 @@ test_that("checking non-ants Neuroc Package", {
 
   L = neuroc.deps::neuroc_example_description(package = "ITKR")
 
-  tester({
+  tester(function() {
       neuroc_require_ants(
       path = L$description_file,
       table_path = table_path,
@@ -70,7 +72,7 @@ test_that("checking non-ants Neuroc Package", {
             out_travis_file,
             overwrite = TRUE)
 
-  tester({
+  tester(function() {
     result = use_neuroc_template(
       path = L$description_file,
       table_path = table_path,
@@ -78,6 +80,7 @@ test_that("checking non-ants Neuroc Package", {
       dev = FALSE,
       verbose = FALSE,
       merge_ci = TRUE)
+    result
   })
 
 
