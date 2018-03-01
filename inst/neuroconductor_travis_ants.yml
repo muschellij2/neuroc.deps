@@ -74,6 +74,7 @@ before_install:
   - cat DESCRIPTION
   - echo $PATH ;
   - install_deps_no_suggests
+  - travis_run_cache 
 
 script:
   # - source ~/.R/Makevars
@@ -88,6 +89,7 @@ script:
     then
       echo "R CMD check failed"; 
       check_fail; 
+      dump_logs; 
       # exit 1; 
       travis_terminate 1;
     fi  
@@ -100,12 +102,10 @@ script:
   #   fi
 
 after_success:
-  - cat ${PACKAGE_NAME}.Rcheck/00install.out
-  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+  - dump_logs
 
 after_failure:
-  - cat ${PACKAGE_NAME}.Rcheck/00install.out
-  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+  - dump_logs
 
 # so no overwrite of linux build
 before_deploy:
