@@ -16,6 +16,8 @@ environment:
 
 install:
   - ps: Bootstrap
+  - ps: (new-object net.webclient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
+  - cmd: C:\projects\JAGS-4.2.0.exe /S
 
 cache:
   - C:\RLibrary
@@ -60,6 +62,8 @@ test_script:
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
+  - cat *.Rcheck\**\*.out
+  - cat *.Rcheck\**\*.log
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
