@@ -30,5 +30,7 @@ Neuroc DESCRIPTION File
 The function will parse a description, delete any remotes for packages in
 neuroconductor, add the neuroconductor remotes (in order),
 adds \code{biocViews} field (for Travis), puts the \code{covr} in Suggests for
-code coverage if not already in Imports/Suggests/Depends.
+code coverage if not already in Imports/Suggests/Depends,
+replaces the SystemRequirements field with the suggested value(s) from
+https://goo.gl/x7rcCD
 }
