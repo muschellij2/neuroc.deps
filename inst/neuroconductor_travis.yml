@@ -36,7 +36,10 @@ before_install:
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - start_xvfb ;
-  - no_open_mp ; 
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then
+      no_open_mp ; 
+    fi
   - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
   - remove_neuroc_packages 
   - cat DESCRIPTION
