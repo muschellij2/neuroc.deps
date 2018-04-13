@@ -81,6 +81,22 @@ neuroc_desc = function(
     msg = paste0("Parsing DESCRIPTION file")
     message(msg)
   }
+  # Fixes the multiple suggests
+  desc = read.dcf(file = path, all = TRUE)
+  collapser = function(desc, cn) {
+    for (icn in cn) {
+    if (icn %in% colnames(desc)) {
+      x = desc[, icn]
+      x = unlist(x)
+      x = paste(x, collapse = ", ")
+      desc[, icn] = x
+    }
+    }
+    return(desc)
+  }
+  desc = collapser(desc, cn = c("Imports", "Suggests", "Depends"))
+  write.dcf(x = desc, file = path)
+
   desc = desc::description$new(file = path)
 
 
