@@ -24,6 +24,7 @@ get_repo_dep_mat = function(
   dcfs = get_remote_package_dcf(repos)
 
   info = lapply(dcfs, function(tmp) {
+    message(tmp)
     if (is.na(tmp)) {
       L = list(Package = NA,
                Version = NA)
