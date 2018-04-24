@@ -83,18 +83,7 @@ neuroc_desc = function(
   }
   # Fixes the multiple suggests
   desc = read.dcf(file = path, all = TRUE)
-  collapser = function(desc, cn) {
-    for (icn in cn) {
-    if (icn %in% colnames(desc)) {
-      x = desc[, icn]
-      x = unlist(x)
-      x = paste(x, collapse = ", ")
-      desc[, icn] = x
-    }
-    }
-    return(desc)
-  }
-  desc = collapser(desc, cn = c("Imports", "Suggests", "Depends"))
+  desc = dcf_collapser(desc, cn = c("Imports", "Suggests", "Depends"))
   write.dcf(x = desc, file = path)
 
   desc = desc::description$new(file = path)
@@ -124,7 +113,11 @@ neuroc_desc = function(
       if (!file.exists(tmp)) {
         return(NA)
       }
-      d = desc::description$new(file = tmp)
+      desc = read.dcf(file = tmp, all = TRUE)
+      desc = dcf_collapser(desc, cn = c("Imports", "Suggests", "Depends"))
+      tfile = tempfile()
+      write.dcf(x = desc, file = tfile)
+      d = desc::description$new(file = tfile)
       unname(d$get("Package"))
     }
     packs = sapply(dcfs, get_pack)

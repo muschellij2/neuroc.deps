@@ -21,3 +21,15 @@ github_pat = function (quiet = FALSE) {
   }
   return(NULL)
 }
+
+dcf_collapser = function(desc, cn) {
+  for (icn in cn) {
+    if (icn %in% colnames(desc)) {
+      x = desc[, icn]
+      x = unlist(x)
+      x = paste(x, collapse = ", ")
+      desc[, icn] = x
+    }
+  }
+  return(desc)
+}
