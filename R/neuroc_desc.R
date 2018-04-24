@@ -113,6 +113,10 @@ neuroc_desc = function(
       if (!file.exists(tmp)) {
         return(NA)
       }
+      desc = read.dcf(file = tmp, all = TRUE)
+      desc = collapser(desc, cn = c("Imports", "Suggests", "Depends"))
+      write.dcf(x = desc, file = tmp)
+
       d = desc::description$new(file = tmp)
       unname(d$get("Package"))
     }
