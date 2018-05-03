@@ -13,8 +13,6 @@ environment:
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     WARNINGS_ARE_ERRORS: 1
-    TMPDIR: "C:\tmp"
-    TMP: "C:\tmp"
 
 install:
   - ps: Bootstrap
@@ -24,6 +22,9 @@ cache:
 
 # Adapt as necessary starting from here
 build_script:
+  - set TMP=C:/
+  - set TMPDIR=C:/
+  - set TEMP=C:/  
   # need to move to higher dir because CMake path req
   - mkdir -p C:\tmp  
   - mkdir C:\run
@@ -70,6 +71,7 @@ test_script:
 
 
 on_failure:
+  - cat *.Rcheck/00install.out    
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
