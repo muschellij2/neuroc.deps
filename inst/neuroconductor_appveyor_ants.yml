@@ -24,9 +24,8 @@ cache:
 build_script:
   - set TMP=C:/
   - set TMPDIR=C:/
-  - set TEMP=C:/  
+  - set TEMP=C:/
   # need to move to higher dir because CMake path req
-  - mkdir -p C:\tmp  
   - mkdir C:\run
   - cp -avr * C:\run
   # need the tool a level above
