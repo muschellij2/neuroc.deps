@@ -41,6 +41,7 @@ before_install:
       no_open_mp ; 
     fi
   - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
+  - jags_install  
   - remove_neuroc_packages 
   - cat DESCRIPTION
   - install_remotes_no_dep
