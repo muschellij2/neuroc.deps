@@ -16,15 +16,18 @@ environment:
 
 install:
   - ps: Bootstrap
+  - ps: (new-object net.webclient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
+  - cmd: C:\projects\JAGS-4.2.0.exe /S
 
 cache:
   - C:\RLibrary
 
 # Adapt as necessary starting from here
 build_script:
-  - set TMP=C:/
-  - set TMPDIR=C:/
-  - set TEMP=C:/
+  - mkdir -p C:\rtm
+  - set TMP=C:/rtm
+  - set TEMP=C:/rtm
+  - set TMPDIR=C:/rtm
   # need to move to higher dir because CMake path req
   - mkdir C:\run
   - cp -avr * C:\run
@@ -59,12 +62,14 @@ build_script:
   - set PATH=%PATH%;C:\Windows\System32\Wbem
   - set PATH=%PATH%;C:\Windows\System32\WindowsPowerShell\v1.0\
   - set PATH=%PATH%;C:\Program Files\7-Zip
+  - RScript -e "install.packages('Rcpp', type = 'source', repos=c(CRAN='https://cran.rstudio.com'))"  
   - travis-tool.sh install_deps
 
 test_script:
   - travis-tool.sh run_tests
   - ls
   - cp -r C:/run/* %APPVEYOR_BUILD_FOLDER%
+  - cp C:/run/.Rbuildignore %APPVEYOR_BUILD_FOLDER%  
   - cd %APPVEYOR_BUILD_FOLDER%
   - ls
 

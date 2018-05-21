@@ -27,9 +27,10 @@ build_script:
   - travis-tool.sh install_deps
 
 test_script:
-  - set TMP=C:\
-  - set TMPDIR=C:\
-  - set TEMP=C:\
+  - mkdir -p C:\rtm
+  - set TMP=C:/rtm
+  - set TEMP=C:/rtm
+  - set TMPDIR=C:/rtm
   # need to move to higher dir because CMake path req
   - mkdir -p C:\run
   - cp -avr * C:\run
