@@ -24,6 +24,10 @@ r:
 - release
 - devel
 
+allow_failures:
+  - r: devel
+  - os: osx
+
 env:
   global: 
     - RGL_USE_NULL=TRUE
