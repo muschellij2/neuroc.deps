@@ -107,12 +107,6 @@ script:
       dump_logs; 
       travis_terminate 1;
     fi  
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];
-    then 
-      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
-      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
-      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
-    fi
   - check_warnings
   # - Rscript -e "message(devtools::check_failures(path = \"${RCHECK_DIR}\"))" ;
   # - grep -q -R "WARNING" "${RCHECK_DIR}/00check.log" ; if [[ $? -eq 0 ]]; error 1; fi  
@@ -129,6 +123,12 @@ after_failure:
 
 # so no overwrite of linux build
 before_deploy:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then 
+      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+    fi   
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       rm -f *.tar.gz;

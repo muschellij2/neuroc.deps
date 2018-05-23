@@ -70,12 +70,6 @@ before_install:
       x=`Rscript -e "cat(Sys.which('R'))"` ;
       alias R="travis_wait 100 ${x}" ;
     fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];
-    then 
-      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
-      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
-      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
-    fi
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:
@@ -91,10 +85,16 @@ after_failure:
 before_deploy:
   # - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
   # so no overwrite of linux build
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then 
+      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+    fi   
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then
       rm -f *.tar.gz;
-    fi
+    fi 
 
 deploy:
   provider: releases
