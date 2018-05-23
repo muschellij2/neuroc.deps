@@ -20,6 +20,10 @@ os:
 osx_image: xcode9 
 dist: trusty
 
+r:
+- release
+- devel
+
 env:
   global: 
     - RGL_USE_NULL=TRUE
@@ -36,6 +40,7 @@ before_install:
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - start_xvfb ;
+  - export rver=`r_version`;
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ; 
@@ -60,6 +65,12 @@ before_install:
       shopt -s expand_aliases ;
       x=`Rscript -e "cat(Sys.which('R'))"` ;
       alias R="travis_wait 100 ${x}" ;
+    fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then 
+      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
     fi
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
@@ -93,7 +104,7 @@ deploy:
 
 after_deploy:
   # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
-  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" ]]; 
     then
       echo 'covr::coveralls(type = "all")' > neuroc_covr.R ;
       travis_wait 100 Rscript neuroc_covr.R ;
