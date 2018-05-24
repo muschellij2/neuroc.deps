@@ -67,7 +67,7 @@ before_install:
     then
       gsl_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" ]]; 
+  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" || "${PACKAGE_NAME}" == "Rvision" ]]; 
     then
       shopt -s expand_aliases ;
       x=`Rscript -e "cat(Sys.which('R'))"` ;
