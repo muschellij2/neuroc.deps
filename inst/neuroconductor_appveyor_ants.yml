@@ -19,6 +19,20 @@ install:
   - ps: (new-object net.webclient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
   - cmd: C:\projects\JAGS-4.2.0.exe /S
 
+matrix:
+  - R_VERSION: devel
+
+  - R_VERSION: release
+
+  - R_VERSION: oldrel
+    CRAN: http://cran.rstudio.com
+
+  - R_VERSION: 3.3.0
+    CRAN: http://cran.rstudio.com
+
+  - R_VERSION: 3.2.0
+    CRAN: http://cran.rstudio.com
+
 cache:
   - C:\RLibrary
 
@@ -73,7 +87,6 @@ test_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - ls
 
-
 on_failure:
   - cat *.Rcheck/00install.out    
   - 7z a failure.zip *.Rcheck\*
@@ -97,6 +110,11 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+
+before_deploy:
+  - PKG_TARBALL=$(ls -1t *.zip | head -n 1); 
+  - PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.zip/_'"R${rver}"'.zip/'` ;
+  - mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
 
 deploy:
   provider: GitHub
