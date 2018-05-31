@@ -157,8 +157,11 @@ neuroc_desc = function(
     msg = paste0("Adding Code Coverage")
     message(msg)
   }
-  if (!desc$has_dep("covr")) {
-    desc$set_dep(package = "covr", type = "Suggests")
+  run_suggests = c("covr", "testthat")
+  for (isug in run_suggests) {
+    if (!desc$has_dep(isug)) {
+      desc$set_dep(package = isug, type = "Suggests")
+    }
   }
 
 
