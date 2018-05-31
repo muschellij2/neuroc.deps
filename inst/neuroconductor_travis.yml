@@ -93,6 +93,7 @@ before_deploy:
       PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
       PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
       mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+      echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
     fi   
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then
