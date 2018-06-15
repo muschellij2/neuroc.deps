@@ -45,12 +45,12 @@ build_script:
   - travis-tool.sh install_deps
 
 test_script:
-  - if not exist "C:\rtm" mkdir -p C:\rtm
+  - if not exist "C:\rtm" mkdir C:\rtm
   - set TMP=C:\rtm
   - set TEMP=C:\rtm
   - set TMPDIR=C:\rtm
   # need to move to higher dir because CMake path req
-  - if not exist "C:\run" mkdir -p C:\run
+  - if not exist "C:\run" mkdir C:\run
   - cp -avr * C:\run
   # need the tool a level above
   - cp ../travis-tool.sh C:\
