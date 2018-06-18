@@ -77,6 +77,11 @@ test_script:
   # - cp ../*.zip ./
   - cp -r C:/run/* %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
+  - for %%i in (*.zip) do echo %%~ni> zip_filename.txt
+  - SET /P PKG_TARBALL=<zip_filename.txt
+  - del zip_filename.txt
+  - rename %PKG_TARBALL%.zip %PKG_TARBALL%_R%R_VER%.zip
+  - echo Built tarball is %PKG_TARBALL%_R%R_VER%.zip
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
@@ -95,15 +100,8 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.zip'
+  - path: '\*_*_*.zip'
     name: Bits
-
-before_deploy:
-  - for %%i in (*.zip) do echo %%~ni> zip_filename.txt
-  - SET /P PKG_TARBALL=<zip_filename.txt
-  - del zip_filename.txt
-  - rename %PKG_TARBALL%.zip %PKG_TARBALL%_R%R_VER%.zip
-  - echo Built tarball is %PKG_TARBALL%_R%R_VER%.zip
 
 deploy:
   provider: GitHub
