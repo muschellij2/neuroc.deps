@@ -114,7 +114,7 @@ after_deploy:
   # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
   - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" ]]; 
     then
-      echo 'covr::coveralls(type = "all")' > neuroc_covr.R ;
+      echo 'covr::coveralls(type = "all", quiet = FALSE)' > neuroc_covr.R ;
       travis_wait 100 Rscript neuroc_covr.R ;
       rm neuroc_covr.R ;
     fi
