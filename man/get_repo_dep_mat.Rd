@@ -10,7 +10,8 @@ get_repo_dep_mat(repos, dep_type = c("Depends", "Imports", "Suggests"))
 
 install_order(dep_mat)
 
-get_repo_install_order(repos, dep_type = c("Depends", "Imports", "Suggests"))
+get_repo_install_order(repos, dep_type = c("Depends", "Imports",
+  "Suggests"))
 }
 \arguments{
 \item{repos}{Repositories to find the install order}

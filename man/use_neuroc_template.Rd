@@ -20,8 +20,8 @@ use_neuroc_appveyor_template(...)
 
 neuroc_key(ci = c("travis", "appveyor"), dev = FALSE, user = NULL)
 
-add_neuroc_keys(template_file, ci = c("travis", "appveyor"), dev = FALSE,
-  user = NULL)
+add_neuroc_keys(template_file, ci = c("travis", "appveyor"),
+  dev = FALSE, user = NULL)
 
 remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
   "neurocInstall"))

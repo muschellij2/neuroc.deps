@@ -4,8 +4,9 @@
 \alias{neuroc_desc}
 \title{Neuroc DESCRIPTION File}
 \usage{
-neuroc_desc(path = "DESCRIPTION", table_path = NULL, release = c("stable",
-  "current"), dev = FALSE, verbose = TRUE, user = NULL)
+neuroc_desc(path = "DESCRIPTION", table_path = NULL,
+  release = c("stable", "current"), dev = FALSE, verbose = TRUE,
+  user = NULL)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}

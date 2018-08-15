@@ -4,9 +4,10 @@
 \alias{neuroc_require_ants}
 \title{ANTsR Dependency}
 \usage{
-neuroc_require_ants(path = "DESCRIPTION", dev = FALSE, table_path = NULL,
-  release = c("stable", "current"), bin_packages = c("ITKR", "ANTsR",
-  "ANTsRCore"), verbose = TRUE, user = NULL)
+neuroc_require_ants(path = "DESCRIPTION", dev = FALSE,
+  table_path = NULL, release = c("stable", "current"),
+  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
+  user = NULL)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
