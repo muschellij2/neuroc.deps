@@ -47,7 +47,6 @@ before_install:
   - export rver=`r_version`;  
   - export PACKAGE_NAME=`package_name`  
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
-  # - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
   - remove_neuroc_packages
   - export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
   # does all the clang exports
