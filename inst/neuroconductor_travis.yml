@@ -94,6 +94,13 @@ before_deploy:
       mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
       echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
     fi   
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];
+    then 
+      PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1); 
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tar.gz/_'"R${rver}"'.tar.gz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+      echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
+    fi       
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then
       rm -f *.tar.gz;
