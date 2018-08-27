@@ -51,7 +51,7 @@ test_script:
   - set TMPDIR=C:/rtm
   # need to move to higher dir because CMake path req
   - if not exist "C:\run" mkdir C:\run
-  - cp -avr * C:\run
+  - cp -avr . C:\run
   # need the tool a level above
   - cp ../travis-tool.sh C:\
   - cd C:\run
@@ -75,7 +75,7 @@ test_script:
   - ls
   - ls ../
   # - cp ../*.zip ./
-  - cp -r C:/run/* %APPVEYOR_BUILD_FOLDER%
+  - cp -rav C:/run/. %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
   - for %%i in (*.zip) do echo %%~ni> zip_filename.txt
   - SET /P PKG_TARBALL=<zip_filename.txt
