@@ -8,9 +8,6 @@ bioc_required: true
 cran: http://cran.rstudio.com
 dist: trusty
 
-python:
-  - "3.6"
-
 os:
   - linux
   - osx

@@ -7,9 +7,6 @@ use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
 
-python:
-  - "3.6"
-
 addons:
   apt:
     packages:
