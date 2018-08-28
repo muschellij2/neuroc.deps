@@ -3,6 +3,7 @@
 
 # Download script file from GitHub
 init:
+  - "ECHO %PYTHON_VERSION% %MINICONDA%"  
   ps: |
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
@@ -13,8 +14,8 @@ environment:
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     WARNINGS_ARE_ERRORS: 1
-    PYTHON_VERSION: 3.6
-    MINICONDA: C:\Miniconda3-x64
+    PYTHON_VERSION: 2.7
+    MINICONDA: C:\Miniconda-x64
   matrix:
     - R_VERSION: devel
       R_VER: 3.6
@@ -42,7 +43,6 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - if exist "requirements.txt" conda update -q conda
   - if exist "requirements.txt" conda info -a
-  - conda install -h
   - if exist "requirements.txt" conda create -q -n test-environment python="%PYTHON_VERSION%" --file requirements.txt
 
 
