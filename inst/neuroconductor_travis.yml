@@ -7,6 +7,9 @@ use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
 
+python:
+  - "3.6"
+
 addons:
   apt:
     packages:
@@ -72,6 +75,7 @@ before_install:
       x=`Rscript -e "cat(Sys.which('R'))"` ;
       alias R="travis_wait 100 ${x}" ;
     fi
+  - install_python_requirements ;    
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:

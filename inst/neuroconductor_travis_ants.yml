@@ -8,6 +8,9 @@ bioc_required: true
 cran: http://cran.rstudio.com
 dist: trusty
 
+python:
+  - "3.6"
+
 os:
   - linux
   - osx
@@ -91,6 +94,7 @@ before_install:
   - cat DESCRIPTION
   - echo $PATH ;
   - install_deps_no_suggests
+  - install_python_requirements ;  
   - travis_run_cache 
 
 script:

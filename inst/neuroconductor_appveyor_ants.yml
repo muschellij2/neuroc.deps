@@ -13,6 +13,8 @@ environment:
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     WARNINGS_ARE_ERRORS: 1
+    PYTHON_VERSION: 3.6
+    MINICONDA: C:\Miniconda3-x64
   matrix:
     - R_VERSION: devel
       R_VER: 3.6
@@ -36,6 +38,11 @@ install:
   - ps: Bootstrap
   - ps: (new-object net.webclient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
   - cmd: C:\projects\JAGS-4.2.0.exe /S
+  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - conda config --set always_yes yes --set changeps1 no
+  - if exist "requirements.txt" conda update -q conda
+  - if exist "requirements.txt" conda info -a
+  - if exist "requirements.txt" "conda create -q -n test-environment python=%PYTHON_VERSION% -f requirements.txt"
 
 
 cache:
