@@ -14,8 +14,8 @@ environment:
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     WARNINGS_ARE_ERRORS: 1
-    PYTHON_VERSION: 2.7
-    MINICONDA: C:\Miniconda-x64
+    PYTHON_VERSION: 3.6
+    MINICONDA: C:\Miniconda3-x64
   matrix:
     - R_VERSION: devel
       R_VER: 3.6
