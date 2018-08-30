@@ -9,6 +9,10 @@ init:
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 
+platform:
+ - x86
+
+
 environment:
   global:
     USE_RTOOLS: true
@@ -16,6 +20,7 @@ environment:
     WARNINGS_ARE_ERRORS: 1
     PYTHON_VERSION: 3.6
     MINICONDA: C:\Miniconda3-x64
+    R_ARCH: x64
   matrix:
     - R_VERSION: devel
       R_VER: 3.6
@@ -74,20 +79,20 @@ build_script:
   # - Rscript -e "install.packages('ANTsR.zip', repos = NULL)"  
   # - rm ANTsR.zip  
   # setting PATH to be specific - no MinGW overall - just R's
-  - set PATH=C:\Rtools\bin;C:\Rtools\MinGW\bin;
-  - set PATH=%PATH%;C:\Rtools\mingw_64\bin;
-  - set PATH=%PATH%;C:\Program Files\Git\cmd;
-  - set PATH=%PATH%;"C:\Program Files (x86)\CMake\bin";
-  - set PATH=%PATH%;C:\R\bin\i386;  
-  - set PATH=%PATH%;C:\Program Files\Git\usr\bin  
-  - set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\npm
-  - set PATH=%PATH%;C:\Users\appveyor\AppData\Local\Yarn\bin
-  - set PATH=%PATH%;C:\Program Files\AppVeyor\BuildAgent\
-  - set PATH=%PATH%;C:\Windows\system32
-  - set PATH=%PATH%;C:\Windows
-  - set PATH=%PATH%;C:\Windows\System32\Wbem
-  - set PATH=%PATH%;C:\Windows\System32\WindowsPowerShell\v1.0\
-  - set PATH=%PATH%;C:\Program Files\7-Zip
+  # - set PATH=C:\Rtools\bin;C:\Rtools\MinGW\bin;
+  # - set PATH=%PATH%;C:\Rtools\mingw_64\bin;
+  # - set PATH=%PATH%;C:\Program Files\Git\cmd;
+  # - set PATH=%PATH%;"C:\Program Files (x86)\CMake\bin";
+  # - set PATH=%PATH%;C:\R\bin\x64;  
+  # - set PATH=%PATH%;C:\Program Files\Git\usr\bin  
+  # - set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\npm
+  # - set PATH=%PATH%;C:\Users\appveyor\AppData\Local\Yarn\bin
+  # - set PATH=%PATH%;C:\Program Files\AppVeyor\BuildAgent\
+  # - set PATH=%PATH%;C:\Windows\system32
+  # - set PATH=%PATH%;C:\Windows
+  # - set PATH=%PATH%;C:\Windows\System32\Wbem
+  # - set PATH=%PATH%;C:\Windows\System32\WindowsPowerShell\v1.0\
+  # - set PATH=%PATH%;C:\Program Files\7-Zip
   - RScript -e "install.packages('Rcpp', type = 'source', repos=c(CRAN='https://cran.rstudio.com'))"  
   - travis-tool.sh install_deps
 
