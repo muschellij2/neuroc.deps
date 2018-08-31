@@ -81,13 +81,13 @@ before_install:
     then
       echo "Installing Missing Deps ANTsRCore" ;
       install_missing_remote_deps ${ants_user}/ANTsRCore;
-      gh_binary_install ${ants_user}/ANTsRCore ;
+      gh_binary_install_passive ${ants_user}/ANTsRCore ;
     fi
   - if [[ "${PACKAGE_NAME}" != "ANTsRCore" && "${PACKAGE_NAME}" != "ITKR" ]]; 
     then
       echo "Installing Missing Deps ANTsR" ;
       install_missing_remote_deps ${ants_user}/ANTsR ;
-      gh_binary_install ${ants_user}/ANTsR ;
+      gh_binary_install_passive ${ants_user}/ANTsR ;
     fi    
   - if [[ "${PACKAGE_NAME}" == "ANTsR" ]]; 
     then 
