@@ -99,7 +99,7 @@ build_script:
 test_script:
   - travis-tool.sh run_tests
   - ls
-  - cp -avr C:/run/ %APPVEYOR_BUILD_FOLDER%
+  - cp -avr C:/run %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
   - ls
   - for %%i in (*.zip) do echo %%~ni> zip_filename.txt
