@@ -89,7 +89,7 @@ test_script:
   - ls
   - ls ../
   # - cp ../*.zip ./
-  - cp -rav C:/run %APPVEYOR_BUILD_FOLDER%
+  - cp -ravTf C:/run %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
   - for %%i in (*.zip) do echo %%~ni> zip_filename.txt
   - SET /P PKG_TARBALL=<zip_filename.txt
