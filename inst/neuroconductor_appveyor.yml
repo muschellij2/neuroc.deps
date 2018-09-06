@@ -64,7 +64,7 @@ test_script:
   - set TMPDIR=C:/rtm
   # need to move to higher dir because CMake path req
   - if not exist "C:\run" mkdir C:\run
-  - cp -avr . C:\run
+  - cp -avrTf . C:\run
   # need the tool a level above
   - cp ../travis-tool.sh C:\
   - cd C:\run
