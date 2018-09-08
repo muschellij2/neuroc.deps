@@ -101,6 +101,9 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
+after_test:
+- 7z a testthat.zip *.Rcheck\**\*.Rout
+
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
@@ -111,7 +114,7 @@ artifacts:
   - path: '*.Rcheck\**\*.fail'
     name: Logs
 
-  - path: '*.Rcheck\**\*.Rout'
+  - path: testthat.zip
     name: Logs
 
   - path: '\*_*_*.zip'
