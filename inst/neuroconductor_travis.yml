@@ -40,7 +40,6 @@ r_check_args: --as-cran --install-args=--build
 # r_check_args: "--as-cran --install-args=--build"
 
 before_install:
-  - curl https://bootstrap.pypa.io/get-pip.py | sudo python
   - ulimit -n 2048
   - export PROJ_DIR=`basename $PWD`    
   - fname=travis_helpers.sh

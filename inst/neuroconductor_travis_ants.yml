@@ -42,7 +42,6 @@ env:
   - DISPLAY=:99.0
 
 before_install:
-  - curl https://bootstrap.pypa.io/get-pip.py | sudo python
   - ulimit -n 2048  
   - export LD_LIBRARY_PATH=/usr/local/clang/lib:${LD_LIBRARY_PATH}
   - export PROJ_DIR=`basename $PWD`
