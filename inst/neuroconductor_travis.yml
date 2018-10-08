@@ -47,7 +47,7 @@ before_install:
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - start_xvfb ;
-  - export rver=`r_version`;
+  - export rver=`r_version`; echo $rver ;
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ; 

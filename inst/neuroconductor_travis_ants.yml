@@ -51,7 +51,7 @@ before_install:
   - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - start_xvfb ;  
-  - export rver=`r_version`;  
+  - export rver=`r_version`; echo $rver ;
   - export PACKAGE_NAME=`package_name`  
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
   - remove_neuroc_packages
