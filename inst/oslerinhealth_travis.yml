@@ -6,6 +6,7 @@ warnings_are_errors: true
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
+dist: trusty
 
 addons:
   apt:
@@ -15,39 +16,52 @@ addons:
     - libgsl0ldbl
     - jags
 
-
 os:
   - linux
   - osx
-osx_image: xcode9 
-dist: trusty
+osx_image: xcode9
+
+r:
+- 3.2
+- 3.3
+- 3.4
+- release
+- devel
+
+matrix:
+  allow_failures:
+    - r: devel
 
 env:
-  global: 
+  global:
     - RGL_USE_NULL=TRUE
-    - PROJECT_NAME=osler
+    - PROJECT_NAME=oslerinhealth
     - DISPLAY=:99.0
-r_check_args: --as-cran
-# r_check_args: "--as-cran --install-args=--build"
+r_check_args: --as-cran --install-args=--build
 
 before_install:
-  - export PROJ_DIR=`basename $PWD`    
+  - ulimit -n 2048
+  - export PROJ_DIR=`basename $PWD`
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
-  - cat ${fname}; source ${fname}; rm ${fname}  
+  - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
   - start_xvfb ;
+  - export rver=`r_version`; echo $rver ;
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
-      no_open_mp ; 
-    fi  
-  - jags_install  
-  - remove_neuroc_packages 
+      no_open_mp ;
+    fi
+  - jags_install
+  - remove_neuroc_packages
   - cat DESCRIPTION
-  - install_deps "'Suggests'"
   - install_remotes_no_dep
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
+  - echo "Package Name is $PACKAGE_NAME"
+  - install_python_requirements ;
+  # - ralias; R -e "cat('test')"; ls travis_*.log
+
 
 after_success:
   - cat ${PACKAGE_NAME}.Rcheck/00install.out
@@ -60,8 +74,22 @@ after_failure:
 # need this explicitly
 # for naming convention
 before_deploy:
-  - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
+  # - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
   # so no overwrite of linux build
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then
+      PKG_TARBALL=$(ls -1t *.tgz | head -n 1);
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+      echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
+    fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];
+    then
+      PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1);
+      PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tar.gz/_'"R${rver}"'.tar.gz/'` ;
+      mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
+      echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
+    fi
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then
       rm -f *.tar.gz;
@@ -78,9 +106,12 @@ deploy:
     tags: true
 
 after_deploy:
-  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
+  # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" ]];
     then
-      Rscript -e 'covr::coveralls(type = "all")' ;
+      echo 'covr::coveralls(type = "all", quiet = FALSE)' > osler_covr.R ;
+      travis_wait 100 Rscript osler_covr.R ;
+      rm osler_covr.R ;
     fi
 
 
