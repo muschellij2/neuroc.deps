@@ -18,6 +18,7 @@
 #' https://goo.gl/x7rcCD
 #'
 #' @importFrom desc description
+#' @importFrom tools toTitleCase
 neuroc_desc = function(
   path = "DESCRIPTION",
   table_path = NULL,
@@ -143,6 +144,9 @@ neuroc_desc = function(
 
   }
 
+  desc$del("Repository")
+  repository = tools::toTitleCase(user)
+  desc$set(Repository = repository)
 
   # Look at ANTsR
   deps = desc$get_deps()
