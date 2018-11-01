@@ -109,9 +109,10 @@ test_script:
   - echo Built tarball is %PKG_TARBALL%_R%R_VER%.zip
 
 on_failure:
-  - cat *.Rcheck/00install.out    
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
+  - cat *.Rcheck\**\*.out
+  - cat *.Rcheck\**\*.log    
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
