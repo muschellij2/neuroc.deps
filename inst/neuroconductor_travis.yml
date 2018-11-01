@@ -75,6 +75,7 @@ before_install:
       alias R="travis_wait 100 ${x}" ;
     fi
   - install_python_requirements ;    
+  - R CMD javareconf ;  
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:

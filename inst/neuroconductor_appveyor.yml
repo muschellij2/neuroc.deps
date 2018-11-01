@@ -10,13 +10,14 @@ init:
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 
-platform:
- - x86
+platform: x64
+
 
 environment:
   global:
     USE_RTOOLS: true
-    R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
+    # R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
+    R_CHECK_ARGS: "--no-multiarch "
     WARNINGS_ARE_ERRORS: 1
     PYTHON_VERSION: 3.6
     MINICONDA: C:\Miniconda3-x64
@@ -56,7 +57,6 @@ cache:
 
 # Adapt as necessary starting from here
 build_script:
-  - travis-tool.sh install_deps
   - travis-tool.sh install_deps
 
 test_script:

@@ -98,7 +98,8 @@ before_install:
   - cat DESCRIPTION
   - echo $PATH ;
   - install_deps_no_suggests
-  - install_python_requirements ;  
+  - install_python_requirements ; 
+  - R CMD javareconf ;   
   - travis_run_cache 
 
 script:
