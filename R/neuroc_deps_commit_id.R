@@ -20,5 +20,7 @@ neuroc_deps_commit_id = function() {
   ss = ss[ grepl("@", ss)]
   ss = strsplit(ss, "@")[[1]]
   ss = ss[length(ss)]
+  ss = sub(")", "", ss, fixed = TRUE)
+  ss = trimws(ss)
   return(ss)
 }
