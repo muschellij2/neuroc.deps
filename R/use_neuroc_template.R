@@ -145,6 +145,12 @@ use_neuroc_template = function(
       # End Merging CI fields
       ############################
     }
+    n_commit_id = neuroc_deps_commit_id()
+    if (!is.na(n_commit_id)) {
+      template = c(template, "",
+                   paste0("# neuroc.deps commit id:",
+                          n_commit_id))
+    }
     writeLines(text = template, con = outfile)
     outfiles[ici] = outfile
   }
