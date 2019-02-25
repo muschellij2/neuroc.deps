@@ -27,7 +27,7 @@ neuroc_table_path = function(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
       "neuroconductor-devel" = "http://neuroconductor.org:8080/neurocPackages",
-      oslerinhealth = "http://oslerinhealth.org/oslerPackages"
+      oslerinhealth = "https://oslerinhealth.org/oslerPackages"
     )
     if (dev) {
       table_path = sub("https://", "http://", table_path)
