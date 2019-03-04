@@ -1,6 +1,5 @@
 # OslerInHealth Template for ANTsR Dep
 language: r
-sudo: false
 cache: packages
 warnings_are_errors: true
 use_bioc: true
