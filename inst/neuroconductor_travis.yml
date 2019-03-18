@@ -53,6 +53,7 @@ before_install:
     fi
   - jags_install ;  
   - v8_install ;
+  - dcmtk_install ;
   - remove_neuroc_packages 
   - cat DESCRIPTION
   - install_remotes_no_dep
