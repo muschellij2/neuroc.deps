@@ -35,6 +35,7 @@ env:
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=neuroconductor
     - DISPLAY=:99.0
+    - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
 r_check_args: --as-cran --install-args=--build
 # r_check_args: "--as-cran --install-args=--build"
 
