@@ -14,6 +14,7 @@ platform: x64
 
 environment:
   global:
+    NOT_CRAN: true    
     USE_RTOOLS: true
     # R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     R_CHECK_ARGS: "--no-multiarch --no-manual "

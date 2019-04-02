@@ -81,12 +81,10 @@ before_install:
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:
-  - cat ${PACKAGE_NAME}.Rcheck/00install.out
-  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+  - dump_logs
 
 after_failure:
-  - cat ${PACKAGE_NAME}.Rcheck/00install.out
-  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+  - dump_logs
 
 # need this explicitly
 # for naming convention
