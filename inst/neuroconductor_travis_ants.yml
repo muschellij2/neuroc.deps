@@ -78,6 +78,7 @@ before_install:
   - if [[ "${PACKAGE_NAME}" == "ITKR" || "${PACKAGE_NAME}" == "ANTsRCore" || "${PACKAGE_NAME}" == "ANTsR" ]];   
     then
       export R_BUILD_ARGS="${R_BUILD_ARGS} --no-build-vignettes " ;
+      export R_CHECK_ARGS="--no-vignettes ${R_CHECK_ARGS}" ;
     fi
   - if [[ "${PACKAGE_NAME}" != "ITKR" ]]; 
     then
