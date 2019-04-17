@@ -7,6 +7,11 @@ os:
   - linux
   # - osx
 
+r: 
+  - release
+  - 3.2
+  - 3.3 
+
 before_install:
   - wget -O travis_helpers.sh http://bit.ly/travis_helpers
   - source travis_helpers.sh
