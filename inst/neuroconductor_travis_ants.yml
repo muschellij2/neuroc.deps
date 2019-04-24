@@ -77,7 +77,7 @@ before_install:
   - gh_binary_install ${ants_user}/ITKR ;
   - if [[ "${PACKAGE_NAME}" == "ITKR" || "${PACKAGE_NAME}" == "ANTsRCore" || "${PACKAGE_NAME}" == "ANTsR" ]];   
     then
-      Rscript -e "install.packages(c('Rcpp', 'RcppEigen'), type = 'source', repo = 'http://cran.rstudio.com')"
+      Rscript -e "install.packages(c('Rcpp', 'RcppEigen'), type = 'source', repo = 'http://cran.rstudio.com')" ;
     fi
   - if [[ "${PACKAGE_NAME}" == "ITKR" || "${PACKAGE_NAME}" == "ANTsRCore" ]];   
     then

@@ -72,7 +72,7 @@ before_install:
   - echo "Installing Missing Deps ITKR"
   - install_missing_remote_deps ${ants_user}/ITKR
   - gh_binary_install ${ants_user}/ITKR ;
-  - if [[ "${PACKAGE_NAME}" == "ITKR" || "${PACKAGE_NAME}" == "ANTsRCore" || "${PACKAGE_NAME}" == "ANTsR" ]];
+  - if [[ "${PACKAGE_NAME}" == "ITKR" || "${PACKAGE_NAME}" == "ANTsRCore" ]];
     then
       export R_BUILD_ARGS="${R_BUILD_ARGS} --no-build-vignettes " ;
     fi
