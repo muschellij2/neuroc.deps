@@ -20,9 +20,9 @@ os:
 osx_image: xcode9 
 
 r:
-- 3.2
 - 3.3
 - 3.4
+- 3.5
 - release
 - devel
 
@@ -116,6 +116,7 @@ deploy:
   api_key:
     secure: "${NEUROCKEY}"
   file_glob: true
+  overwrite: true 
   file: ${PACKAGE_NAME}*.t*gz
   on:
     tags: true
