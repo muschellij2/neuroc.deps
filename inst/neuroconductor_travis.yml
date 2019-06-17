@@ -10,6 +10,8 @@ dist: trusty
 addons:
   apt:
     packages:
+    - libcurl4-openssl-dev
+    - libxml2-dev       
     - libfftw3-dev
     - libgsl0-dev
     - libgsl0ldbl
@@ -65,7 +67,7 @@ before_install:
     then
       fftw_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "dti" ]]; 
+  - if [[ "${PACKAGE_NAME}" == "dti" || "${PACKAGE_NAME}" == "qMRI" ]]; 
     then
       gsl_install ;
     fi
