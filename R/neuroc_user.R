@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' neuroc_user(user = "neuroconductor")
-#' neuroc_user(user = "neuroconductor-releases")
+#' neuroc_user(user = "neuroconductor-releases", deployment = TRUE)
 #' neuroc_user(user = "neuroconductor-devel", dev = TRUE)
 #' neuroc_user(user = "neuroconductor-devel-releases", dev = TRUE,
 #' deployment = TRUE)

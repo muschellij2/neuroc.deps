@@ -4,7 +4,7 @@
 \alias{set_env_package_name}
 \title{Set PACKAGE_NAME Environment Variable}
 \usage{
-set_env_package_name(x, dev = FALSE, user = NULL)
+set_env_package_name(x, dev = FALSE, user = NULL, deployment = FALSE)
 }
 \arguments{
 \item{x}{character of vector}
@@ -12,9 +12,12 @@ set_env_package_name(x, dev = FALSE, user = NULL)
 \item{dev}{Development Site vs. not?}
 
 \item{user}{User for the repositories}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 }
 \value{
-Chnage the PROJECT_NAME to the user
+Change the PROJECT_NAME to the user
 }
 \description{
 Set PACKAGE_NAME Environment Variable
