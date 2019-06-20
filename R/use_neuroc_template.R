@@ -13,6 +13,8 @@
 #' @param merge_ci Should CI fields be merged?  If so,
 #' \code{\link{extract_ci_fields}} is called to grab the relevant fields.
 #' Fields cannot currently be a list
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment.
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -28,6 +30,7 @@ use_neuroc_template = function(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
+  deployment = FALSE,
   merge_ci = FALSE,
   ...) {
 
@@ -41,12 +44,13 @@ use_neuroc_template = function(
     setwd(owd)
   })
   setwd(pkg_directory)
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
 
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,
-    user = user)
+    user = user,
+    deployment = deployment)
 
   if (grepl("^http", table_path)) {
     if (verbose) {
@@ -67,7 +71,8 @@ use_neuroc_template = function(
     release = release,
     dev = dev,
     verbose = verbose,
-    user = user)
+    user = user,
+    deployment = deployment)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   ####################
@@ -92,7 +97,8 @@ use_neuroc_template = function(
     release = release,
     bin_packages = bin_packages,
     verbose = verbose,
-    user = user)
+    user = user,
+    deployment = deployment)
 
   if (verbose) {
     message(paste0("Writing CI files")
@@ -107,16 +113,19 @@ use_neuroc_template = function(
       ci = ici,
       ants = ants,
       user = user,
-      dev = dev)
+      dev = dev,
+      deployment = deployment)
     template = add_neuroc_keys(
       template_file,
       ci = ici,
       dev = dev,
-      user = user)
+      user = user,
+      deployment = deployment)
     template = set_env_package_name(
       template,
       dev = dev,
-      user = user)
+      user = user,
+      deployment = deployment)
     outfile = switch(
       ici,
       travis = ".travis.yml",
@@ -174,7 +183,9 @@ use_neuroc_appveyor_template = function(...){
 neuroc_key = function(
   ci = c("travis", "appveyor"),
   dev = FALSE,
-  user = NULL) {
+  release = FALSE,
+  user = NULL,
+  deployment = FALSE) {
 
   ci = match.arg(ci)
   outdev = ""
@@ -183,11 +194,15 @@ neuroc_key = function(
   }
   user = neuroc_user(
     user = user,
-    dev = dev)
+    dev = dev,
+    deployment = deployment)
   prefix = switch(
     user,
     neuroconductor = "NEUROC",
     "neuroconductor-devel" = "NEUROC",
+    "neuroconductor-devel-releases" = "NEUROC",
+    "neuroconductor-releases" = "NEUROC",
+    "oslerinhealth-releases" = "OSLER",
     oslerinhealth = "OSLER")
   key_val = paste0(prefix, "_", outdev, toupper(ci), "_KEY")
   key = Sys.getenv(key_val)
@@ -205,14 +220,16 @@ add_neuroc_keys = function(
   template_file,
   ci = c("travis", "appveyor"),
   dev = FALSE,
-  user = NULL) {
+  user = NULL,
+  deployment = FALSE) {
 
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
 
   key = neuroc_key(
     ci = ci,
     dev = dev,
-    user = user
+    user = user,
+    deployment = deployment
   )
 
   tfile = tempfile()

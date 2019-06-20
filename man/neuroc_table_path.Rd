@@ -4,7 +4,8 @@
 \alias{neuroc_table_path}
 \title{Path to Neuroconductor Remote Commits}
 \usage{
-neuroc_table_path(table_path = NULL, dev = FALSE, user = NULL)
+neuroc_table_path(table_path = NULL, dev = FALSE, user = NULL,
+  deployment = FALSE)
 }
 \arguments{
 \item{table_path}{Path to the table.  If unspecified, uses defaults}
@@ -12,6 +13,9 @@ neuroc_table_path(table_path = NULL, dev = FALSE, user = NULL)
 \item{dev}{Whether development should be used or not}
 
 \item{user}{User for the repositories}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 }
 \value{
 Character Vector

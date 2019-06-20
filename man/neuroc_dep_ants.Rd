@@ -6,7 +6,7 @@
 \usage{
 neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), table_path = NULL,
-  user = NULL)
+  deployment = FALSE, user = NULL)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -16,6 +16,9 @@ neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
 \item{bin_packages}{Packages that require binaries}
 
 \item{table_path}{path to table of packages}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 
 \item{user}{GitHub username for repos}
 }

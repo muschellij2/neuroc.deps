@@ -6,7 +6,7 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION", table_path = NULL,
   release = c("stable", "current"), dev = FALSE, verbose = TRUE,
-  user = NULL)
+  user = NULL, deployment = FALSE)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -20,6 +20,9 @@ neuroc_desc(path = "DESCRIPTION", table_path = NULL,
 \item{verbose}{print diagnostic messages}
 
 \item{user}{GitHub username for repos}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 }
 \value{
 Path to new DESCRIPTION file

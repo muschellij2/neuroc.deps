@@ -12,16 +12,17 @@
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
-  user = NULL, merge_ci = FALSE, ...)
+  user = NULL, deployment = FALSE, merge_ci = FALSE, ...)
 
 use_neuroc_travis_template(...)
 
 use_neuroc_appveyor_template(...)
 
-neuroc_key(ci = c("travis", "appveyor"), dev = FALSE, user = NULL)
+neuroc_key(ci = c("travis", "appveyor"), dev = FALSE,
+  release = FALSE, user = NULL, deployment = FALSE)
 
 add_neuroc_keys(template_file, ci = c("travis", "appveyor"),
-  dev = FALSE, user = NULL)
+  dev = FALSE, user = NULL, deployment = FALSE)
 
 remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
   "neurocInstall"))
@@ -42,6 +43,9 @@ remove_neuroc_packages(..., keep_packs = c("neuroc.deps", "ghtravis",
 \item{verbose}{print diagnostic messages}
 
 \item{user}{User for the repositories}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 
 \item{merge_ci}{Should CI fields be merged?  If so,
 \code{\link{extract_ci_fields}} is called to grab the relevant fields.

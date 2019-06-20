@@ -7,7 +7,7 @@
 neuroc_require_ants(path = "DESCRIPTION", dev = FALSE,
   table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
-  user = NULL)
+  user = NULL, deployment = FALSE)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -23,6 +23,9 @@ neuroc_require_ants(path = "DESCRIPTION", dev = FALSE,
 \item{verbose}{print diagnostic messages}
 
 \item{user}{GitHub username for repos}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 }
 \description{
 Returns a logical if binary packages are necessary

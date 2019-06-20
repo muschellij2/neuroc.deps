@@ -6,7 +6,8 @@
 #' @param dev Development Site vs. not?
 #' @param verbose print diagnostic messages
 #' @param user GitHub username for repos
-#'
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment.
 #' @return Path to new DESCRIPTION file
 #' @export
 #' @details
@@ -25,7 +26,8 @@ neuroc_desc = function(
   release = c("stable", "current"),
   dev = FALSE,
   verbose = TRUE,
-  user = NULL
+  user = NULL,
+  deployment = FALSE
 ){
 
   release = match.arg(release)
@@ -37,15 +39,16 @@ neuroc_desc = function(
     msg = paste0("Getting Installation Order")
     message(msg)
   }
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
 
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,
-    user = user)
+    user = user,
+    deployment = deployment)
   ord = neuroc_install_order(
     table_path = table_path, release = release,
-    dev = dev, user = user)
+    dev = dev, user = user, deployment = deployment)
   ord_packs = ord$install_order
 
 

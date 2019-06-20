@@ -40,6 +40,7 @@
 neuroc_sha_check = function(
   release = c("stable", "current"),
   dev = FALSE,
+  deployment = FALSE,
   table_path = NULL,
   user = NULL,
   drop_packages = NULL,
@@ -51,10 +52,11 @@ neuroc_sha_check = function(
   #############################
   release = match.arg(release)
 
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
   table_path = neuroc_table_path(
     table_path = table_path,
-    dev = dev, user = user)
+    dev = dev, user = user,
+    deployment = deployment)
 
 
   neuro_deps = neurocInstall::neuro_package_table(path = table_path, long = TRUE)

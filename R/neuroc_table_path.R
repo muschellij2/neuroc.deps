@@ -5,6 +5,8 @@
 #' @param table_path Path to the table.  If unspecified, uses defaults
 #' @param dev Whether development should be used or not
 #' @param user User for the repositories
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment.
 #'
 #' @return Character Vector
 #' @export
@@ -19,15 +21,19 @@
 neuroc_table_path = function(
   table_path = NULL,
   dev = FALSE,
-  user = NULL) {
+  user = NULL,
+  deployment = FALSE) {
 
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
   if (is.null(table_path)) {
     table_path = switch(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
       "neuroconductor-devel" = "http://neuroconductor.org:8080/neurocPackages",
-      oslerinhealth = "https://oslerinhealth.org/oslerPackages"
+      "neuroconductor-devel-releases" = "http://neuroconductor.org:8080/neurocReleasePackages",
+      "neuroconductor-releases" = "https://neuroconductor.org/neurocReleasePackages",
+      oslerinhealth = "https://oslerinhealth.org/oslerPackages",
+      "oslerinhealth-releases" = "https://oslerinhealth.org/oslerReleasePackages"
     )
     if (dev) {
       table_path = sub("https://", "http://", table_path)

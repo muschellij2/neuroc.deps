@@ -4,12 +4,15 @@
 \alias{neuroc_user}
 \title{Neuroconductor GitHub Username}
 \usage{
-neuroc_user(user = NULL, dev = FALSE)
+neuroc_user(user = NULL, dev = FALSE, deployment = FALSE)
 }
 \arguments{
 \item{user}{GitHub username}
 
 \item{dev}{Whether development should be used or not}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 }
 \value{
 Character Vector of username
@@ -20,7 +23,10 @@ OSLER)
 }
 \examples{
 neuroc_user(user = "neuroconductor")
+neuroc_user(user = "neuroconductor-releases")
 neuroc_user(user = "neuroconductor-devel", dev = TRUE)
+neuroc_user(user = "neuroconductor-devel-releases", dev = TRUE,
+deployment = TRUE)
 neuroc_user(dev = TRUE)
 neuroc_user(user = "oslerinhealth")
 neuroc_user(user = "oslerinhealth", dev = TRUE)

@@ -6,6 +6,8 @@
 #' @param dev Development version or not?
 #' @param table_path path to table of packages
 #' @param user GitHub username for repos
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment
 #' @export
 #'
 #' @examples \dontrun{
@@ -15,6 +17,7 @@
 neuroc_install_order = function(
   release = c("stable", "current"),
   dev = FALSE,
+  deployment = FALSE,
   table_path = NULL,
   user = NULL
 ){
@@ -23,7 +26,8 @@ neuroc_install_order = function(
     release = release,
     dev = dev,
     table_path = table_path,
-    user = user)
+    user = user,
+    deployment = deployment)
   repos = names(colnames(dep_mat))
   install_ord = install_order(dep_mat)
   L = list(install_order_list = install_ord,
@@ -39,16 +43,18 @@ neuroc_dep_mat = function(
   release = c("stable", "current"),
   dev = FALSE,
   table_path = NULL,
+  deployment = FALSE,
   user = NULL) {
   #############################
   # Match release
   #############################
   release = match.arg(release)
 
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
   table_path = neuroc_table_path(
     table_path = table_path,
-    dev = dev, user = user)
+    dev = dev, user = user,
+    deployment = deployment)
 
 
   neuro_deps = neuro_package_table(path = table_path, long = TRUE)

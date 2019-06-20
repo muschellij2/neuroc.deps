@@ -7,7 +7,7 @@
 \title{Neuroconductor CI Template Paths}
 \usage{
 neuroc_ci_template_path(ci = c("travis", "appveyor"), ants = FALSE,
-  dev = FALSE, user = NULL)
+  dev = FALSE, user = NULL, deployment = FALSE)
 
 neuroc_travis_template_path(...)
 
@@ -21,6 +21,9 @@ neuroc_appveyor_template_path(...)
 \item{dev}{Development Site vs. not?}
 
 \item{user}{GitHub username for repos}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment.}
 
 \item{...}{not used}
 }

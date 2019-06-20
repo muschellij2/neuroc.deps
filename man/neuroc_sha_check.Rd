@@ -5,13 +5,16 @@
 \title{Check SHA consistency of the system}
 \usage{
 neuroc_sha_check(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL, user = NULL, drop_packages = NULL,
-  verbose = FALSE)
+  deployment = FALSE, table_path = NULL, user = NULL,
+  drop_packages = NULL, verbose = FALSE)
 }
 \arguments{
 \item{release}{Stable or development version}
 
 \item{dev}{Development version or not?}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment}
 
 \item{table_path}{path to table of packages}
 

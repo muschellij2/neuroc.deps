@@ -6,15 +6,18 @@
 \title{Neuroconductor Package Install Order}
 \usage{
 neuroc_install_order(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL, user = NULL)
+  deployment = FALSE, table_path = NULL, user = NULL)
 
 neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL, user = NULL)
+  table_path = NULL, deployment = FALSE, user = NULL)
 }
 \arguments{
 \item{release}{Stable or development version}
 
 \item{dev}{Development version or not?}
+
+\item{deployment}{indicator if this is a release, not standard running.
+Just deployment}
 
 \item{table_path}{path to table of packages}
 

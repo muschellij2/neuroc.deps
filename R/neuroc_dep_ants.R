@@ -7,7 +7,8 @@
 #' @param bin_packages Packages that require binaries
 #' @param table_path path to table of packages
 #' @param user GitHub username for repos
-#'
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment.
 #' @export
 #'
 #' @examples \dontrun{
@@ -18,6 +19,7 @@ neuroc_dep_ants = function(
   dev = FALSE,
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   table_path = NULL,
+  deployment = FALSE,
   user = NULL
 ){
 
@@ -25,7 +27,8 @@ neuroc_dep_ants = function(
     release = release,
     dev = dev,
     table_path = table_path,
-    user = user)
+    user = user,
+    deployment = deployment)
 
   get_a_dep = function(packs) {
     if (is.null(packs)) {

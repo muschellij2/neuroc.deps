@@ -4,6 +4,8 @@
 #' @param ants Does the package depend on ANTs or ANTsR
 #' @param user GitHub username for repos
 #' @param dev Development Site vs. not?
+#' @param deployment indicator if this is a release, not standard running.
+#' Just deployment.
 #' @param ... not used
 #'
 #' @return File path of YAML file
@@ -21,14 +23,19 @@ neuroc_ci_template_path = function(
   ci = c("travis", "appveyor"),
   ants = FALSE,
   dev = FALSE,
-  user = NULL) {
+  user = NULL,
+  deployment = FALSE
+    ) {
   ci = match.arg(ci)
 
-  user = neuroc_user(user = user, dev = dev)
+  user = neuroc_user(user = user, dev = dev, deployment = deployment)
   user = switch(user,
     "neuroconductor" = "neuroconductor",
     "neuroconductor-devel" = "neuroconductor",
-    "oslerinhealth" = "oslerinhealth"
+    "neuroconductor-releases" = "neuroconductor",
+    "neuroconductor-devel-releases" = "neuroconductor",
+    "oslerinhealth" = "oslerinhealth",
+    "oslerinhealth-releases" = "oslerinhealth"
   )
 
   file = paste0(user, "_", ci, ifelse(ants, "_ants", ""), ".yml")
