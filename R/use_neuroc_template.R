@@ -192,6 +192,9 @@ neuroc_key = function(
   if (dev) {
     outdev = "DEVEL_"
   }
+  if (deployment) {
+    outdev = paste0(outdev,"RELEASE_")
+  }
   user = neuroc_user(
     user = user,
     dev = dev,
