@@ -162,7 +162,8 @@ deploy:
     tags: true
 
 after_deploy:
-  - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" ]];
+  - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi; 
+  - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" && -z "${run_coverage}" ]];   
     then
       if [[ "${TRAVIS_R_VERSION_STRING}" = "release" ]]; then
         Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)' ;
