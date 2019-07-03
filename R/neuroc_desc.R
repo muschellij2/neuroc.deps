@@ -74,8 +74,10 @@ neuroc_desc = function(
   if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(
       user, "/",
-      all_neuro_deps$repo,
-      "@", all_neuro_deps$commit)
+      all_neuro_deps$repo)
+    run = !is.na(all_neuro_deps$commit) & all_neuro_deps$commit != ""
+    all_neuro_deps$remote[run] = paste0(all_neuro_deps$remote[run],
+                                        "@", all_neuro_deps$commit[run])
   }
 
   #############################################
