@@ -181,10 +181,12 @@ neuroc_desc = function(
       msg = paste0("Writing Neuroc Remotes")
       message(msg)
     }
+    ## added for missing remotes
+    run = !is.na(neuro_deps$commit) & neuro_deps$commit != ""
     add_remotes = paste0(user, "/",
-                         neuro_deps$repo,
-                         "@", neuro_deps$commit
-    )
+                         neuro_deps$repo)
+    add_remotes[run] =  paste0(add_remotes[run],
+                               "@", neuro_deps$commit[run])
     remotes = c(remotes, add_remotes)
   }
   # Fixes Github issue #82
