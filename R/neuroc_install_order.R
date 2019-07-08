@@ -57,12 +57,20 @@ neuroc_dep_mat = function(
     deployment = deployment)
 
 
-  neuro_deps = neuro_package_table(path = table_path, long = TRUE)
+  args = list(path = table_path, long = TRUE)
+  if ("deployment" %in% methods::formalArgs(neuro_package_table)) {
+    args$deployment = deployment
+  }
+  neuro_deps = do.call(neuro_package_table, args = args)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
   if (nrow(all_neuro_deps) > 0) {
-    all_neuro_deps$remote = paste0(user, "/",
-                                   all_neuro_deps$repo,
-                                   "@", all_neuro_deps$commit)
+    all_neuro_deps$remote = paste0(
+      user, "/",
+      all_neuro_deps$repo)
+    run = !is.na(all_neuro_deps$commit) & all_neuro_deps$commit != ""
+    all_neuro_deps$remote[run] = paste0(
+      all_neuro_deps$remote[run],
+      "@", all_neuro_deps$commit[run])
     repos = all_neuro_deps$remote
     dep_mat = get_repo_dep_mat(repos)
   } else {

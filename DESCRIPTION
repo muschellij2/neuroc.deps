@@ -1,7 +1,7 @@
 Package: neuroc.deps
 Type: Package
 Title: Parses Dependencies for GitHub Packges
-Version: 0.16.1
+Version: 0.16.2
 Author: John Muschelli
 Maintainer: John Muschelli <muschellij2@gmail.com>
 Description: Uses functions to interface with 'GitHub' to 
@@ -19,7 +19,8 @@ Imports:
     neurocInstall (>= 0.7.1),
     sessioninfo,
     yaml,
-    tools
+    tools,
+    methods
 Remotes: 
     muschellij2/ghtravis, 
     r-lib/gh, 
