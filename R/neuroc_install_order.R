@@ -8,6 +8,8 @@
 #' @param user GitHub username for repos
 #' @param deployment indicator if this is a release, not standard running.
 #' Just deployment
+#' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
+#' Passed to \code{\link{get_repo_dep_mat}}.
 #' @export
 #'
 #' @examples \dontrun{
@@ -19,7 +21,8 @@ neuroc_install_order = function(
   dev = FALSE,
   deployment = FALSE,
   table_path = NULL,
-  user = NULL
+  user = NULL,
+  force = FALSE
 ){
 
   dep_mat = neuroc_dep_mat(
@@ -27,7 +30,8 @@ neuroc_install_order = function(
     dev = dev,
     table_path = table_path,
     user = user,
-    deployment = deployment)
+    deployment = deployment,
+    force = force)
   repos = names(colnames(dep_mat))
   install_ord = install_order(dep_mat)
   L = list(install_order_list = install_ord,
@@ -44,7 +48,8 @@ neuroc_dep_mat = function(
   dev = FALSE,
   table_path = NULL,
   deployment = FALSE,
-  user = NULL) {
+  user = NULL,
+  force = FALSE) {
   #############################
   # Match release
   #############################
@@ -58,10 +63,11 @@ neuroc_dep_mat = function(
 
 
   args = list(path = table_path, long = TRUE)
-  if ("deployment" %in% methods::formalArgs(neuro_package_table)) {
+  if ("deployment" %in%
+      methods::formalArgs(neurocInstall::neuro_package_table)) {
     args$deployment = deployment
   }
-  neuro_deps = do.call(neuro_package_table, args = args)
+  neuro_deps = do.call(neurocInstall::neuro_package_table, args = args)
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
   if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(
@@ -72,7 +78,7 @@ neuroc_dep_mat = function(
       all_neuro_deps$remote[run],
       "@", all_neuro_deps$commit[run])
     repos = all_neuro_deps$remote
-    dep_mat = get_repo_dep_mat(repos)
+    dep_mat = get_repo_dep_mat(repos, force = force)
   } else {
     dep_mat = matrix(NA, nrow = 0, ncol = 0)
   }

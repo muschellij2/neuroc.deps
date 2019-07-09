@@ -6,10 +6,12 @@
 \title{Neuroconductor Package Install Order}
 \usage{
 neuroc_install_order(release = c("stable", "current"), dev = FALSE,
-  deployment = FALSE, table_path = NULL, user = NULL)
+  deployment = FALSE, table_path = NULL, user = NULL,
+  force = FALSE)
 
 neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL, deployment = FALSE, user = NULL)
+  table_path = NULL, deployment = FALSE, user = NULL,
+  force = FALSE)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -22,6 +24,9 @@ Just deployment}
 \item{table_path}{path to table of packages}
 
 \item{user}{GitHub username for repos}
+
+\item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
+Passed to \code{\link{get_repo_dep_mat}}.}
 }
 \value{
 \code{list} of package install order, the dependency matrix,

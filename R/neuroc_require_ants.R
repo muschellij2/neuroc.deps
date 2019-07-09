@@ -12,8 +12,9 @@ neuroc_require_ants = function(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
-  deployment = FALSE
-  ) {
+  deployment = FALSE,
+  force = !deployment
+) {
 
   desc = desc::description$new(file = path)
   deps = desc$get_deps()
@@ -29,9 +30,12 @@ neuroc_require_ants = function(
     bin_packages = bin_packages,
     table_path = table_path,
     user = user,
-    deployment = deployment
+    deployment = deployment,
+    force = force
   )
-  ants = any(deps %in% ants_dep) || any(deps %in% bin_packages)
+  ants = any(deps %in% ants_dep)
+
+  ants = ants || any(deps %in% bin_packages)
   ants = ants || any(pack_name %in% bin_packages)
   return(ants)
 }

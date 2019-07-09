@@ -154,7 +154,6 @@ get_commits = function(pkg, user = "neurocondcutor") {
 
 remote_remotes =  function(pkg, commit, user = "neuroconductor") {
   tfile = remote_desc(pkg, commit, user)
-  # tfile = ghtravis::get_remote_package_dcf(remote_name)
   desc = desc::description$new(tfile)
   x = desc$get_remotes()
   if (length(x) == 0) {

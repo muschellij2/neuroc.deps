@@ -8,6 +8,8 @@
 #' @param user GitHub username for repos
 #' @param deployment indicator if this is a release, not standard running.
 #' Just deployment.
+#' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
+#' Passed to \code{\link{get_repo_dep_mat}}.
 #' @return Path to new DESCRIPTION file
 #' @export
 #' @details
@@ -27,7 +29,8 @@ neuroc_desc = function(
   dev = FALSE,
   verbose = TRUE,
   user = NULL,
-  deployment = FALSE
+  deployment = FALSE,
+  force = !deployment
 ){
 
   release = match.arg(release)
@@ -35,10 +38,6 @@ neuroc_desc = function(
   #############################################
   # Get the installation order for Neuroc
   #############################################
-  if (verbose) {
-    msg = paste0("Getting Installation Order")
-    message(msg)
-  }
   user = neuroc_user(user = user, dev = dev, deployment = deployment)
 
   table_path = neuroc_table_path(
@@ -46,10 +45,16 @@ neuroc_desc = function(
     dev = dev,
     user = user,
     deployment = deployment)
+  if (verbose) {
+    msg = paste0("Getting Installation Order")
+    message(msg)
+  }
   ord = neuroc_install_order(
     table_path = table_path, release = release,
-    dev = dev, user = user, deployment = deployment)
+    dev = dev, user = user, deployment = deployment,
+    force = force)
   ord_packs = ord$install_order
+
 
 
   #############################################
@@ -61,8 +66,8 @@ neuroc_desc = function(
   #############################################
   # reorder this so it's in order (easier later)
   #############################################
-  all_neuro_deps = all_neuro_deps[ all_neuro_deps$release %in% release, ,
-                                   drop = FALSE]
+  all_neuro_deps = all_neuro_deps[
+    all_neuro_deps$release %in% release, , drop = FALSE]
   rownames(all_neuro_deps) = all_neuro_deps$repo
   all_neuro_deps = all_neuro_deps[ord_packs, ,
                                   drop = FALSE]

@@ -2,7 +2,7 @@
 #' @description Get
 #' @param repos Repositories to find the install order
 #' @param dep_type Dependency types to check against
-#'
+#' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' @return List of dependency order
 #' @export
 #'
@@ -19,9 +19,12 @@
 get_repo_dep_mat = function(
   repos,
   dep_type =  c("Depends", "Imports",
-                "Suggests")) {
+                "Suggests"),
+  force = FALSE) {
 
-  dcfs = get_remote_package_dcf(repos)
+  dcfs = ghtravis::get_remote_package_dcf(
+    repos,
+    url = "https://api.github.com")
 
   info = lapply(dcfs, function(tmp) {
     if (is.na(tmp)) {
@@ -41,7 +44,15 @@ get_repo_dep_mat = function(
     bad_repo = repos[bad_pack]
     msg = paste0("Repos: ", paste(bad_repo, collapse = ", "),
                  "have no DESCRIPTION file for the package name!")
-    stop(msg)
+    if (force) {
+      stop_func = base::stop
+    } else {
+      stop_func = base::warning
+    }
+    stop_func(msg)
+    pkgs[bad_pack] = sapply(
+      ghtravis::parse_remotes(repos[bad_pack]),
+      `[[`, "repo")
   }
 
   dep_mat = sapply(info, function(xx) {
@@ -55,7 +66,7 @@ get_repo_dep_mat = function(
         x = paste(x, collapse = ", ")
         if (length(x) > 0) {
           x = strsplit(x, " ")[[1]]
-          return(split_remotes(x))
+          return(ghtravis::split_remotes(x))
         } else {
           return("")
         }
@@ -84,7 +95,7 @@ get_repo_dep_mat = function(
 install_order = function(dep_mat) {
   pkgs = colnames(dep_mat)
 
-  ograph = graph_from_adjacency_matrix(
+  ograph = igraph::graph_from_adjacency_matrix(
     dep_mat,
     mode = "directed")
 
@@ -92,11 +103,11 @@ install_order = function(dep_mat) {
   install_order = list()
   i = 1
   while (length(neuro_deps) > 0) {
-    graph = graph_from_adjacency_matrix(
+    graph = igraph::graph_from_adjacency_matrix(
       dep_mat,
       mode = "directed")
 
-    outs = degree(graph, mode = "in")
+    outs = igraph::degree(graph, mode = "in")
     installer = names(outs)[outs == 0]
     install_order = c(install_order,
                       list(installer))

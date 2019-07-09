@@ -6,7 +6,7 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION", table_path = NULL,
   release = c("stable", "current"), dev = FALSE, verbose = TRUE,
-  user = NULL, deployment = FALSE)
+  user = NULL, deployment = FALSE, force = !deployment)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -23,6 +23,9 @@ neuroc_desc(path = "DESCRIPTION", table_path = NULL,
 
 \item{deployment}{indicator if this is a release, not standard running.
 Just deployment.}
+
+\item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
+Passed to \code{\link{get_repo_dep_mat}}.}
 }
 \value{
 Path to new DESCRIPTION file

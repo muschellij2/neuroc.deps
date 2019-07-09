@@ -12,7 +12,8 @@
 use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
-  user = NULL, deployment = FALSE, merge_ci = FALSE, ...)
+  user = NULL, deployment = FALSE, merge_ci = FALSE,
+  force = !deployment, ...)
 
 use_neuroc_travis_template(...)
 
@@ -50,6 +51,9 @@ Just deployment.}
 \item{merge_ci}{Should CI fields be merged?  If so,
 \code{\link{extract_ci_fields}} is called to grab the relevant fields.
 Fields cannot currently be a list}
+
+\item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
+Passed to \code{\link{get_repo_dep_mat}}.}
 
 \item{...}{Additional arguments to pass to
 \code{\link{extract_ci_fields}}}

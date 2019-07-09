@@ -15,7 +15,8 @@
 #' Fields cannot currently be a list
 #' @param deployment indicator if this is a release, not standard running.
 #' Just deployment.
-#'
+#' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
+#' Passed to \code{\link{get_repo_dep_mat}}.
 #' @return Copy the template to the current directory
 #' @export
 #' @importFrom utils download.file
@@ -32,6 +33,7 @@ use_neuroc_template = function(
   user = NULL,
   deployment = FALSE,
   merge_ci = FALSE,
+  force = !deployment,
   ...) {
 
   if (!file.exists(path)) {
@@ -72,7 +74,8 @@ use_neuroc_template = function(
     dev = dev,
     verbose = verbose,
     user = user,
-    deployment = deployment)
+    deployment = deployment,
+    force = force)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   ####################
@@ -98,7 +101,8 @@ use_neuroc_template = function(
     bin_packages = bin_packages,
     verbose = verbose,
     user = user,
-    deployment = deployment)
+    deployment = deployment,
+    force = force)
 
   if (verbose) {
     message(paste0("Writing CI files")
