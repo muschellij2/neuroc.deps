@@ -48,6 +48,9 @@ use_neuroc_template = function(
   setwd(pkg_directory)
   user = neuroc_user(user = user, dev = dev, deployment = deployment)
 
+  if (verbose) {
+    message(paste0("User is set to ", user))
+  }
   table_path = neuroc_table_path(
     table_path = table_path,
     dev = dev,
