@@ -6,7 +6,7 @@
 \usage{
 neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), table_path = NULL,
-  deployment = FALSE, user = NULL, force = FALSE)
+  deployment = FALSE, user = NULL, force = FALSE, ...)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -24,6 +24,8 @@ Just deployment.}
 
 \item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
 Passed to \code{\link{get_repo_dep_mat}}.}
+
+\item{...}{arguments to pass to \code{\link{neuroc_dep_mat}}}
 }
 \value{
 Character vector of packages

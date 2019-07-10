@@ -10,6 +10,8 @@
 #' Just deployment
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
+#' @param ... arguments to pass to \code{\link{neuroc_dep_mat}}, and
+#' then \code{\link{get_repo_dep_mat}}
 #' @export
 #'
 #' @examples \dontrun{
@@ -22,7 +24,8 @@ neuroc_install_order = function(
   deployment = FALSE,
   table_path = NULL,
   user = NULL,
-  force = FALSE
+  force = FALSE,
+  ...
 ){
 
   dep_mat = neuroc_dep_mat(
@@ -31,7 +34,8 @@ neuroc_install_order = function(
     table_path = table_path,
     user = user,
     deployment = deployment,
-    force = force)
+    force = force,
+    ...)
   repos = names(colnames(dep_mat))
   install_ord = install_order(dep_mat)
   L = list(install_order_list = install_ord,
@@ -49,7 +53,7 @@ neuroc_dep_mat = function(
   table_path = NULL,
   deployment = FALSE,
   user = NULL,
-  force = FALSE) {
+  force = FALSE, ...) {
   #############################
   # Match release
   #############################
@@ -78,7 +82,7 @@ neuroc_dep_mat = function(
       all_neuro_deps$remote[run],
       "@", all_neuro_deps$commit[run])
     repos = all_neuro_deps$remote
-    dep_mat = get_repo_dep_mat(repos, force = force)
+    dep_mat = get_repo_dep_mat(repos, force = force, ...)
   } else {
     dep_mat = matrix(NA, nrow = 0, ncol = 0)
   }

@@ -9,6 +9,7 @@
 #' @param user GitHub username for repos
 #' @param deployment indicator if this is a release, not standard running.
 #' Just deployment.
+#' @param ... arguments to pass to \code{\link{neuroc_dep_mat}}
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
 #' @export
@@ -23,7 +24,8 @@ neuroc_dep_ants = function(
   table_path = NULL,
   deployment = FALSE,
   user = NULL,
-  force = FALSE
+  force = FALSE,
+  ...
 ){
 
   dep_mat = neuroc_dep_mat(
@@ -32,7 +34,8 @@ neuroc_dep_ants = function(
     table_path = table_path,
     user = user,
     deployment = deployment,
-    force = force
+    force = force,
+    ...
     )
 
   get_a_dep = function(packs) {

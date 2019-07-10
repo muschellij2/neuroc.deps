@@ -10,6 +10,7 @@
 #' Just deployment.
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
+#' @param ... arguments to pass to \code{\link{neuroc_install_order}}.
 #' @return Path to new DESCRIPTION file
 #' @export
 #' @details
@@ -30,7 +31,8 @@ neuroc_desc = function(
   verbose = TRUE,
   user = NULL,
   deployment = FALSE,
-  force = deployment
+  force = deployment,
+  ...
 ){
 
   release = match.arg(release)
@@ -52,7 +54,7 @@ neuroc_desc = function(
   ord = neuroc_install_order(
     table_path = table_path, release = release,
     dev = dev, user = user, deployment = deployment,
-    force = force)
+    force = force, ...)
   ord_packs = ord$install_order
 
 

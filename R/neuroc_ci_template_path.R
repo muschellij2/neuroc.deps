@@ -24,8 +24,8 @@ neuroc_ci_template_path = function(
   ants = FALSE,
   dev = FALSE,
   user = NULL,
-  deployment = FALSE
-    ) {
+  deployment = FALSE,
+  ...) {
   ci = match.arg(ci)
 
   user = neuroc_user(user = user, dev = dev, deployment = deployment)

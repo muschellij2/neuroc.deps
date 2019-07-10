@@ -7,7 +7,7 @@
 \title{Get Install Order of Repositories}
 \usage{
 get_repo_dep_mat(repos, dep_type = c("Depends", "Imports", "Suggests"),
-  force = FALSE)
+  force = FALSE, url = "https://api.github.com", ...)
 
 install_order(dep_mat)
 
@@ -20,6 +20,11 @@ get_repo_install_order(repos, dep_type = c("Depends", "Imports",
 \item{dep_type}{Dependency types to check against}
 
 \item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?}
+
+\item{url}{URL to use to get DESCRIPTION file, passed to
+\code{\link[ghtravis]{get_remote_package_dcf}}.}
+
+\item{...}{not used}
 
 \item{dep_mat}{Logial Dependency matrix}
 }

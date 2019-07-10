@@ -3,6 +3,9 @@
 #' @param repos Repositories to find the install order
 #' @param dep_type Dependency types to check against
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
+#' @param url URL to use to get DESCRIPTION file, passed to
+#' \code{\link[ghtravis]{get_remote_package_dcf}}.
+#' @param ... not used
 #' @return List of dependency order
 #' @export
 #'
@@ -20,11 +23,13 @@ get_repo_dep_mat = function(
   repos,
   dep_type =  c("Depends", "Imports",
                 "Suggests"),
-  force = FALSE) {
+  force = FALSE,
+  url = "https://api.github.com",
+  ...) {
 
   dcfs = ghtravis::get_remote_package_dcf(
     repos,
-    url = "https://api.github.com")
+    url = url)
 
   info = lapply(dcfs, function(tmp) {
     if (is.na(tmp)) {
