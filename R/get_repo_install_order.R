@@ -45,9 +45,9 @@ get_repo_dep_mat = function(
     msg = paste0("Repos: ", paste(bad_repo, collapse = ", "),
                  "have no DESCRIPTION file for the package name!")
     if (force) {
-      stop_func = base::stop
-    } else {
       stop_func = base::warning
+    } else {
+      stop_func = base::stop
     }
     stop_func(msg)
     pkgs[bad_pack] = sapply(
