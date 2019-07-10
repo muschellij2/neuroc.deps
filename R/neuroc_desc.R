@@ -30,7 +30,7 @@ neuroc_desc = function(
   verbose = TRUE,
   user = NULL,
   deployment = FALSE,
-  force = !deployment
+  force = deployment
 ){
 
   release = match.arg(release)

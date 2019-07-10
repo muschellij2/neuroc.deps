@@ -13,7 +13,7 @@ use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
   user = NULL, deployment = FALSE, merge_ci = FALSE,
-  force = !deployment, ...)
+  force = deployment, ...)
 
 use_neuroc_travis_template(...)
 

@@ -13,7 +13,7 @@ neuroc_require_ants = function(
   verbose = TRUE,
   user = NULL,
   deployment = FALSE,
-  force = !deployment
+  force = deployment
 ) {
 
   desc = desc::description$new(file = path)

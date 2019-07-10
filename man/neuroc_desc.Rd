@@ -6,7 +6,7 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION", table_path = NULL,
   release = c("stable", "current"), dev = FALSE, verbose = TRUE,
-  user = NULL, deployment = FALSE, force = !deployment)
+  user = NULL, deployment = FALSE, force = deployment)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}

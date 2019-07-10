@@ -33,7 +33,7 @@ use_neuroc_template = function(
   user = NULL,
   deployment = FALSE,
   merge_ci = FALSE,
-  force = !deployment,
+  force = deployment,
   ...) {
 
   if (!file.exists(path)) {
