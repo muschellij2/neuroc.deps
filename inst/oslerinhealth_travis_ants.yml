@@ -49,7 +49,11 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
-  - start_xvfb ;
+  - codename=`linux_codename`;
+  - if [ "${codename}" = "trusty" ];
+    then
+      start_xvfb ;
+    fi
   - export rver=`r_version`; echo $rver ;
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
