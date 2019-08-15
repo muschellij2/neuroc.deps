@@ -2,11 +2,14 @@
 % Please edit documentation in R/neuroc_sha_check.R
 \name{neuroc_sha_check}
 \alias{neuroc_sha_check}
+\alias{neuroc_bad_sha}
 \title{Check SHA consistency of the system}
 \usage{
 neuroc_sha_check(release = c("stable", "current"), dev = FALSE,
   deployment = FALSE, table_path = NULL, user = NULL,
   drop_packages = NULL, verbose = FALSE)
+
+neuroc_bad_sha(...)
 }
 \arguments{
 \item{release}{Stable or development version}
@@ -23,6 +26,9 @@ Just deployment}
 \item{drop_packages}{Packages to drop from consistency check}
 
 \item{verbose}{print diagnostic messages}
+
+\item{...}{arguments to pass to \code{\link{neuroc_dep_mat}}, and
+then \code{\link{get_repo_dep_mat}}}
 }
 \value{
 A list of \code{data.frame}s of information of

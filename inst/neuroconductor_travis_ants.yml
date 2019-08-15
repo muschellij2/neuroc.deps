@@ -24,6 +24,9 @@ osx_image: xcode9
 r_binary_packages:
   - rgl
 
+services:
+  - xvfb
+
 r:
 - 3.3
 - 3.4

@@ -1,7 +1,7 @@
 Package: neuroc.deps
 Type: Package
 Title: Parses Dependencies for GitHub Packages for Neuroconductor
-Version: 0.17.2
+Version: 0.17.3
 Author: John Muschelli
 Maintainer: John Muschelli <muschellij2@gmail.com>
 Description: Uses functions to interface with 'GitHub' to 
@@ -20,7 +20,8 @@ Imports:
     sessioninfo,
     yaml,
     tools,
-    methods
+    methods,
+    magrittr
 Remotes: 
     muschellij2/ghtravis, 
     r-lib/gh, 

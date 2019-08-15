@@ -36,7 +36,6 @@
 #'   distinct() %>%
 #'   filter(n_commit > 1 | overall_n_commit > 1)
 #' }
-
 neuroc_sha_check = function(
   release = c("stable", "current"),
   dev = FALSE,
@@ -90,14 +89,14 @@ neuroc_sha_check = function(
     if (verbose) {
       message(paste0("Looking at level: ", ilevel, " dependencies"))
     }
-    res_df = get_all_remotes(df, verbose = verbose)
+    res_df = get_all_remotes(df, verbose = verbose, user = user)
     res_df = res_df[ grepl(paste0("^", user), res_df$remotes),]
     if (nrow(res_df) == 0) break
     if (nrow(res_df) > 0 & ilevel == n_levels) {
       warning("More than 10 levels deep of dependencies, stopping")
     }
     res_df$level = ilevel
-    all_remotes = split_remote(res_df$remotes)
+    all_remotes = split_remote(res_df$remotes, user = user)
     res_df = cbind(res_df, all_remotes)
     res_df = res_df[ which(res_df$remote_package != ""),]
     level_data[[ilevel]] = res_df
@@ -117,6 +116,44 @@ neuroc_sha_check = function(
 }
 #
 
+#' @export
+#' @rdname neuroc_sha_check
+neuroc_bad_sha = function(...) {
+  L = neuroc_sha_check(...)
+  original_package = level = remote_package = remote_commit_id = NULL
+  rm(list = c("original_package ", "level ", "remote_package ",
+              "remote_commit_id"))
+  overall_n_commit = n_commit = original_commit_id = NULL
+  rm(list = c("overall_n_commit", "n_commit", "original_commit_id"))
+
+  if (requireNamespace("dplyr", quietly = TRUE)) {
+    xdf = L$original_df
+    res = L$dependency_df
+    res = res %>%
+      dplyr::arrange(original_package, level, remote_package)
+
+    res = res %>%
+      dplyr::group_by(remote_package) %>%
+      dplyr::mutate(overall_n_commit = length(unique(remote_commit_id))) %>%
+      dplyr::ungroup()
+
+    res = res %>%
+      dplyr::group_by(original_package, remote_package) %>%
+      dplyr::mutate(n_commit = length(unique(remote_commit_id)))
+
+    res = dplyr::right_join(
+      xdf %>%
+        dplyr::select(original_package, original_commit_id),
+      res)
+    bad = res %>%
+      dplyr::select(-level) %>%
+      dplyr::distinct() %>%
+      dplyr::filter(n_commit > 1 | overall_n_commit > 1)
+  } else {
+    stop("dplyr is required for neuroc_bad_sha")
+  }
+  return(bad)
+}
 
 
 
@@ -176,7 +213,7 @@ split_remote = function(x, user = "neuroconductor") {
   as.data.frame(x, stringsAsFactors = FALSE)
 }
 
-get_all_remotes = function(df, verbose = FALSE) {
+get_all_remotes = function(df, verbose = FALSE, user = "neuroconductor") {
   res = vector(mode = "list", length = nrow(df))
   names(res) = df$original_package
   if (verbose) {
@@ -186,7 +223,7 @@ get_all_remotes = function(df, verbose = FALSE) {
     idf = df[iid,]
     pkg = idf$pkg
     commit = idf$commit_id
-    dd = remote_remotes(pkg, commit)
+    dd = remote_remotes(pkg, commit, user = user)
     dd = data.frame(remotes = dd, stringsAsFactors = FALSE)
     dd$pkg = pkg
     dd$original_package = idf$original_package
