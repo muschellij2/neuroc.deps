@@ -58,7 +58,10 @@ before_install:
     then
       no_open_mp ;
     fi
-  - jags_install
+  - jags_install || true;  
+  - v8_install || true;
+  - dcmtk_install || true;    
+  - gsl_install 2.1 || true ; # now checking version
   - remove_neuroc_packages
   - cat DESCRIPTION
   - install_remotes_no_dep

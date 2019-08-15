@@ -62,8 +62,10 @@ before_install:
     then
       start_xvfb ;
     fi
-  - v8_install ;
-  - dcmtk_install ;  
+  - jags_install || true;  
+  - v8_install || true;
+  - dcmtk_install || true;    
+  - gsl_install 2.1 || true ; # now checking version
   - export rver=`r_version`; echo $rver ;
   - export PACKAGE_NAME=`package_name`  
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
