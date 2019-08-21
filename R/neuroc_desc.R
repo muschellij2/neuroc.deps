@@ -78,13 +78,15 @@ neuroc_desc = function(
   #############################################
   # Make proper remote
   #############################################
-  if (nrow(all_neuro_deps) > 0) {
-    all_neuro_deps$remote = paste0(
-      user, "/",
-      all_neuro_deps$repo)
-    run = !is.na(all_neuro_deps$commit) & all_neuro_deps$commit != ""
-    all_neuro_deps$remote[run] = paste0(all_neuro_deps$remote[run],
-                                        "@", all_neuro_deps$commit[run])
+  if (!is.null(all_neuro_deps)) {
+    if (nrow(all_neuro_deps) > 0) {
+      all_neuro_deps$remote = paste0(
+        user, "/",
+        all_neuro_deps$repo)
+      run = !is.na(all_neuro_deps$commit) & all_neuro_deps$commit != ""
+      all_neuro_deps$remote[run] = paste0(all_neuro_deps$remote[run],
+                                          "@", all_neuro_deps$commit[run])
+    }
   }
 
   #############################################
@@ -183,18 +185,20 @@ neuroc_desc = function(
 
   neuro_deps = all_neuro_deps[ all_neuro_deps$repo %in% deps, , drop = FALSE]
   # run if have neuroconductor dependencies
-  if (nrow(neuro_deps) > 0) {
-    if (verbose) {
-      msg = paste0("Writing Neuroc Remotes")
-      message(msg)
+  if (!is.null(neuro_deps)) {
+    if (nrow(neuro_deps) > 0) {
+      if (verbose) {
+        msg = paste0("Writing Neuroc Remotes")
+        message(msg)
+      }
+      ## added for missing remotes
+      run = !is.na(neuro_deps$commit) & neuro_deps$commit != ""
+      add_remotes = paste0(user, "/",
+                           neuro_deps$repo)
+      add_remotes[run] =  paste0(add_remotes[run],
+                                 "@", neuro_deps$commit[run])
+      remotes = c(remotes, add_remotes)
     }
-    ## added for missing remotes
-    run = !is.na(neuro_deps$commit) & neuro_deps$commit != ""
-    add_remotes = paste0(user, "/",
-                         neuro_deps$repo)
-    add_remotes[run] =  paste0(add_remotes[run],
-                               "@", neuro_deps$commit[run])
-    remotes = c(remotes, add_remotes)
   }
   # Fixes Github issue #82
   if (length(remotes) > 0) {

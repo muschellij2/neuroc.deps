@@ -16,7 +16,7 @@ Imports:
     ghtravis (>= 0.14.0),
     remotes,
     usethis (>= 0.0.0.9000),
-    neurocInstall (>= 0.7.1),
+    neurocInstall (>= 0.11.3),
     sessioninfo,
     yaml,
     tools,

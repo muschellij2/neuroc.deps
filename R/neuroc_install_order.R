@@ -72,6 +72,10 @@ neuroc_dep_mat = function(
     args$deployment = deployment
   }
   neuro_deps = do.call(neurocInstall::neuro_package_table, args = args)
+  if (is.null(neuro_deps)) {
+    dep_mat = matrix(NA, nrow = 0, ncol = 0)
+    return(dep_mat)
+  }
   all_neuro_deps = neuro_deps[ neuro_deps$release %in% release, ]
   if (nrow(all_neuro_deps) > 0) {
     all_neuro_deps$remote = paste0(
