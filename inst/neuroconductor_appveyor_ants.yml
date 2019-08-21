@@ -29,7 +29,7 @@ environment:
     - R_VERSION: release
       R_VER: 3.6
 
-    - R_VERSION: oldrel
+    - R_VERSION: 3.5.3
       CRAN: http://cran.rstudio.com
       R_VER: 3.5
 
