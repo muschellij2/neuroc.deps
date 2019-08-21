@@ -76,7 +76,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ; 
-      brew install -v freetype;      
+      brew install -v freetype; 
     fi
   - echo "CC=${CC}, CXX=${CXX}, CXX1X=${CXX1X}"
   - echo "CXX1XSTD=${CXX1XSTD}, CXX11=${CXX11}"  
@@ -97,8 +97,8 @@ before_install:
     fi    
   - if [[ "${PACKAGE_NAME}" != "ITKR" ]]; 
     then
-      echo "Installing Missing Deps ITKR"
-      install_missing_remote_deps_all ${ants_user}/ITKR
+      echo "Installing Missing Deps ITKR" ;
+      install_missing_remote_deps_all ${ants_user}/ITKR ;
       gh_binary_install ${ants_user}/ITKR ;    
     fi
   - if [[ "${PACKAGE_NAME}" != "ANTsRCore" && "${PACKAGE_NAME}" != "ITKR" ]]; 
