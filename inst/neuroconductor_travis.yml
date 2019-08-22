@@ -1,6 +1,5 @@
 # Neuroconductor Template no ANTs
 language: r
-cache: packages
 warnings_are_errors: true
 use_bioc: true
 bioc_required: true
