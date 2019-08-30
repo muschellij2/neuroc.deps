@@ -61,6 +61,9 @@ build_script:
   - travis-tool.sh install_deps
 
 test_script:
+  - choco install ffmpeg & exit 0
+  - choco install dcmtk & exit 0
+  - choco install libreoffice-fresh & exit 0
   - if not exist "C:\rtm" mkdir C:\rtm
   - set TMP=C:/rtm
   - set TEMP=C:/rtm
