@@ -1,6 +1,7 @@
 # Neuroconductor Template no ANTs
 language: r
 warnings_are_errors: true
+cache: false
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
