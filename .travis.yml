@@ -9,8 +9,8 @@ os:
 
 r: 
   - release
-  - 3.2
-  - 3.3 
+  - oldrel
+  - devel
 
 before_install:
   - wget -O travis_helpers.sh http://bit.ly/travis_helpers
