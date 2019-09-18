@@ -3,6 +3,7 @@
 export("%>%")
 export(add_neuroc_keys)
 export(extract_ci_fields)
+export(fix_desc_remotes)
 export(get_all_repos)
 export(get_repo_dep_mat)
 export(get_repo_install_order)

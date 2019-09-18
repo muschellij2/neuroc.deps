@@ -13,7 +13,7 @@ use_neuroc_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
   dev = FALSE, table_path = NULL, release = c("stable", "current"),
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), verbose = TRUE,
   user = NULL, deployment = FALSE, merge_ci = FALSE,
-  force = deployment, ...)
+  force = deployment, fix_remotes = TRUE, ...)
 
 use_neuroc_travis_template(...)
 
@@ -54,6 +54,9 @@ Fields cannot currently be a list}
 
 \item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
 Passed to \code{\link{get_repo_dep_mat}}.}
+
+\item{fix_remotes}{Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
+file before running.}
 
 \item{...}{Additional arguments to pass to
 \code{\link{extract_ci_fields}}}

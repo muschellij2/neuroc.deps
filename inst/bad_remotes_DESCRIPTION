@@ -1,0 +1,38 @@
+Package: mimosa
+Type: Package
+Title: 'MIMoSA': A Method for Inter-Modal Segmentation Analysis
+Version: 0.5.8
+Authors@R: c(person("Alessandra", "Valcarcel", role = c("aut", "cre"),
+        email = "alval@pennmedicine.upenn.edu"))
+Maintainer: Alessandra Valcarcel <alval@pennmedicine.upenn.edu>
+Description: Trains and makes predictions from the 'MIMoSA' method.
+Imports: ANTsRCore (>= 0.3.4), dplyr, extrantsr (>= 3.1), fslr (>=
+        2.24.1), neurobase (>= 1.27.11), oasis (>= 3.0.1), parallel (>=
+        2.14.0), rlist (>= 0.4.5), stats, utils (>= 3.2.5), WhiteStripe
+        (>= 2.3.1)
+License: GPL-2
+LazyData: TRUE
+RoxygenNote: 6.1.1
+Encoding: UTF-8
+Remotes: neuroconductor/ANTsR@bb8aeacac74c9969fe0693cffb82291ba192fe31,
+        neuroconductor/ANTsRCore@55d658eb9f3e265a3dd11aea0d423d876cb2794c,
+        neuroconductor/extrantsr@eb3e9ab6e4a081ef9134ae2b47260817f44b2834,
+        jonclayden/mmand,
+        neuroconductor/neurobase@69edde6d85b13cf182ed5990e6c4166795128977,
+        neuroconductor/oro.nifti@c8832b410ec2ccd86b23e23db79d8d0291fecb2a,
+        muschellij2/WhiteStripe
+Remotes:
+        neuroconductor/ANTsRCore@3f638ceda3df0e8d35c7044f89bf8abb468c8502,
+        neuroconductor/WhiteStripe@a758479c2820e8221f20d40a9d83a5b85173ea21,
+        neuroconductor/neurobase@69edde6d85b13cf182ed5990e6c4166795128977,
+        neuroconductor/fslr@035fd4b2b76e287bec0488a53257b66201781c48,
+        neuroconductor/extrantsr@fc8c4d7596c255f666eae4b8da0165033caeca8a,
+        neuroconductor/oasis@9163a0e1f63532a47928c07060c1a4a57f65c586
+Packaged: 2017-08-24 17:32:43 UTC; alval
+URL: https://github.com/avalcarcel9/mimosa
+BugReports: https://github.com/avalcarcel9/mimosa/issues
+Suggests: covr, knitr, rmarkdown, spelling, testthat
+VignetteBuilder: knitr
+Language: en-US
+Repository: Neuroconductor
+biocViews:

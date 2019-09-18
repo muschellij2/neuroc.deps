@@ -6,7 +6,8 @@
 \usage{
 neuroc_desc(path = "DESCRIPTION", table_path = NULL,
   release = c("stable", "current"), dev = FALSE, verbose = TRUE,
-  user = NULL, deployment = FALSE, force = deployment, ...)
+  user = NULL, deployment = FALSE, force = deployment,
+  fix_remotes = TRUE, ...)
 }
 \arguments{
 \item{path}{path to DESCRIPTION file}
@@ -26,6 +27,9 @@ Just deployment.}
 
 \item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
 Passed to \code{\link{get_repo_dep_mat}}.}
+
+\item{fix_remotes}{Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
+file before running.}
 
 \item{...}{arguments to pass to \code{\link{neuroc_install_order}}.}
 }

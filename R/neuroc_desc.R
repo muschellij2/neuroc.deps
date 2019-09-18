@@ -10,6 +10,8 @@
 #' Just deployment.
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
+#' @param fix_remotes Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
+#' file before running.
 #' @param ... arguments to pass to \code{\link{neuroc_install_order}}.
 #' @return Path to new DESCRIPTION file
 #' @export
@@ -32,6 +34,7 @@ neuroc_desc = function(
   user = NULL,
   deployment = FALSE,
   force = deployment,
+  fix_remotes = TRUE,
   ...
 ){
 
@@ -95,6 +98,9 @@ neuroc_desc = function(
   if (verbose) {
     msg = paste0("Parsing DESCRIPTION file")
     message(msg)
+  }
+  if (fix_remotes) {
+    path = fix_desc_remotes(path)
   }
   # Fixes the multiple suggests
   desc = read.dcf(file = path, all = TRUE)

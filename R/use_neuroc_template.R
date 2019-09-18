@@ -17,6 +17,9 @@
 #' Just deployment.
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
+#' @param fix_remotes Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
+#' file before running.
+#'
 #' @return Copy the template to the current directory
 #' @export
 #' @importFrom utils download.file
@@ -34,6 +37,7 @@ use_neuroc_template = function(
   deployment = FALSE,
   merge_ci = FALSE,
   force = deployment,
+  fix_remotes = TRUE,
   ...) {
 
   if (!file.exists(path)) {
@@ -78,7 +82,8 @@ use_neuroc_template = function(
     verbose = verbose,
     user = user,
     deployment = deployment,
-    force = force)
+    force = force,
+    fix_remotes = fix_remotes)
   bak = paste0(path, ".bak")
   file.copy(path, bak, overwrite = TRUE)
   ####################
