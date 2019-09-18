@@ -42,7 +42,7 @@ use_neuroc_template = function(
 
   if (!file.exists(path)) {
     stop(paste0("File passed into path argument: ", path,
-                "does not exist!"))
+                " does not exist!"))
   }
   pkg_directory = dirname(path)
   owd = getwd()
