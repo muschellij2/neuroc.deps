@@ -121,7 +121,7 @@ neuroc_sha_check = function(
 neuroc_bad_sha = function(...) {
   L = neuroc_sha_check(...)
   original_package = level = remote_package = remote_commit_id = NULL
-  rm(list = c("original_package ", "level ", "remote_package ",
+  rm(list = c("original_package", "level", "remote_package",
               "remote_commit_id"))
   overall_n_commit = n_commit = original_commit_id = NULL
   rm(list = c("overall_n_commit", "n_commit", "original_commit_id"))
