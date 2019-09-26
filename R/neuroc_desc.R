@@ -100,7 +100,7 @@ neuroc_desc = function(
     message(msg)
   }
   if (fix_remotes) {
-    path = fix_desc_remotes(path)
+      path = fix_desc_remotes(path)
   }
   # Fixes the multiple suggests
   desc = read.dcf(file = path, all = TRUE)
@@ -133,6 +133,9 @@ neuroc_desc = function(
     get_pack = function(tmp) {
       if (!file.exists(tmp)) {
         return(NA)
+      }
+      if (fix_remotes) {
+        tmp = fix_desc_remotes(tmp)
       }
       desc = read.dcf(file = tmp, all = TRUE)
       desc = dcf_collapser(desc, cn = c("Imports", "Suggests", "Depends"))
