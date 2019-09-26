@@ -15,6 +15,8 @@
 #' L = neuroc_sha_check(release = "stable", dev = FALSE,
 #' drop_packages = "rtapas", verbose = TRUE)
 #' xdf = L$original_df
+#' bad_packages = xdf$original_package[
+#' any(is.na(xdf$original_commit) | xdf$original_commit == "")]
 #' res = L$dependency_df
 #' res = res %>%
 #'   arrange(original_package, level, remote_package)
@@ -70,6 +72,12 @@ neuroc_sha_check = function(
   colnames(xdf)[ colnames(xdf) == "commit_id"] = "original_commit_id"
 
   df = cbind(xdf, df)
+  missing_cid = df$commit_id %in% "" | is.na(df$commit_id)
+  if (any(missing_cid)) {
+    ddd = df[missing_cid,  ]
+    warning(paste0("No commit IDs: ", paste(ddd$pkg, collapse = ", ")))
+  }
+  df$commit_id[missing_cid] = "master"
 
   df$remotes = ""
   if (!is.null(drop_packages)) {
@@ -129,6 +137,12 @@ neuroc_bad_sha = function(...) {
   if (requireNamespace("dplyr", quietly = TRUE)) {
     xdf = L$original_df
     res = L$dependency_df
+    bad = any(is.na(xdf$original_commit) | xdf$original_commit == "")
+    bad_packages = NULL
+    if (any(bad)) {
+      bad_packages = xdf$original_package[bad]
+      message(paste0("No commit IDs: ", paste(bad_packages, collapse = ", ")))
+    }
     res = res %>%
       dplyr::arrange(original_package, level, remote_package)
 
@@ -149,6 +163,7 @@ neuroc_bad_sha = function(...) {
       dplyr::select(-level) %>%
       dplyr::distinct() %>%
       dplyr::filter(n_commit > 1 | overall_n_commit > 1)
+    attr(bad, "bad_packages") = bad_packages
   } else {
     stop("dplyr is required for neuroc_bad_sha")
   }
@@ -216,23 +231,26 @@ split_remote = function(x, user = "neuroconductor") {
 get_all_remotes = function(df, verbose = FALSE, user = "neuroconductor") {
   res = vector(mode = "list", length = nrow(df))
   names(res) = df$original_package
-  if (verbose) {
+  if (verbose & !(verbose > 1)) {
     pb = utils::txtProgressBar(min = 0, max = nrow(df))
   }
   for (iid in seq(nrow(df))) {
     idf = df[iid,]
     pkg = idf$pkg
     commit = idf$commit_id
+    if (verbose > 1) {
+      message(paste0(pkg, ", commit: ", commit))
+    }
     dd = remote_remotes(pkg, commit, user = user)
     dd = data.frame(remotes = dd, stringsAsFactors = FALSE)
     dd$pkg = pkg
     dd$original_package = idf$original_package
     res[[iid]] = dd
-    if (verbose) {
+    if (verbose & !(verbose > 1)) {
       utils::setTxtProgressBar(pb, value = iid)
     }
   }
-  if (verbose) {
+  if (verbose & !(verbose > 1)) {
     close(pb)
   }
   res_df = do.call(rbind, res)

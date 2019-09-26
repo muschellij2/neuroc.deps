@@ -43,6 +43,8 @@ library(dplyr)
 L = neuroc_sha_check(release = "stable", dev = FALSE,
 drop_packages = "rtapas", verbose = TRUE)
 xdf = L$original_df
+bad_packages = xdf$original_package[
+any(is.na(xdf$original_commit) | xdf$original_commit == "")]
 res = L$dependency_df
 res = res \%>\%
   arrange(original_package, level, remote_package)

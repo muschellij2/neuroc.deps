@@ -127,17 +127,29 @@ use_neuroc_template = function(
       user = user,
       dev = dev,
       deployment = deployment)
-    template = add_neuroc_keys(
-      template_file,
-      ci = ici,
-      dev = dev,
-      user = user,
-      deployment = deployment)
+    if (!grepl("pkgdown", ici)) {
+      template = add_neuroc_keys(
+        template_file,
+        ci = ici,
+        dev = dev,
+        user = user,
+        deployment = deployment)
+    } else {
+      tfile = tempfile()
+      file.copy(template_file, tfile)
+      suppressWarnings({
+        template = readLines(tfile)
+      })
+    }
     template = set_env_package_name(
       template,
       dev = dev,
       user = user,
       deployment = deployment)
+    ici = switch(
+      ici,
+      travis_pkgdown = "travis",
+      ici)
     outfile = switch(
       ici,
       travis = ".travis.yml",

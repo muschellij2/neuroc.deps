@@ -84,5 +84,20 @@ test_that("checking non-ants Neuroc Package", {
   })
 
 
+  L = neuroc.deps::neuroc_example_description(package = "mimosa")
+
+  tester(function() {
+    result = use_neuroc_template(
+      path = L$description_file,
+      ci = "travis_pkgdown",
+      table_path = table_path,
+      user = "neuroconductor",
+      dev = FALSE,
+      verbose = FALSE,
+      merge_ci = TRUE)
+    result
+  })
+
+
 
 })

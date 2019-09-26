@@ -20,7 +20,7 @@
 #' neuroc_appveyor_template_path()
 #' neuroc_appveyor_template_path(ants = TRUE)
 neuroc_ci_template_path = function(
-  ci = c("travis", "appveyor"),
+  ci = c("travis", "appveyor", "travis_pkgdown"),
   ants = FALSE,
   dev = FALSE,
   user = NULL,
@@ -38,6 +38,9 @@ neuroc_ci_template_path = function(
     "oslerinhealth-releases" = "oslerinhealth"
   )
 
+  if (user == "neurconductor" & ci == "travis_pkgdown") {
+    ants = TRUE
+  }
   file = paste0(user, "_", ci, ifelse(ants, "_ants", ""), ".yml")
   file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
 
