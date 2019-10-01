@@ -38,7 +38,7 @@ neuroc_ci_template_path = function(
     "oslerinhealth-releases" = "oslerinhealth"
   )
 
-  if (user == "neurconductor" & ci == "travis_pkgdown") {
+  if (user == "neuroconductor" & ci == "travis_pkgdown") {
     ants = TRUE
   }
   file = paste0(user, "_", ci, ifelse(ants, "_ants", ""), ".yml")
