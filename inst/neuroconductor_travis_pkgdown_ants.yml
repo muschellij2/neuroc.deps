@@ -110,7 +110,10 @@ before_install:
   - travis_run_cache
 
 script:
-  - Rscript -e 'install.packages("remotes")' -e 'remotes::install_github("hadley/pkgdown")' -e 'pkgdown::build_site()'
+  - Rscript -e 'install.packages("remotes")' 
+  - Rscript -e 'remotes::install_github("hadley/pkgdown")' 
+  - travis_wait 100 Rscript -e 'pkgdown::build_site()'
+
 
 after_failure:
 
