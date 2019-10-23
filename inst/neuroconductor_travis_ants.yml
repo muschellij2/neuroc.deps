@@ -15,7 +15,8 @@ addons:
     - libfftw3-dev
     - libgsl0-dev
     - libgsl0ldbl
-
+    - mesa-common-dev 
+    - libglu1-mesa-dev 
 os:
   - linux
   - osx
