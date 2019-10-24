@@ -17,6 +17,8 @@ addons:
     - libgsl0ldbl
     - mesa-common-dev 
     - libglu1-mesa-dev 
+    - devscripts
+
   
 os:
   - linux

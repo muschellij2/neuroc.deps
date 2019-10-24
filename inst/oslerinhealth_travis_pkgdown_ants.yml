@@ -15,6 +15,7 @@ addons:
     - libfftw3-dev
     - libgsl0-dev
     - libgsl0ldbl
+    - devscripts
 
 os:
   - linux
@@ -78,6 +79,24 @@ before_install:
       export R_BUILD_ARGS="${R_BUILD_ARGS} --no-build-vignettes " ;
       export R_CHECK_ARGS="--no-vignettes ${R_CHECK_ARGS}" ;
     fi
+  - if [[ "${PACKAGE_NAME}" != "ITKR" ]];
+    then
+      echo "Installing Missing Deps ITKR" ;
+      install_missing_remote_deps_all ${ants_user}/ITKR ;
+      gh_binary_install ${ants_user}/ITKR ;
+    fi
+  - if [[ "${PACKAGE_NAME}" != "ANTsRCore" && "${PACKAGE_NAME}" != "ITKR" ]];
+    then
+      echo "Installing Missing Deps ANTsRCore" ;
+      install_missing_remote_deps_all ${ants_user}/ANTsRCore;
+      gh_binary_install_passive ${ants_user}/ANTsRCore ;
+    fi
+  - if [[ "${PACKAGE_NAME}" != "ANTsRCore" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsR" ]];
+    then
+      echo "Installing Missing Deps ANTsR" ;
+      install_missing_remote_deps_all ${ants_user}/ANTsR ;
+      gh_binary_install_passive ${ants_user}/ANTsR ;
+    fi
   - if [[ "${PACKAGE_NAME}" == "ANTsR" ]];
     then
       export _R_CHECK_FORCE_SUGGESTS_=false ;
@@ -92,8 +111,8 @@ before_install:
   - travis_run_cache
 
 script:
-  - Rscript -e 'install.packages("remotes")'
-  - Rscript -e 'remotes::install_github("hadley/pkgdown")'
+  - Rscript -e 'install.packages("remotes")' 
+  - Rscript -e 'remotes::install_github("hadley/pkgdown")' 
   - travis_wait 100 Rscript -e 'pkgdown::build_site()'
 
 after_failure:

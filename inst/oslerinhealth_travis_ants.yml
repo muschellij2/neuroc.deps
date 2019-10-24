@@ -13,6 +13,7 @@ addons:
     - libfftw3-dev
     - libgsl0-dev
     - libgsl0ldbl
+    - devscripts
 
 os:
   - linux

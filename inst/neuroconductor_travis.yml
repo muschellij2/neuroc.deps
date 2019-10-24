@@ -17,6 +17,7 @@ addons:
     - libgsl0ldbl
     - mesa-common-dev 
     - libglu1-mesa-dev 
+    - devscripts
     
 # r_binary_packages:
 #   - rgl
