@@ -60,7 +60,7 @@ before_install:
       no_open_mp ;
     fi
   - jags_install || true;  
-  - v8_install || true;
+  - if `need_v8`; then v8_install || true; fi
   - dcmtk_install || true;    
   - gsl_install 2.1 || true ; # now checking version
   - remove_neuroc_packages

@@ -70,7 +70,7 @@ before_install:
       brew install -v freetype ;
     fi
   - jags_install || true;  
-  - v8_install || true;
+  - if `need_v8`; then v8_install || true; fi
   - dcmtk_install || true;    
   - gsl_install 2.1 || true ; # now checking version
   - export cmake_version="3.11"
