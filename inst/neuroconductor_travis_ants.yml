@@ -195,7 +195,9 @@ deploy:
 after_deploy:
   - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi; 
   - if [[ "${TRAVIS_R_VERSION_STRING}" = "release" ]]; then
-        Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)' ;
+      echo 'covr::coveralls(type = "all", quiet = FALSE)' > neuroc_covr.R ;
+      travis_wait 100 Rscript neuroc_covr.R ;
+      rm neuroc_covr.R ;
     fi
   # - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" && -z "${run_coverage}" ]]; 
   #   then
