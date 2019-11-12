@@ -3,6 +3,11 @@ sudo: false
 cache: packages
 warnings_are_errors: true
 
+addons:
+  apt:
+    packages:
+    - devscripts
+
 os:
   - linux
   - osx
