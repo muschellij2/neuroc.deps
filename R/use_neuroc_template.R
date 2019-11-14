@@ -70,6 +70,10 @@ use_neuroc_template = function(
                   quiet = !verbose)
     table_path = destfile
   }
+  # if (verbose) {
+  #   message("Getting System Requirements")
+  # }
+  # sreq = system_requirements(path = path)
   if (verbose) {
     message("Rewriting DESCRIPTION")
   }

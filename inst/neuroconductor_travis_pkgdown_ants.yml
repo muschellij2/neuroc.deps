@@ -49,11 +49,7 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
-  - codename=`linux_codename`;
-  - if [ "${codename}" = "trusty" ];
-    then
-      start_xvfb ;
-    fi
+  - start_xvfb ;
   - jags_install || true;
   - if `need_v8`; then v8_install || true; fi
   - dcmtk_install || true;
