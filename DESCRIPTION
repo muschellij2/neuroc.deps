@@ -34,4 +34,6 @@ RoxygenNote: 6.1.1
 Suggests: 
     covr,
     testthat,
-    dplyr
+    dplyr,
+    base64enc
+
