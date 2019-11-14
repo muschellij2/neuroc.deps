@@ -33,3 +33,23 @@ dcf_collapser = function(desc, cn) {
   }
   return(desc)
 }
+
+
+
+change_yaml_field = function(template, field_name, field_value) {
+  if (!is.null(field_value)) {
+    #  make into yaml
+    template = paste(template, collapse = "\n")
+    template = yaml::yaml.load(string = template,
+                               as.named.list = TRUE)
+    template[[field_name]] = field_value
+    # revert back to string
+    template = yaml::as.yaml(
+      template,
+      indent = 2,
+      indent.mapping.sequence = TRUE)
+    template = strsplit(template, "\n")[[1]]
+  }
+
+  return(template)
+}

@@ -47,3 +47,4 @@ merge_ci_fields = function(file, template, ...) {
 
   return(template)
 }
+

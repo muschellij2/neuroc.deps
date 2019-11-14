@@ -19,6 +19,8 @@
 #' Passed to \code{\link{get_repo_dep_mat}}.
 #' @param fix_remotes Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
 #' file before running.
+#' @param linux_distribution Travis Linux distribution to override default
+#' @param osx_image Travis OSX image version to override default
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -38,6 +40,8 @@ use_neuroc_template = function(
   merge_ci = FALSE,
   force = deployment,
   fix_remotes = TRUE,
+  linux_distribution = NULL,
+  osx_image = NULL,
   ...) {
 
   if (!file.exists(path)) {
@@ -182,6 +186,12 @@ use_neuroc_template = function(
       # End Merging CI fields
       ############################
     }
+    template = change_yaml_field(template,
+                                 field_name = "osx_image",
+                                 osx_image)
+    template = change_yaml_field(template,
+                                 field_name = "dist",
+                                 linux_distribution)
     n_commit_id = neuroc_deps_commit_id()
     if (!is.na(n_commit_id)) {
       template = c(template, "",
