@@ -1,7 +1,7 @@
 # Neuroconductor Template no ANTs
 language: r
 warnings_are_errors: true
-cache: false
+cache: packages
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
@@ -48,6 +48,7 @@ env:
     - DISPLAY=:99.0
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
     - _R_CHECK_FORCE_SUGGESTS_=false
+    - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 r_check_args: --as-cran --install-args=--build
 # r_check_args: "--as-cran --install-args=--build"
 

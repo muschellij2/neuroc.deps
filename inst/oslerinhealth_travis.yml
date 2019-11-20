@@ -40,6 +40,7 @@ env:
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=oslerinhealth
     - DISPLAY=:99.0
+    - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 r_check_args: --as-cran --install-args=--build
 
 before_install:

@@ -36,12 +36,13 @@ matrix:
 
 env:
   global:
-  - R_BUILD_ARGS="--no-manual"
-  - R_CHECK_ARGS="--as-cran --install-args=--build"
-  - RGL_USE_NULL=TRUE
-  - WARNINGS_ARE_ERRORS=1
-  - PROJECT_NAME=oslerinhealth
-  - DISPLAY=:99.0
+    - R_BUILD_ARGS="--no-manual"
+    - R_CHECK_ARGS="--as-cran --install-args=--build"
+    - RGL_USE_NULL=TRUE
+    - WARNINGS_ARE_ERRORS=1
+    - PROJECT_NAME=oslerinhealth
+    - DISPLAY=:99.0
+    - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 
 before_install:
   - ulimit -n 2048
