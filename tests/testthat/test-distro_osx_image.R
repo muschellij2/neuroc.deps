@@ -4,8 +4,14 @@ test_that("OSX Image and distribution change", {
 
   table_path = neuroc_table_path(user = "neuroconductor")
   destfile = tempfile(fileext = ".txt")
-  download.file(url = table_path, destfile = destfile,
+  x = try({
+    download.file(url = table_path, destfile = destfile,
                 quiet = TRUE)
+  })
+  if (inherits(x, "try-error") || x != 0) {
+    httr::GET(table_path, httr::write_disk(destfile, overwrite = TRUE),
+              config = httr::config(ssl_verifypeer = FALSE))
+  }
   table_path = destfile
   Sys.setenv("NEUROC_TRAVIS_KEY" = "asdfdsdf")
   Sys.setenv("NEUROC_APPVEYOR_KEY" = "asdfdsdf")
