@@ -4,8 +4,12 @@
 \alias{neuroc_table_path}
 \title{Path to Neuroconductor Remote Commits}
 \usage{
-neuroc_table_path(table_path = NULL, dev = FALSE, user = NULL,
-  deployment = FALSE)
+neuroc_table_path(
+  table_path = NULL,
+  dev = FALSE,
+  user = NULL,
+  deployment = FALSE
+)
 }
 \arguments{
 \item{table_path}{Path to the table.  If unspecified, uses defaults}

@@ -6,13 +6,17 @@
 \alias{get_repo_install_order}
 \title{Get Install Order of Repositories}
 \usage{
-get_repo_dep_mat(repos, dep_type = c("Depends", "Imports", "Suggests"),
-  force = FALSE, url = "https://api.github.com", ...)
+get_repo_dep_mat(
+  repos,
+  dep_type = c("Depends", "Imports", "Suggests"),
+  force = FALSE,
+  url = "https://api.github.com",
+  ...
+)
 
 install_order(dep_mat)
 
-get_repo_install_order(repos, dep_type = c("Depends", "Imports",
-  "Suggests"))
+get_repo_install_order(repos, dep_type = c("Depends", "Imports", "Suggests"))
 }
 \arguments{
 \item{repos}{Repositories to find the install order}

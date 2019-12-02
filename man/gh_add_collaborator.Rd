@@ -4,8 +4,12 @@
 \alias{gh_add_collaborator}
 \title{Add GitHub Collaborator}
 \usage{
-gh_add_collaborator(repo = "neuroconductor/ANTsR",
-  username = "muschellij2", .token = NULL, ...)
+gh_add_collaborator(
+  repo = "neuroconductor/ANTsR",
+  username = "muschellij2",
+  .token = NULL,
+  ...
+)
 }
 \arguments{
 \item{repo}{Repository Name, in the form of user/repo}

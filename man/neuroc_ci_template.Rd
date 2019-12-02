@@ -6,8 +6,7 @@
 \alias{neuroc_appveyor_template}
 \title{Neuroconductor CI Template}
 \usage{
-neuroc_ci_template(path = "DESCRIPTION", ci = c("travis", "appveyor"),
-  ...)
+neuroc_ci_template(path = "DESCRIPTION", ci = c("travis", "appveyor"), ...)
 
 neuroc_travis_template(...)
 

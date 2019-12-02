@@ -5,9 +5,15 @@
 \alias{neuroc_bad_sha}
 \title{Check SHA consistency of the system}
 \usage{
-neuroc_sha_check(release = c("stable", "current"), dev = FALSE,
-  deployment = FALSE, table_path = NULL, user = NULL,
-  drop_packages = NULL, verbose = FALSE)
+neuroc_sha_check(
+  release = c("stable", "current"),
+  dev = FALSE,
+  deployment = FALSE,
+  table_path = NULL,
+  user = NULL,
+  drop_packages = NULL,
+  verbose = FALSE
+)
 
 neuroc_bad_sha(...)
 }

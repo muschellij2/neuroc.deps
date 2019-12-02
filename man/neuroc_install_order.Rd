@@ -5,13 +5,25 @@
 \alias{neuroc_dep_mat}
 \title{Neuroconductor Package Install Order}
 \usage{
-neuroc_install_order(release = c("stable", "current"), dev = FALSE,
-  deployment = FALSE, table_path = NULL, user = NULL,
-  force = FALSE, ...)
+neuroc_install_order(
+  release = c("stable", "current"),
+  dev = FALSE,
+  deployment = FALSE,
+  table_path = NULL,
+  user = NULL,
+  force = FALSE,
+  ...
+)
 
-neuroc_dep_mat(release = c("stable", "current"), dev = FALSE,
-  table_path = NULL, deployment = FALSE, user = NULL,
-  force = FALSE, ...)
+neuroc_dep_mat(
+  release = c("stable", "current"),
+  dev = FALSE,
+  table_path = NULL,
+  deployment = FALSE,
+  user = NULL,
+  force = FALSE,
+  ...
+)
 }
 \arguments{
 \item{release}{Stable or development version}

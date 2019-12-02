@@ -70,8 +70,17 @@ use_neuroc_template = function(
       message("Downloading Table of packages")
     }
     destfile = tempfile(fileext = ".txt")
-    download.file(url = table_path, destfile = destfile,
+    dl = download.file(url = table_path, destfile = destfile,
                   quiet = !verbose)
+    if (dl != 0 && grepl("^https", table_path)) {
+      table_path = sub("https", "http", table_path)
+      destfile2 = tempfile(fileext = ".txt")
+      dl = download.file(url = table_path, destfile = destfile2,
+                         quiet = !verbose)
+      if (dl == 0) {
+        destfile = destfile2
+      }
+    }
     table_path = destfile
   }
   # if (verbose) {

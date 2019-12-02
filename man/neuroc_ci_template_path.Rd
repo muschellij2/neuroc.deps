@@ -6,8 +6,14 @@
 \alias{neuroc_appveyor_template_path}
 \title{Neuroconductor CI Template Paths}
 \usage{
-neuroc_ci_template_path(ci = c("travis", "appveyor", "travis_pkgdown"),
-  ants = FALSE, dev = FALSE, user = NULL, deployment = FALSE, ...)
+neuroc_ci_template_path(
+  ci = c("travis", "appveyor", "travis_pkgdown"),
+  ants = FALSE,
+  dev = FALSE,
+  user = NULL,
+  deployment = FALSE,
+  ...
+)
 
 neuroc_travis_template_path(...)
 

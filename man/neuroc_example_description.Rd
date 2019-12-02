@@ -4,8 +4,9 @@
 \alias{neuroc_example_description}
 \title{Make Example DESCRIPTION file for testing}
 \usage{
-neuroc_example_description(package = c("extrantsr", "cifti", "spotgear",
-  "ITKR", "mimosa"))
+neuroc_example_description(
+  package = c("extrantsr", "cifti", "spotgear", "ITKR", "mimosa")
+)
 }
 \arguments{
 \item{package}{packages in \code{neuroc.deps} that have an example}

@@ -4,9 +4,16 @@
 \alias{neuroc_dep_ants}
 \title{Neuroconductor ANTsR Dependency}
 \usage{
-neuroc_dep_ants(release = c("stable", "current"), dev = FALSE,
-  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"), table_path = NULL,
-  deployment = FALSE, user = NULL, force = FALSE, ...)
+neuroc_dep_ants(
+  release = c("stable", "current"),
+  dev = FALSE,
+  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
+  table_path = NULL,
+  deployment = FALSE,
+  user = NULL,
+  force = FALSE,
+  ...
+)
 }
 \arguments{
 \item{release}{Stable or development version}
