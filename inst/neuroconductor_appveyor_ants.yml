@@ -74,13 +74,13 @@ build_script:
   - ps: echo '@bash.exe ../travis_helpers.sh %*' | Out-File -Encoding ASCII .\travis_helpers.sh.cmd
   - bash -c "echo '^travis_helpers\.sh\.cmd$' >> .Rbuildignore"
   - echo "Remote deps for ITKR"
-  - export PACKAGE_NAME=`travis_helpers.sh package_name`
-  - if [[ "%PACKAGE_NAME%" != "ITKR" ]] (
+  - sh: export PACKAGE_NAME=`travis_helpers.sh package_name`
+  - sh: if [[ "%PACKAGE_NAME%" != "ITKR" ]] (
         then
         travis_helpers.sh install_missing_remote_deps muschellij2/ITKR;
         travis_helpers.sh gh_binary_install muschellij2/ITKR;
         fi
-  - if [[ "%PACKAGE_NAME%" == "ANTsR" ]]
+  - sh: if [[ "%PACKAGE_NAME%" == "ANTsR" ]]
         then 
           travis_helpers.sh install_missing_remote_deps muschellij2/ANTsRCore;
           travis_helpers.sh gh_binary_install muschellij2/ANTsRCore;
