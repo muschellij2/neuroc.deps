@@ -8,7 +8,6 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
-  - rm -f travis-tool.sh
 
 platform: x64
 
@@ -42,6 +41,7 @@ environment:
       R_VER: 3.3
 
 install:
+  - rm -f travis-tool.sh
   - ps: Bootstrap
   - ps: (new-object net.webclient).DownloadFile('https://github.com/muschellij2/neuroc_dependencies/raw/master/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
   - cmd: C:\projects\JAGS-4.2.0.exe /S
