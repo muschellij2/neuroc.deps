@@ -71,7 +71,7 @@ use_neuroc_template = function(
     }
     destfile = tempfile(fileext = ".txt")
     dl = download.file(url = table_path, destfile = destfile,
-                  quiet = !verbose)
+                       quiet = !verbose)
     if (dl != 0 && grepl("^https", table_path)) {
       table_path = sub("https", "http", table_path)
       destfile2 = tempfile(fileext = ".txt")
@@ -195,12 +195,14 @@ use_neuroc_template = function(
       # End Merging CI fields
       ############################
     }
-    template = change_yaml_field(template,
-                                 field_name = "osx_image",
-                                 osx_image)
-    template = change_yaml_field(template,
-                                 field_name = "dist",
-                                 linux_distribution)
+    if (ici %in% "travis") {
+      template = change_yaml_field(template,
+                                   field_name = "osx_image",
+                                   osx_image)
+      template = change_yaml_field(template,
+                                   field_name = "dist",
+                                   linux_distribution)
+    }
     n_commit_id = neuroc_deps_commit_id()
     if (!is.na(n_commit_id)) {
       template = c(template, "",

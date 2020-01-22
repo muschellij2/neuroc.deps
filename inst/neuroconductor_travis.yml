@@ -96,6 +96,7 @@ before_install:
       echo "reset R" ;
       alias R="travis_wait 100 ${x}" ;
     fi
+  - setup_python 3.6 false ;
   - install_python_requirements ;    
   - R CMD javareconf ;  
   # - ralias; R -e "cat('test')"; ls travis_*.log
