@@ -38,8 +38,8 @@ test_that("checking non-ants Neuroc Package", {
   ##############################################
   L = neuroc.deps::neuroc_example_description(package = "extrantsr")
 
-  tester(function() {
-    use_neuroc_template(
+  tester({
+    out = use_neuroc_template(
       path = L$description_file,
       table_path = table_path,
       user = "neuroconductor",
@@ -47,11 +47,25 @@ test_that("checking non-ants Neuroc Package", {
       verbose = FALSE)
   })
 
+  testthat::expect_true(file.exists(file.path(L$directory, ".travis.yml")))
+
+  tester({
+    out = use_neuroc_template(
+      path = L$description_file,
+      table_path = table_path,
+      os_to_run = c("linux"),
+      user = "neuroconductor",
+      dev = FALSE,
+      verbose = FALSE)
+  })
+  res = yaml::yaml.load_file(out[["travis"]])
+  testthat::expect_equal(res$os, "linux")
+
 
   L = neuroc.deps::neuroc_example_description(package = "ITKR")
 
-  tester(function() {
-      neuroc_require_ants(
+  tester({
+    neuroc_require_ants(
       path = L$description_file,
       table_path = table_path,
       user = "neuroconductor",

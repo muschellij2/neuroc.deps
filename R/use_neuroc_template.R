@@ -21,6 +21,7 @@
 #' file before running.
 #' @param linux_distribution Travis Linux distribution to override default
 #' @param osx_image Travis OSX image version to override default
+#' @param os_to_run The operating systems to run on Travis
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -36,6 +37,7 @@ use_neuroc_template = function(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
+  os_to_run = c("linux", "osx"),
   deployment = FALSE,
   merge_ci = FALSE,
   force = deployment,
@@ -194,6 +196,16 @@ use_neuroc_template = function(
       ############################
       # End Merging CI fields
       ############################
+    }
+    sd_os = setdiff(os_to_run, c("osx", "linux") )
+    sd_os_op = setdiff(c("osx", "linux"), os_to_run)
+
+    if (ici %in% "travis" &&
+        (length(sd_os) == 0 ||
+        length(sd_os_op) == 0)) {
+      template = change_yaml_field(template,
+                                   field_name = "os",
+                                   os_to_run)
     }
     if (ici %in% "travis") {
       template = change_yaml_field(template,

@@ -18,6 +18,7 @@ use_neuroc_template(
   bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
+  os_to_run = c("linux", "osx"),
   deployment = FALSE,
   merge_ci = FALSE,
   force = deployment,
@@ -68,6 +69,8 @@ remove_neuroc_packages(
 \item{verbose}{print diagnostic messages}
 
 \item{user}{User for the repositories}
+
+\item{os_to_run}{The operating systems to run on Travis}
 
 \item{deployment}{indicator if this is a release, not standard running.
 Just deployment.}
