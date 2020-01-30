@@ -38,6 +38,7 @@ dcf_collapser = function(desc, cn) {
 
 change_yaml_field = function(template, field_name, field_value) {
   if (!is.null(field_value)) {
+    template = gsub("(\\s+)on:(\\s+)$", "\\1'on':\\2", template)
     #  make into yaml
     template = paste(template, collapse = "\n")
     template = yaml::yaml.load(string = template,

@@ -1,3 +1,8 @@
+# 0.19.4
+
+* Fix for `on:` in the YAML.
+* Allowed for specifying the distro for linux and OS.
+
 # 0.17.3
 
 * `neuroc_sha_check` now exists.
