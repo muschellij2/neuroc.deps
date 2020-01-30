@@ -12,7 +12,6 @@ addons:
     packages:
     - libfftw3-dev
     - libgsl0-dev
-    - libgsl0ldbl
     - jags
     - devscripts
 
@@ -44,6 +43,7 @@ env:
 r_check_args: --as-cran --install-args=--build
 
 before_install:
+  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi  
   - ulimit -n 2048
   - export PROJ_DIR=`basename $PWD`
   - fname=travis_helpers.sh
@@ -113,7 +113,7 @@ deploy:
     secure: "${NEUROCKEY}"
   file_glob: true
   file: ${PACKAGE_NAME}*.t*gz
-  on:
+  'on':
     tags: true
 
 after_deploy:

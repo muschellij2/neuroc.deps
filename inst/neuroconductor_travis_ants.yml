@@ -53,7 +53,7 @@ env:
   - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 
 before_install:
-  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi
+  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi  
   - ulimit -n 2048  
   - export LD_LIBRARY_PATH=/usr/local/clang/lib:${LD_LIBRARY_PATH}
   - export PROJ_DIR=`basename $PWD`
@@ -187,7 +187,7 @@ deploy:
   file_glob: true
   overwrite: true   
   file: ${PACKAGE_NAME}*.t*gz
-  on:
+  'on':
     tags: true
 
 after_deploy:
