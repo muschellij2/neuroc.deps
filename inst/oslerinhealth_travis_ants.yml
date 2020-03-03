@@ -1,7 +1,7 @@
 # OslerInHealth Template for ANTsR Dep
 language: r
-cache: packages
 warnings_are_errors: true
+cache: packages
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
@@ -10,9 +10,14 @@ dist: trusty
 addons:
   apt:
     packages:
+    - libcurl4-openssl-dev
+    - libxml2-dev       
     - libfftw3-dev
     - libgsl0-dev
+    - mesa-common-dev 
+    - libglu1-mesa-dev 
     - devscripts
+    - jags 
 
 os:
   - linux
@@ -41,6 +46,8 @@ env:
     - WARNINGS_ARE_ERRORS=1
     - PROJECT_NAME=oslerinhealth
     - DISPLAY=:99.0
+    - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
+    - _R_CHECK_FORCE_SUGGESTS_=false
     - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 
 before_install:
@@ -53,11 +60,7 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
-  - codename=`linux_codename`;
-  - if [ "${codename}" = "trusty" ];
-    then
-      start_xvfb ;
-    fi
+  - start_xvfb ;  
   - jags_install || true;  
   - if `need_v8`; then v8_install || true; fi
   - dcmtk_install || true;    
@@ -71,7 +74,8 @@ before_install:
   - x=`export_clang_cxx`; eval ${x}
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
-      no_open_mp ;
+      no_open_mp ; 
+      brew install -v freetype ;      
     fi
   - echo "CC=${CC}, CXX=${CXX}, CXX1X=${CXX1X}"
   - echo "CXX1XSTD=${CXX1XSTD}, CXX11=${CXX11}"
@@ -109,7 +113,9 @@ before_install:
   - cat DESCRIPTION
   - echo $PATH ;
   - install_deps_no_suggests
-  - install_python_requirements ;
+  - setup_python 3.6 false ;  
+  - install_python_requirements ; 
+  - R CMD javareconf ;     
   - travis_run_cache
 
 script:
@@ -169,16 +175,15 @@ deploy:
   api_key:
     secure: "${NEUROCKEY}"
   file_glob: true
+  overwrite: true     
   file: ${PACKAGE_NAME}*.t*gz
   'on':
     tags: true
 
 after_deploy:
   - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi; 
-  - if [[ "${PACKAGE_NAME}" != "ANTsR" && "${PACKAGE_NAME}" != "ITKR" && "${PACKAGE_NAME}" != "ANTsRCore" && -z "${run_coverage}" ]];   
-    then
-      if [[ "${TRAVIS_R_VERSION_STRING}" = "release" ]]; then
-        Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)' ;
-      fi
+  - if [[ "${TRAVIS_R_VERSION_STRING}" = "release" ]]; then
+      echo 'covr::coveralls(type = "all", quiet = FALSE)' > osler_covr.R ;
+      travis_wait 100 Rscript osler_covr.R ;
+      rm osler_covr.R ;
     fi
-
