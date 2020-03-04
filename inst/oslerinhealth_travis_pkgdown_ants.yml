@@ -2,7 +2,6 @@
 language: r
 warnings_are_errors: false
 cache: false
-use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
 dist: trusty
@@ -37,7 +36,7 @@ env:
   - _R_CHECK_FORCE_SUGGESTS_=false
 
 before_install:
-  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi  
+  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi
   - ulimit -n 2048
   - export LD_LIBRARY_PATH=/usr/local/clang/lib:${LD_LIBRARY_PATH}
   - export PROJ_DIR=`basename $PWD`
@@ -111,8 +110,8 @@ before_install:
   - travis_run_cache
 
 script:
-  - Rscript -e 'install.packages("remotes")' 
-  - Rscript -e 'remotes::install_github("hadley/pkgdown")' 
+  - Rscript -e 'install.packages("remotes")'
+  - Rscript -e 'remotes::install_github("hadley/pkgdown")'
   - travis_wait 100 Rscript -e 'pkgdown::build_site()'
 
 after_failure:
@@ -121,11 +120,10 @@ before_deploy:
 
 deploy:
   provider: pages
-  skip-cleanup: true
-  keep-history: true
-  local-dir: docs
+  keep_history: true
+  local_dir: docs
   'on':
     branch: master
-  github_token: $GITHUB_TOKEN
+  token: $GITHUB_TOKEN
 
 after_deploy:

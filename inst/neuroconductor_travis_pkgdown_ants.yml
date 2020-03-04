@@ -2,7 +2,7 @@
 language: r
 warnings_are_errors: false
 cache: false
-use_bioc: true
+bioc_required: true
 cran: http://cran.rstudio.com
 dist: trusty
 
