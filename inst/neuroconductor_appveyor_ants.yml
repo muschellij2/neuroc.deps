@@ -41,6 +41,7 @@ environment:
       R_VER: 3.3
 
 install:
+  - rm -rf .Rprofile  
   - rm -f travis-tool.sh
   - ps: Bootstrap
   - ps: (new-object net.webclient).DownloadFile('https://github.com/muschellij2/neuroc_dependencies/raw/master/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
