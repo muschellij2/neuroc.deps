@@ -112,6 +112,7 @@ script:
   - Rscript -e 'remotes::install_github("hadley/pkgdown")' 
   - travis_wait 100 Rscript -e 'pkgdown::build_site()'
 
+
 deploy:
   provider: pages
   skip_cleanup: true
