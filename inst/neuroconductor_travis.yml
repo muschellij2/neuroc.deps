@@ -10,20 +10,20 @@ addons:
   apt:
     packages:
     - libcurl4-openssl-dev
-    - libxml2-dev
+    - libxml2-dev       
     - libfftw3-dev
     - libgsl0-dev
-    - mesa-common-dev
-    - libglu1-mesa-dev
+    - mesa-common-dev 
+    - libglu1-mesa-dev 
     - devscripts
-
+    
 # r_binary_packages:
 #   - rgl
 
 os:
   - linux
   - osx
-osx_image: xcode9.4
+osx_image: xcode9.4 
 
 services:
   - xvfb
@@ -40,7 +40,7 @@ jobs:
     - r: devel
 
 env:
-  global:
+  global: 
     - RGL_USE_NULL=TRUE
     - PROJECT_NAME=neuroconductor
     - DISPLAY=:99.0
@@ -51,44 +51,44 @@ r_check_args: --as-cran --install-args=--build
 # r_check_args: "--as-cran --install-args=--build"
 
 before_install:
-  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi
+  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi  
   - ulimit -n 2048
-  - export PROJ_DIR=`basename $PWD`
+  - export PROJ_DIR=`basename $PWD`    
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
-  - cat ${fname}; source ${fname}; rm ${fname}
+  - cat ${fname}; source ${fname}; rm ${fname}  
   - cat DESCRIPTION
   - codename=`linux_codename`;
   - start_xvfb ;
   - export rver=`r_version`; echo $rver ;
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
-      no_open_mp ;
+      no_open_mp ; 
       brew install -v freetype ;
     fi
-  - jags_install || true;
+  - jags_install || true;  
   - if `need_v8`; then v8_install || true; fi
-  - dcmtk_install || true;
+  - dcmtk_install || true;    
   - gsl_install 2.1 || true ; # now checking version
   - export cmake_version="3.11"
   - cmake --version
   - x=`cmake_setup`; echo "${x}"; eval ${x};
-  - cmake --version
-  - remove_neuroc_packages
+  - cmake --version  
+  - remove_neuroc_packages 
   - cat DESCRIPTION
   - install_remotes_no_dep
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
   - echo "Package Name is $PACKAGE_NAME"
-  - if [[ "${PACKAGE_NAME}" == "waveslim" ]];
+  - if [[ "${PACKAGE_NAME}" == "waveslim" ]]; 
     then
       fftw_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "dti" || "${PACKAGE_NAME}" == "qMRI" ]];
+  - if [[ "${PACKAGE_NAME}" == "dti" || "${PACKAGE_NAME}" == "qMRI" ]]; 
     then
       gsl_install ;
     fi
-  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" || "${PACKAGE_NAME}" == "Rvision" || "${PACKAGE_NAME}" == "rtapas" ]];
+  - if [[ "${PACKAGE_NAME}" == "ROpenCVLite" || "${PACKAGE_NAME}" == "Rvision" || "${PACKAGE_NAME}" == "rtapas" ]]; 
     then
       shopt -s expand_aliases ;
       x=`Rscript -e "cat(Sys.which('R'))"` ;
@@ -96,8 +96,8 @@ before_install:
       alias R="travis_wait 100 ${x}" ;
     fi
   - setup_python 3.6 false ;
-  - install_python_requirements ;
-  - R CMD javareconf ;
+  - install_python_requirements ;    
+  - R CMD javareconf ;  
   # - ralias; R -e "cat('test')"; ls travis_*.log
 
 after_success:
@@ -112,23 +112,23 @@ before_deploy:
   # - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
   # so no overwrite of linux build
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
-    then
-      PKG_TARBALL=$(ls -1t *.tgz | head -n 1);
+    then 
+      PKG_TARBALL=$(ls -1t *.tgz | head -n 1); 
       PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ;
       mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
       echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
-    fi
+    fi   
   - if [ "$TRAVIS_OS_NAME" = "linux" ];
-    then
-      PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1);
+    then 
+      PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1); 
       PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tar.gz/_'"R${rver}"'.tar.gz/'` ;
       mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ;
       echo "Built tarball is ${PKG_TARBALL_WITH_R}" ;
-    fi
+    fi       
   - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
     then
       rm -f *.tar.gz;
-    fi
+    fi 
 
 deploy:
   provider: releases
@@ -136,14 +136,14 @@ deploy:
   token:
     secure: "${NEUROCKEY}"
   file_glob: true
-  overwrite: true
+  overwrite: true 
   file: ${PACKAGE_NAME}*.t*gz
   'on':
     tags: true
 
 after_deploy:
-  - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi;
-  - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" && -z "${run_coverage}" ]];
+  - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi; 
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" && -z "${run_coverage}" ]]; 
     then
       echo 'covr::coveralls(type = "all", quiet = FALSE)' > neuroc_covr.R ;
       travis_wait 100 Rscript neuroc_covr.R ;
