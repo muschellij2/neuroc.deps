@@ -121,6 +121,7 @@ before_deploy:
 deploy:
   provider: pages
   keep_history: true
+  skip_cleanup: true
   local_dir: docs
   'on':
     branch: master

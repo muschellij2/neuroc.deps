@@ -132,6 +132,7 @@ before_deploy:
 
 deploy:
   provider: releases
+  skip_cleanup: true
   token:
     secure: "${NEUROCKEY}"
   file_glob: true
