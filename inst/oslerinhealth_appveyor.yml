@@ -59,8 +59,9 @@ cache:
 
 # Adapt as necessary starting from here
 build_script:
+  - ps: Progress "Installing Dependencies"
   - travis-tool.sh install_deps
-  - travis-tool.sh install_deps
+  - ps: Progress "Installing Dependencies Done"
 
 test_script:
   - if not exist "C:\rtm" mkdir C:\rtm
@@ -90,7 +91,9 @@ test_script:
   # - set PATH=%PATH%;C:\Windows\System32\Wbem
   # - set PATH=%PATH%;C:\Windows\System32\WindowsPowerShell\v1.0\
   # - set PATH=%PATH%;C:\Program Files\7-Zip
+  - ps: Progress "Running Tests"
   - travis-tool.sh run_tests
+  - ps: Progress "Running Tests Done"
   - ls
   - ls ../
   # - cp ../*.zip ./
