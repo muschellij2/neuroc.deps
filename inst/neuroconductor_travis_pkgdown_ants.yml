@@ -110,6 +110,7 @@ before_install:
 script:
   - Rscript -e 'install.packages("remotes")' 
   - Rscript -e 'remotes::install_github("hadley/pkgdown")' 
+  - travis_wait 100 Rscript -e 'pkgdown::clean_site()'
   - travis_wait 100 Rscript -e 'pkgdown::build_site()'
 
 
