@@ -10,13 +10,13 @@ addons:
   apt:
     packages:
     - libcurl4-openssl-dev
-    - libxml2-dev       
+    - libxml2-dev
     - libfftw3-dev
     - libgsl0-dev
-    - mesa-common-dev 
-    - libglu1-mesa-dev 
+    - mesa-common-dev
+    - libglu1-mesa-dev
     - devscripts
-    - jags 
+    - jags
 
 os:
   - linux
@@ -50,7 +50,7 @@ env:
     - CACHE_NAME="${TRAVIS_OS_NAME}-R-${TRAVIS_R_VERSION}"
 
 before_install:
-  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi  
+  - if [ "$TRAVIS_DIST" = "trusty" ]; then sudo apt-get -y install libgsl0ldbl ; fi
   - ulimit -n 2048
   - export LD_LIBRARY_PATH=/usr/local/clang/lib:${LD_LIBRARY_PATH}
   - export PROJ_DIR=`basename $PWD`
@@ -59,11 +59,11 @@ before_install:
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
-  - start_xvfb ;  
-  - jags_install || true;  
+  - start_xvfb ;
+  - jags_install || true;
   - if `need_v8`; then v8_install || true; fi
-  - dcmtk_install || true;    
-  - gsl_install 2.1 || true ; # now checking version    
+  - dcmtk_install || true;
+  - gsl_install 2.1 || true ; # now checking version
   - export rver=`r_version`; echo $rver ;
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
@@ -73,8 +73,8 @@ before_install:
   - x=`export_clang_cxx`; eval ${x}
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
-      no_open_mp ; 
-      brew install -v freetype ;      
+      no_open_mp ;
+      brew install -v freetype ;
     fi
   - echo "CC=${CC}, CXX=${CXX}, CXX1X=${CXX1X}"
   - echo "CXX1XSTD=${CXX1XSTD}, CXX11=${CXX11}"
@@ -112,9 +112,9 @@ before_install:
   - cat DESCRIPTION
   - echo $PATH ;
   - install_deps_no_suggests
-  - setup_python 3.6 false ;  
-  - install_python_requirements ; 
-  - R CMD javareconf ;     
+  - setup_python 3.6 false ;
+  - install_python_requirements ;
+  - R CMD javareconf ;
   - travis_run_cache
 
 script:
@@ -171,16 +171,15 @@ before_deploy:
 deploy:
   provider: releases
   skip_cleanup: true
-  token:
-    secure: "${NEUROCKEY}"
+  token: $GITHUB_TOKEN
   file_glob: true
-  overwrite: true     
+  overwrite: true
   file: ${PACKAGE_NAME}*.t*gz
   'on':
     tags: true
 
 after_deploy:
-  - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi; 
+  - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false"; else run_coverage=; fi;
   - if [[ "${TRAVIS_R_VERSION_STRING}" = "release" ]]; then
       echo 'covr::coveralls(type = "all", quiet = FALSE)' > osler_covr.R ;
       travis_wait 100 Rscript osler_covr.R ;
