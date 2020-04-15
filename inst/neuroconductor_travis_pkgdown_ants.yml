@@ -16,6 +16,7 @@ addons:
     - mesa-common-dev 
     - libglu1-mesa-dev 
     - devscripts
+    - libomp-dev
 
 os:
   - linux
