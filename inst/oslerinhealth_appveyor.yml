@@ -15,7 +15,7 @@ platform:
 
 environment:
   global:
-    NOT_CRAN: true    
+    NOT_CRAN: true
     USE_RTOOLS: true
     R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch "
     WARNINGS_ARE_ERRORS: 1
@@ -24,9 +24,13 @@ environment:
     R_ARCH: x64
   matrix:
     - R_VERSION: devel
-      R_VER: 3.7
+      R_VER: 4.1
 
     - R_VERSION: release
+      R_VER: 4.0
+
+    - R_VERSION: 3.6.2
+      CRAN: http://cran.rstudio.com
       R_VER: 3.6
 
     - R_VERSION: 3.5.3
@@ -37,13 +41,9 @@ environment:
       CRAN: http://cran.rstudio.com
       R_VER: 3.4
 
-    - R_VERSION: 3.3.3
-      CRAN: http://cran.rstudio.com
-      R_VER: 3.3
-
 
 install:
-  - rm -rf .Rprofile  
+  - rm -rf .Rprofile
   - ps: Bootstrap
   - ps: (new-object net.webclient).DownloadFile('https://github.com/muschellij2/neuroc_dependencies/raw/master/JAGS-4.2.0-Rtools33.exe', 'C:\projects\JAGS-4.2.0.exe')
   - cmd: C:\projects\JAGS-4.2.0.exe /S

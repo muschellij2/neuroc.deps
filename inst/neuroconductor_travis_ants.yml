@@ -4,7 +4,7 @@ warnings_are_errors: true
 cache: packages
 bioc_required: true
 cran: http://cran.rstudio.com
-dist: trusty
+dist: xenial
 
 addons:
   apt:
@@ -30,9 +30,9 @@ services:
   - xvfb
 
 r:
-- 3.3
 - 3.4
 - 3.5
+- 3.6
 - release
 - devel
 
