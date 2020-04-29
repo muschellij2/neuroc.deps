@@ -17,6 +17,8 @@ addons:
     - libglu1-mesa-dev
     - devscripts
     - libomp-dev
+    - libhdf5-serial-dev 
+    - libhdf5-dev
 
 os:
   - linux
@@ -117,6 +119,10 @@ before_install:
   - if [[ "${PACKAGE_NAME}" == "ANTsR" ]];
     then
       export _R_CHECK_FORCE_SUGGESTS_=false ;
+    fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];
+    then 
+      hdf5_install ;
     fi
   - cat DESCRIPTION
   - install_remotes_no_dep
