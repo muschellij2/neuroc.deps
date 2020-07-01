@@ -74,7 +74,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ;
-      brew install -v freetype ;
     fi
   - echo "CC=${CC}, CXX=${CXX}, CXX1X=${CXX1X}"
   - echo "CXX1XSTD=${CXX1XSTD}, CXX11=${CXX11}"

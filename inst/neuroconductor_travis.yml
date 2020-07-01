@@ -17,7 +17,7 @@ addons:
     - libglu1-mesa-dev
     - devscripts
     - libomp-dev
-    - libhdf5-serial-dev 
+    - libhdf5-serial-dev
     - libhdf5-dev
 
 # r_binary_packages:
@@ -68,7 +68,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ;
-      brew install -v freetype ;
     fi
   - jags_install || true;
   - if `need_v8`; then v8_install || true; fi
@@ -104,12 +103,12 @@ before_install:
       alias R="travis_wait 100 ${x}" ;
     fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
-    then 
+    then
       if [ `need_hdf5` ];
-      then 
+      then
         hdf5_install ;
-      fi 
-    fi 
+      fi
+    fi
   - setup_python 3.6 false ;
   - install_python_requirements ;
   - R CMD javareconf ;

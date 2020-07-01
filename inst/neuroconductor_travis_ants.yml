@@ -17,7 +17,7 @@ addons:
     - libglu1-mesa-dev
     - devscripts
     - libomp-dev
-    - libhdf5-serial-dev 
+    - libhdf5-serial-dev
     - libhdf5-dev
 
 os:
@@ -79,7 +79,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ;
-      brew install -v freetype ;
     fi
   - echo "CC=${CC}, CXX=${CXX}, CXX1X=${CXX1X}"
   - echo "CXX1XSTD=${CXX1XSTD}, CXX11=${CXX11}"
@@ -121,7 +120,7 @@ before_install:
       export _R_CHECK_FORCE_SUGGESTS_=false ;
     fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
-    then 
+    then
       hdf5_install ;
     fi
   - cat DESCRIPTION

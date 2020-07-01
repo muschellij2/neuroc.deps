@@ -62,7 +62,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       no_open_mp ;
-      brew install -v freetype ;
     fi
   - jags_install || true;
   - if `need_v8`; then v8_install || true; fi
