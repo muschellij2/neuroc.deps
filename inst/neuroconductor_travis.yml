@@ -24,8 +24,8 @@ addons:
 #   - rgl
 
 os:
-  - linux
   - osx
+  - linux
 osx_image: xcode9.4
 
 services:
