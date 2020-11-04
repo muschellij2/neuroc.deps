@@ -111,6 +111,7 @@ before_install:
     fi
   - setup_python 3.6 false ;
   - install_python_requirements ;
+  - reticulate_install_python_requirements ;
   - R CMD javareconf || true;
   - sudo R CMD javareconf || true;
   # - ralias; R -e "cat('test')"; ls travis_*.log

@@ -83,6 +83,7 @@ before_install:
   - echo "Package Name is $PACKAGE_NAME"
   - setup_python 3.6 false ;
   - install_python_requirements ;
+  - reticulate_install_python_requirements ;  
   - R CMD javareconf ;
 
   # - ralias; R -e "cat('test')"; ls travis_*.log

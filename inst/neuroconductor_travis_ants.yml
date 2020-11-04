@@ -130,6 +130,7 @@ before_install:
   - install_deps_no_suggests
   - setup_python 3.6 false ;
   - install_python_requirements ;
+  - reticulate_install_python_requirements ;  
   - R CMD javareconf || true ;
   - sudo R CMD javareconf || true ;
   - travis_run_cache

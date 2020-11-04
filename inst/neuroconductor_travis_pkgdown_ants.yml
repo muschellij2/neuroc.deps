@@ -105,6 +105,7 @@ before_install:
   - echo $PATH ;
   - install_deps_no_suggests
   - install_python_requirements ;
+  - reticulate_install_python_requirements ;  
   - R CMD javareconf ;
   - travis_run_cache
 
