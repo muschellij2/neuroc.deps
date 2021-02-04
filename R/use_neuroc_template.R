@@ -1,3 +1,26 @@
+get_remote_table_path = function(table_path, verbose = TRUE) {
+  if (grepl("^http", table_path)) {
+    if (verbose) {
+      message("Downloading Table of packages")
+    }
+    destfile = tempfile(fileext = ".txt")
+    dl = download.file(url = table_path, destfile = destfile,
+                       quiet = !verbose)
+    if (dl != 0 && grepl("^https", table_path)) {
+      table_path = sub("https", "http", table_path)
+      destfile2 = tempfile(fileext = ".txt")
+      dl = download.file(url = table_path, destfile = destfile2,
+                         quiet = !verbose)
+      if (dl == 0) {
+        destfile = destfile2
+      }
+    }
+    table_path = destfile
+  }
+  table_path
+}
+
+
 #' Use Neuroconductor Template
 #'
 #' @param path path to DESCRIPTION file
@@ -67,24 +90,8 @@ use_neuroc_template = function(
     user = user,
     deployment = deployment)
 
-  if (grepl("^http", table_path)) {
-    if (verbose) {
-      message("Downloading Table of packages")
-    }
-    destfile = tempfile(fileext = ".txt")
-    dl = download.file(url = table_path, destfile = destfile,
-                       quiet = !verbose)
-    if (dl != 0 && grepl("^https", table_path)) {
-      table_path = sub("https", "http", table_path)
-      destfile2 = tempfile(fileext = ".txt")
-      dl = download.file(url = table_path, destfile = destfile2,
-                         quiet = !verbose)
-      if (dl == 0) {
-        destfile = destfile2
-      }
-    }
-    table_path = destfile
-  }
+  table_path = get_remote_table_path(table_path, verbose)
+
   # if (verbose) {
   #   message("Getting System Requirements")
   # }
