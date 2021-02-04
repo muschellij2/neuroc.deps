@@ -13,6 +13,7 @@
 #'
 #' @examples
 #' neuroc_ci_template_path()
+#' neuroc_ci_template_path(ci = "autoci")
 #' neuroc_appveyor_template_path()
 #' neuroc_ci_template_path(ants = TRUE)
 #' neuroc_travis_template_path()
@@ -20,7 +21,7 @@
 #' neuroc_appveyor_template_path()
 #' neuroc_appveyor_template_path(ants = TRUE)
 neuroc_ci_template_path = function(
-  ci = c("travis", "appveyor", "travis_pkgdown"),
+  ci = c("travis", "appveyor", "travis_pkgdown", "autoci", "tic"),
   ants = FALSE,
   dev = FALSE,
   user = NULL,
@@ -28,16 +29,30 @@ neuroc_ci_template_path = function(
   ...) {
   ci = match.arg(ci)
 
+  if (ci == "autoci") {
+    file = "autoci.yml"
+    file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
+    return(file)
+  }
+  if (ci == "tic") {
+    file = "tic.R"
+    file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
+    return(file)
+  }
   user = neuroc_user(user = user, dev = dev, deployment = deployment)
   user = switch(user,
-    "neuroconductor" = "neuroconductor",
-    "neuroconductor-devel" = "neuroconductor",
-    "neuroconductor-releases" = "neuroconductor",
-    "neuroconductor-devel-releases" = "neuroconductor",
-    "oslerinhealth" = "oslerinhealth",
-    "oslerinhealth-releases" = "oslerinhealth"
+                "neuroconductor" = "neuroconductor",
+                "neuroconductor-devel" = "neuroconductor",
+                "neuroconductor-releases" = "neuroconductor",
+                "neuroconductor-devel-releases" = "neuroconductor",
+                "oslerinhealth" = "oslerinhealth",
+                "oslerinhealth-releases" = "oslerinhealth"
   )
 
+  if (ci == "github") {
+    file = paste0(user, "_", "github.yml")
+    file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
+  }
   if ((user == "neuroconductor" || user == "oslerinhealth") & ci == "travis_pkgdown") {
     ants = TRUE
   }

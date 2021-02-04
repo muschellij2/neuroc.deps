@@ -20,6 +20,35 @@ get_remote_table_path = function(table_path, verbose = TRUE) {
   table_path
 }
 
+copy_and_ignore_file = function(ci, user, dev, deployment, pkg_directory,
+                                outfile = NULL) {
+
+  template_file = neuroc_ci_template_path(
+    ci = ci,
+    ants = FALSE,
+    user = user,
+    dev = dev,
+    deployment = deployment)
+  if (is.null(outfile)) {
+    outfile = basename(template_file)
+  }
+  ####################
+  # Adding build ignoring
+  ####################
+  usethis::use_build_ignore(outfile)
+  outfile = file.path(pkg_directory, outfile)
+  if (file.exists(outfile)) {
+    bak = paste0(outfile, ".bak")
+    file.copy(outfile, bak, overwrite = TRUE)
+
+    ####################
+    # Adding build ignoring
+    ####################
+    usethis::use_build_ignore(bak)
+  }
+  file.copy(template_file, outfile, overwrite = TRUE)
+  outfile
+}
 
 #' Use Neuroconductor Template
 #'
@@ -30,21 +59,14 @@ get_remote_table_path = function(table_path, verbose = TRUE) {
 #' \code{\link{extract_ci_fields}}
 #' @param table_path Path to the table of packages for neuroconductor
 #' @param release Stable or development version
-#' @param bin_packages Binaries packages required
 #' @param verbose print diagnostic messages
 #' @param user User for the repositories
-#' @param merge_ci Should CI fields be merged?  If so,
-#' \code{\link{extract_ci_fields}} is called to grab the relevant fields.
-#' Fields cannot currently be a list
 #' @param deployment indicator if this is a release, not standard running.
 #' Just deployment.
 #' @param force should this stop (\code{FALSE}) on missing DESCRIPTION files?
 #' Passed to \code{\link{get_repo_dep_mat}}.
 #' @param fix_remotes Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
 #' file before running.
-#' @param linux_distribution Travis Linux distribution to override default
-#' @param osx_image Travis OSX image version to override default
-#' @param os_to_run The operating systems to run on Travis
 #'
 #' @return Copy the template to the current directory
 #' @export
@@ -53,20 +75,14 @@ get_remote_table_path = function(table_path, verbose = TRUE) {
 #' @importFrom usethis use_build_ignore
 use_neuroc_template = function(
   path = "DESCRIPTION",
-  ci = c("travis", "appveyor"),
   dev = FALSE,
   table_path = NULL,
   release = c("stable", "current"),
-  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
-  os_to_run = c("linux", "osx"),
   deployment = FALSE,
-  merge_ci = FALSE,
   force = deployment,
   fix_remotes = TRUE,
-  linux_distribution = NULL,
-  osx_image = NULL,
   ...) {
 
   if (!file.exists(path)) {
@@ -121,116 +137,31 @@ use_neuroc_template = function(
   file.copy(new_desc, path, overwrite = TRUE)
 
   if (verbose) {
-    message(
-      paste0("Checking Dependencies against ",
-             paste(bin_packages, collapse = ", "),
-             " required binaries")
-    )
+    message("Removing workflows")
   }
-  ants = neuroc_require_ants(
-    path = path,
-    dev = dev,
-    table_path = table_path,
-    release = release,
-    bin_packages = bin_packages,
-    verbose = verbose,
-    user = user,
-    deployment = deployment,
-    force = force)
+  workflow_dir <- file.path(pkg_directory, ".github", "workflows")
+  dir.create(workflow_dir, showWarnings = FALSE, recursive = TRUE)
+  x = list.files(path = workflow_dir, pattern = ".y(a|)ml",
+                 ignore.case = TRUE, full.names = TRUE)
+  if (length(x) > 0) file.remove(x)
 
   if (verbose) {
-    message(paste0("Writing CI files")
-    )
+    message("Writing CI files")
   }
-  outfiles = rep(NA, length = length(ci))
-  names(outfiles) = ci
-  for (ici in ci) {
-    # template_file = neuroc_ci_template(path = path, ci = ici, ...)
+  yaml_file = copy_and_ignore_file(
+    ci = "autoci",
+    user, dev, deployment,
+    workflow_dir,
+    outfile = NULL)
+  tic_file = copy_and_ignore_file(
+    ci = "tic",
+    user, dev, deployment,
+    pkg_directory,
+    outfile = "tic.R")
 
-    template_file = neuroc_ci_template_path(
-      ci = ici,
-      ants = ants,
-      user = user,
-      dev = dev,
-      deployment = deployment)
-    if (!grepl("pkgdown", ici)) {
-      template = add_neuroc_keys(
-        template_file,
-        ci = ici,
-        dev = dev,
-        user = user,
-        deployment = deployment)
-    } else {
-      tfile = tempfile()
-      file.copy(template_file, tfile)
-      suppressWarnings({
-        template = readLines(tfile)
-      })
-    }
-    template = set_env_package_name(
-      template,
-      dev = dev,
-      user = user,
-      deployment = deployment)
-    ici = switch(
-      ici,
-      travis_pkgdown = "travis",
-      ici)
-    outfile = switch(
-      ici,
-      travis = ".travis.yml",
-      appveyor = "appveyor.yml")
-    ####################
-    # Adding build ignoring
-    ####################
-    usethis::use_build_ignore(outfile)
-    outfile = file.path(pkg_directory, outfile)
-    if (file.exists(outfile)) {
-      bak = paste0(outfile, ".bak")
-      file.copy(outfile, bak, overwrite = TRUE)
+  outfiles = c(yaml_file, tic_file)
+  n_commit_id = neuroc_deps_commit_id()
 
-      ####################
-      # Adding build ignoring
-      ####################
-      usethis::use_build_ignore(bak)
-
-      ############################
-      # Merging CI fields
-      ############################
-      if (merge_ci) {
-        template = merge_ci_fields(file = outfile, template = template, ...)
-      }
-      ############################
-      # End Merging CI fields
-      ############################
-    }
-    sd_os = setdiff(os_to_run, c("osx", "linux") )
-    sd_os_op = setdiff(c("osx", "linux"), os_to_run)
-
-    if (ici %in% "travis" &&
-        (length(sd_os) == 0 ||
-        length(sd_os_op) == 0)) {
-      template = change_yaml_field(template,
-                                   field_name = "os",
-                                   os_to_run)
-    }
-    if (ici %in% "travis") {
-      template = change_yaml_field(template,
-                                   field_name = "osx_image",
-                                   osx_image)
-      template = change_yaml_field(template,
-                                   field_name = "dist",
-                                   linux_distribution)
-    }
-    n_commit_id = neuroc_deps_commit_id()
-    if (!is.na(n_commit_id)) {
-      template = c(template, "",
-                   paste0("# neuroc.deps commit id:",
-                          n_commit_id))
-    }
-    writeLines(text = template, con = outfile)
-    outfiles[ici] = outfile
-  }
   return(outfiles)
 }
 

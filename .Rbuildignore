@@ -3,3 +3,4 @@
 makefile
 ^\.travis\.yml$
 ^appveyor\.yml$
+^tests/testthat/obsolete$

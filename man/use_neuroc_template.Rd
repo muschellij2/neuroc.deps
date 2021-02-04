@@ -11,20 +11,14 @@
 \usage{
 use_neuroc_template(
   path = "DESCRIPTION",
-  ci = c("travis", "appveyor"),
   dev = FALSE,
   table_path = NULL,
   release = c("stable", "current"),
-  bin_packages = c("ITKR", "ANTsR", "ANTsRCore"),
   verbose = TRUE,
   user = NULL,
-  os_to_run = c("linux", "osx"),
   deployment = FALSE,
-  merge_ci = FALSE,
   force = deployment,
   fix_remotes = TRUE,
-  linux_distribution = NULL,
-  osx_image = NULL,
   ...
 )
 
@@ -56,28 +50,18 @@ remove_neuroc_packages(
 \arguments{
 \item{path}{path to DESCRIPTION file}
 
-\item{ci}{Which continuous integration system}
-
 \item{dev}{Development Site vs. not?}
 
 \item{table_path}{Path to the table of packages for neuroconductor}
 
 \item{release}{Stable or development version}
 
-\item{bin_packages}{Binaries packages required}
-
 \item{verbose}{print diagnostic messages}
 
 \item{user}{User for the repositories}
 
-\item{os_to_run}{The operating systems to run on Travis}
-
 \item{deployment}{indicator if this is a release, not standard running.
 Just deployment.}
-
-\item{merge_ci}{Should CI fields be merged?  If so,
-\code{\link{extract_ci_fields}} is called to grab the relevant fields.
-Fields cannot currently be a list}
 
 \item{force}{should this stop (\code{FALSE}) on missing DESCRIPTION files?
 Passed to \code{\link{get_repo_dep_mat}}.}
@@ -85,12 +69,10 @@ Passed to \code{\link{get_repo_dep_mat}}.}
 \item{fix_remotes}{Run \code{\link{fix_desc_remotes}} on the DESCRIPTION
 file before running.}
 
-\item{linux_distribution}{Travis Linux distribution to override default}
-
-\item{osx_image}{Travis OSX image version to override default}
-
 \item{...}{Additional arguments to pass to
 \code{\link{extract_ci_fields}}}
+
+\item{ci}{Which continuous integration system}
 
 \item{template_file}{file to template}
 
