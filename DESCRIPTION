@@ -2,8 +2,11 @@ Package: neuroc.deps
 Type: Package
 Title: Parses Dependencies for GitHub Packages for Neuroconductor
 Version: 0.20.0
-Author: John Muschelli
-Maintainer: John Muschelli <muschellij2@gmail.com>
+Authors@R: c(person(given = "John",
+           family = "Muschelli",
+           email = "muschellij2@gmail.com",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-6469-1750")))
 Description: Uses functions to interface with 'GitHub' to 
     extract information about packages hosted there.  Creates an install
     order for those packages.
