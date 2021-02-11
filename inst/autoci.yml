@@ -2,31 +2,50 @@ on:
   push:
     tags:
        - '*.[sc]'
+  workflow_dispatch:
 
 name: Neuroconductor-check
 
 jobs:
+  pkgdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-pandoc@master
+      - name: Install dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_dev("pkgdown")
+        shell: Rscript {0}
+      - name: Install package
+        run: R CMD INSTALL .
+      - name: Deploy package
+        run: pkgdown::deploy_to_branch(new_process = FALSE)
+        shell: Rscript {0}
+
   create_release:
     name: Create release
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }} 
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Get tag name
         id: get_tag_name
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.get_tag_name.outputs.VERSION }} 
+          tag_name: ${{ steps.get_tag_name.outputs.VERSION }}
           release_name: Neuroc Release ${{ steps.get_tag_name.outputs.VERSION }}
           draft: false
           prerelease: false
-  
+
   neuroconductor_check:
     needs: create_release
     runs-on: ${{ matrix.config.os }}
@@ -47,7 +66,7 @@ jobs:
           - {os: ubuntu-16.04,   r: 'oldrel',  r_ver: '3.6', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'devel',   r_ver: '4.1', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          
+
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
@@ -60,10 +79,10 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
-        
+
       - uses: r-lib/actions/setup-tinytex@master
         if: matrix.config.latex == 'true'
-        
+
       - name: Install additional latex modules
         if: matrix.config.latex == 'true'
         run: |
@@ -72,27 +91,27 @@ jobs:
           tlmgr update --all
 
       - uses: r-lib/actions/setup-pandoc@master
-      
+
       - name: Get repo name
         uses: adigherman/actions/get-repo-name@v1
         id: get-name
         with:
           github_slug: ${{ github.repository }}
-      
+
       - name: Get the repo version (windows)
         if: runner.os == 'Windows'
         id: get_pkg_version_win
         run: |
           echo ::set-output name=PKG_VER::$(Rscript.exe -e "cat(read.dcf('DESCRIPTION')[, 'Version'])")
         shell: bash
-        
+
       - name: Get the repo version (macOS/ubuntu)
         if: runner.os != 'Windows'
         id: get_pkg_version_nonwin
         run: |
           echo ::set-output name=PKG_VER::$(Rscript -e 'cat(read.dcf("DESCRIPTION")[, "Version"])')
         shell: bash
-      
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -130,16 +149,16 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
-        
+
       - name: Before Check
         run: Rscript -e "tic::before_install()"
-      
+
       - name: "Check"
         run: |
           Rscript -e 'tic::script()'
           ls -l check
         shell: bash
-        
+
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
@@ -151,10 +170,10 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-          
+
       - name: Before Deploy
         run: Rscript -e "tic::before_deploy()"
-          
+
       - name: Upload Release Asset (linux-x64)
         if: runner.os == 'Linux'
         uses: actions/upload-release-asset@v1.0.1
@@ -165,7 +184,7 @@ jobs:
           asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R_x86_64-pc-linux-gnu.tar.gz
           asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R_x86_64-pc-linux-gnu_R${{ matrix.config.r_ver }}.tar.gz
           asset_content_type: application/octet-stream
-      
+
       - name: Upload Release Asset (macOS)
         if: runner.os == 'macOS'
         uses: actions/upload-release-asset@v1.0.1
@@ -176,7 +195,7 @@ jobs:
           asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}.tgz
           asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R${{ matrix.config.r_ver }}.tgz
           asset_content_type: application/octet-stream
-          
+
       - name: Upload Release Asset (Windows)
         if: runner.os == 'Windows'
         uses: actions/upload-release-asset@v1.0.1
