@@ -13,6 +13,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
+      - name: Install system dependencies
+        run: |
+          sudo apt-get install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           install.packages("remotes")
@@ -141,6 +144,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_github("ropensci/tic")
+          remotes::install_github("muschellij2/ghtravis")
         shell: Rscript {0}
 
       - name: Session info
