@@ -15,7 +15,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
       - name: Install system dependencies
         run: |
-          sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
+          sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libgit2-dev libssh2-1-dev
       - name: Install dependencies
         run: |
           install.packages("remotes")
@@ -96,24 +96,14 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Get repo name
-        uses: adigherman/actions/get-repo-name@v1
+        uses: adigherman/actions/get-repo-name@master
         id: get-name
         with:
           github_slug: ${{ github.repository }}
 
-      - name: Get the repo version (windows)
-        if: runner.os == 'Windows'
-        id: get_pkg_version_win
-        run: |
-          echo ::set-output name=PKG_VER::$(Rscript.exe -e "cat(read.dcf('DESCRIPTION')[, 'Version'])")
-        shell: bash
-
-      - name: Get the repo version (macOS/ubuntu)
-        if: runner.os != 'Windows'
-        id: get_pkg_version_nonwin
-        run: |
-          echo ::set-output name=PKG_VER::$(Rscript -e 'cat(read.dcf("DESCRIPTION")[, "Version"])')
-        shell: bash
+      - name: Get package version
+        uses: adigherman/actions/get-repo-version@master
+        id: get-version-number
 
       - name: Query dependencies
         run: |
@@ -185,8 +175,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R_x86_64-pc-linux-gnu.tar.gz
-          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R_x86_64-pc-linux-gnu_R${{ matrix.config.r_ver }}.tar.gz
+          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}_R_x86_64-pc-linux-gnu.tar.gz
+          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}_R_x86_64-pc-linux-gnu_R${{ matrix.config.r_ver }}.tar.gz
           asset_content_type: application/octet-stream
 
       - name: Upload Release Asset (macOS)
@@ -196,8 +186,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}.tgz
-          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_nonwin.outputs.PKG_VER }}_R${{ matrix.config.r_ver }}.tgz
+          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}.tgz
+          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}_R${{ matrix.config.r_ver }}.tgz
           asset_content_type: application/octet-stream
 
       - name: Upload Release Asset (Windows)
@@ -207,8 +197,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_win.outputs.PKG_VER }}.zip
-          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get_pkg_version_win.outputs.PKG_VER }}_R${{ matrix.config.r_ver }}.zip
+          asset_path: check/${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}.zip
+          asset_name: ${{ steps.get-name.outputs.repo_name }}_${{ steps.get-version-number.outputs.package_version }}_R${{ matrix.config.r_ver }}.zip
           asset_content_type: application/octet-stream
 
       - name: Deploy
