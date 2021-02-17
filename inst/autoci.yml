@@ -6,27 +6,6 @@ on:
 
 name: Neuroconductor-check
 
-jobs:
-  pkgdown:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master
-      - uses: r-lib/actions/setup-pandoc@master
-      - name: Install dependencies
-        run: |
-          git config user.name adigherman
-          git config user.email adig@jhu.edu
-          install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_dev("pkgdown")
-        shell: Rscript {0}
-      - name: Install package
-        run: R CMD INSTALL .
-      - name: Deploy package
-        run: pkgdown::deploy_to_branch(new_process = FALSE)
-        shell: Rscript {0}
-
   create_release:
     name: Create release
     runs-on: ubuntu-latest
@@ -179,7 +158,7 @@ jobs:
       - name: Before Deploy
         run: Rscript -e "tic::before_deploy()"
 
-      - name: Upload Release Asset (linux-x64)
+      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
