@@ -7,7 +7,7 @@
 \title{Neuroconductor CI Template Paths}
 \usage{
 neuroc_ci_template_path(
-  ci = c("travis", "appveyor", "travis_pkgdown", "autoci", "tic"),
+  ci = c("travis", "appveyor", "travis_pkgdown", "autoci", "tic", "autoci_pkgdown"),
   ants = FALSE,
   dev = FALSE,
   user = NULL,

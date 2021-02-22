@@ -21,7 +21,7 @@
 #' neuroc_appveyor_template_path()
 #' neuroc_appveyor_template_path(ants = TRUE)
 neuroc_ci_template_path = function(
-  ci = c("travis", "appveyor", "travis_pkgdown", "autoci", "tic"),
+  ci = c("travis", "appveyor", "travis_pkgdown", "autoci", "tic", "autoci_pkgdown"),
   ants = FALSE,
   dev = FALSE,
   user = NULL,
@@ -31,6 +31,11 @@ neuroc_ci_template_path = function(
 
   if (ci == "autoci") {
     file = "autoci.yml"
+    file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
+    return(file)
+  }
+  if (ci == "autoci_pkgdown") {
+    file = "autoci_pkgdown.yml"
     file = system.file(file, package = "neuroc.deps", mustWork = TRUE)
     return(file)
   }

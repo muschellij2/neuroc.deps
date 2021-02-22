@@ -153,13 +153,18 @@ use_neuroc_template = function(
     user, dev, deployment,
     workflow_dir,
     outfile = NULL)
+  pkgdown_yaml_file = copy_and_ignore_file(
+    ci = "autoci_pkgdown",
+    user, dev, deployment,
+    workflow_dir,
+    outfile = NULL)
   tic_file = copy_and_ignore_file(
     ci = "tic",
     user, dev, deployment,
     pkg_directory,
     outfile = "tic.R")
 
-  outfiles = c(yaml_file, tic_file)
+  outfiles = c(yaml_file, tic_file, pkgdown_yaml_file)
   n_commit_id = neuroc_deps_commit_id()
 
   return(outfiles)
