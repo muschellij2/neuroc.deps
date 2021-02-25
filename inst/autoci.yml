@@ -118,8 +118,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remove.packages('curl')
-          install.packages('curl')
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_github("ropensci/tic")
