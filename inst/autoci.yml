@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 name: Neuroconductor-check
-
+jobs:
   create_release:
     name: Create release
     runs-on: ubuntu-latest
