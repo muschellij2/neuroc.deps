@@ -148,6 +148,7 @@ use_neuroc_template = function(
   if (verbose) {
     message("Writing CI files")
   }
+  usethis::use_build_ignore(".github")
   yaml_file = copy_and_ignore_file(
     ci = "autoci",
     user, dev, deployment,
