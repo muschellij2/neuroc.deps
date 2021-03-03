@@ -15,7 +15,13 @@ jobs:
       - name: Get tag name
         id: get_tag_name
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
+      - name: Attempt to Delete Release
+        uses: adigherman/actions/delete-release-by-tag@master
+        id: delete-release
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          tag: ${{ steps.get_tag_name.outputs.VERSION }}
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
