@@ -1,5 +1,11 @@
-# installs dependencies, runs R CMD check, runs covr::codecov()
-do_package_checks(args=c("--as-cran","--install-args=--build"))
+# R CMD Check OS specific build and check arguments
+args <- c("--as-cran","--install-args=--build")
+error_on <- "warnings"
+
+# do not treat warnings as errors for windows
+if (.Platform$OS.type == "windows") error_on <- "error"
+
+do_package_checks(args = args, error_on = error_on)
 
 InstallRemoteBinaries <- R6Class(
   "InstallRemoteBinaries",
