@@ -164,6 +164,7 @@ use_neuroc_template = function(
     user, dev, deployment,
     pkg_directory,
     outfile = "tic.R")
+  usethis::use_build_ignore("tic.R")
 
   outfiles = c(yaml_file, tic_file, pkgdown_yaml_file)
   n_commit_id = neuroc_deps_commit_id()
