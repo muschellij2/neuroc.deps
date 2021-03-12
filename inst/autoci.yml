@@ -59,6 +59,7 @@ jobs:
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: ${{ startsWith(matrix.config.r, 'devel') }}
 
     steps:
       - uses: actions/checkout@v2
