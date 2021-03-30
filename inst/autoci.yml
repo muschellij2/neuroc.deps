@@ -79,6 +79,18 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Install system dependencies (unix)
+        if: runner.os == 'Linux'
+        uses: adigherman/actions/install-sysdeps-linux@master
+
+      - name: Install system dependencies (macos)
+        if: runner.os == 'macOS'
+        uses: adigherman/actions/install-sysdeps-macos@master
+
+      - name: Install system dependencies (windows)
+        if: runner.os == 'Windows'
+        uses: adigherman/actions/install-sysdeps-windows@master
+
       - name: Get repo name
         uses: adigherman/actions/get-repo-name@master
         id: get-name
