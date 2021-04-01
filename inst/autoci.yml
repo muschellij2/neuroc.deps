@@ -4,7 +4,7 @@ on:
        - '*.[sc]'
   workflow_dispatch:
 
-name: Neuroconductor-check
+name: Check
 jobs:
   create_release:
     name: Create release
