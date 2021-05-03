@@ -75,7 +75,7 @@ jobs:
         if: matrix.config.latex == 'true'
         run: |
           tlmgr update --self
-          tlmgr install filecontents upquote courier courier-scaled biber biblatex collection-luatex
+          tlmgr install filecontents upquote courier courier-scaled biber biblatex collection-luatex ae
           tlmgr update --all
 
       - uses: r-lib/actions/setup-pandoc@master
