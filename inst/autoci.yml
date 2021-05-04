@@ -80,6 +80,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Setup git identity
+        run: |
+          git config user.name adigherman
+          git config user.email adig@jhu.edu
+
       - name: Install system dependencies (unix)
         if: runner.os == 'Linux'
         uses: adigherman/actions/install-sysdeps-linux@master
