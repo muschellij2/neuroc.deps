@@ -143,6 +143,9 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
+      - name: Install Binaries
+        run: Rscript -e "tic::before_install()"
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
@@ -159,9 +162,6 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
-
-      - name: Before Check
-        run: Rscript -e "tic::before_install()"
 
       - name: "Check"
         run: |
