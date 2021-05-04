@@ -148,6 +148,14 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
+      - name: Install helper packages
+        run: |
+          remotes::install_github("ropensci/tic")
+          remotes::install_github("muschellij2/ghtravis")
+          remotes::install_github("muschellij2/aghast")
+          remotes::install_cran("covr")
+        shell: Rscript {0}
+
       - name: Install Binaries
         run: Rscript -e "tic::before_install()"
 
@@ -155,10 +163,6 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
-          remotes::install_github("ropensci/tic")
-          remotes::install_github("muschellij2/ghtravis")
-          remotes::install_github("muschellij2/aghast")
-          remotes::install_cran("covr")
         shell: Rscript {0}
 
       - name: Session info
