@@ -233,5 +233,6 @@ jobs:
 
       - name: Generate and Upload R Package Coverage
         if: matrix.config.coveralls == 'true'
+        continue-on-error: true
         run: covr::coveralls(service_name='drone', repo_token=${{ env.COVERALLS_REPO_TOKEN }})
         shell: Rscript {0}
