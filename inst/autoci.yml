@@ -211,6 +211,7 @@ jobs:
         run: Rscript -e "tic::after_deploy()"
 
       - name: Enable Repo on Coveralls
+        if: matrix.config.coveralls == 'true'
         id: enable_coveralls
         run: |
           curl -s -H "Accept: application/json" \
@@ -220,6 +221,7 @@ jobs:
             -X POST https://coveralls.io/api/repos
 
       - name: Get Coveralls Repo Token
+        if: matrix.config.coveralls == 'true'
         id: get_coverall_repo_token
         run: |
           echo "COVERALLS_REPO_TOKEN=$(\
