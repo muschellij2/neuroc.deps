@@ -51,7 +51,7 @@ jobs:
           - {os: windows-latest, r: 'devel',   r_ver: '4.1'}
           - {os: ubuntu-20.04,   r: '3.5',     r_ver: '3.5', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: 'oldrel',  r_ver: '3.6', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", codecov: "true"}
+          - {os: ubuntu-20.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", coveralls: "true"}
           - {os: ubuntu-20.04,   r: 'devel',   r_ver: '4.1', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
