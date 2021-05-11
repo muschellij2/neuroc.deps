@@ -41,10 +41,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: '3.5',     r_ver: '3.5', latex: "true"}
-          - {os: macOS-latest,   r: 'oldrel',  r_ver: '3.6', latex: "true"}
-          - {os: macOS-latest,   r: 'release', r_ver: '4.0', latex: "true"}
-          - {os: macOS-latest,   r: 'devel',   r_ver: '4.1', latex: "true"}
+          - {os: macOS-latest,   r: '3.5',     r_ver: '3.5', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'oldrel',  r_ver: '3.6', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'release', r_ver: '4.0', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'devel',   r_ver: '4.1', latex: "true", vdiffr: false}
           - {os: windows-latest, r: '3.5',     r_ver: '3.5'}
           - {os: windows-latest, r: 'oldrel',  r_ver: '3.6'}
           - {os: windows-latest, r: 'release', r_ver: '4.0'}
@@ -60,6 +60,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       continue-on-error: ${{ startsWith(matrix.config.r, 'devel') }}
+      VDIFFR_RUN_TESTS: ${{ matrix.config.vdiffr }}
 
     steps:
       - uses: actions/checkout@v2
