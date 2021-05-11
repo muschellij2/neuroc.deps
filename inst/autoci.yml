@@ -51,7 +51,7 @@ jobs:
           - {os: windows-latest, r: 'devel',   r_ver: '4.1'}
           - {os: ubuntu-20.04,   r: '3.5',     r_ver: '3.5', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: 'oldrel',  r_ver: '3.6', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", codecov: "true"}
+          - {os: ubuntu-20.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", coveralls: "true"}
           - {os: ubuntu-20.04,   r: 'devel',   r_ver: '4.1', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
@@ -59,6 +59,7 @@ jobs:
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
       continue-on-error: ${{ startsWith(matrix.config.r, 'devel') }}
       VDIFFR_RUN_TESTS: ${{ matrix.config.vdiffr }}
 
@@ -210,7 +211,29 @@ jobs:
       - name: After Deploy
         run: Rscript -e "tic::after_deploy()"
 
-      - name: Test coverage
-        if: matrix.config.codecov == 'true'
-        run: covr::codecov()
+      - name: Enable Repo on Coveralls
+        if: matrix.config.coveralls == 'true'
+        id: enable_coveralls
+        run: |
+          curl -s -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $COVERALLS_TOKEN" \
+            -d '{"repo": {"service": "github","name": "'$GITHUB_REPOSITORY'"}}' \
+            -X POST https://coveralls.io/api/repos
+
+      - name: Get Coveralls Repo Token
+        if: matrix.config.coveralls == 'true'
+        id: get_coverall_repo_token
+        run: |
+          echo "COVERALLS_REPO_TOKEN=$(\
+            curl -s -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $COVERALLS_TOKEN" \
+            https://coveralls.io/api/repos/github/$GITHUB_REPOSITORY \
+            | jq '.token')" >> $GITHUB_ENV
+
+      - name: Generate and Upload R Package Coverage
+        if: matrix.config.coveralls == 'true'
+        continue-on-error: true
+        run: covr::coveralls(service_name='drone', repo_token=${{ env.COVERALLS_REPO_TOKEN }})
         shell: Rscript {0}
