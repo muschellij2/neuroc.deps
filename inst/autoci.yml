@@ -158,8 +158,8 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
-      - name: Install Binaries
-        run: Rscript -e "tic::before_install()"
+#      - name: Install Binaries
+#        run: Rscript -e "tic::before_install()"
 
       - name: Install dependencies
         run: |
