@@ -26,6 +26,11 @@ InstallRemoteBinaries <- R6Class(
           if(!is.null(github_user) && !is.null(repo)) {
             message(paste0("Installing ",repo," binaries"))
             ghtravis::install_remote_binaries(check_r_version = TRUE, force_sha = FALSE, remotes = c(slug))
+
+            # install binary package deps (not already installed)
+            binary_deps <- ghtravis::remote_package_deps(slug)
+            binary_deps_list <- binary_deps[[1[]]]$name
+            install.packages(binary_deps_list[!(binary_deps_list %in% installed.packages())])
           }
         }
       }
