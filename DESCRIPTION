@@ -26,7 +26,7 @@ Imports:
     methods,
     magrittr
 Remotes: 
-    muschellij2/ghtravis, 
+    adigherman/ghtravis, 
     r-lib/gh, 
     muschellij2/desc,
     muschellij2/neurocInstall
