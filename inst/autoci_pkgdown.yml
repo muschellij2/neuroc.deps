@@ -20,7 +20,6 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
-          rm -rf node_modules/.cache/gh-pages
       - name: Install R dependencies
         run: |
           install.packages("pak")
@@ -30,5 +29,5 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
       - name: Deploy package
-        run: pkgdown::deploy_to_branch(new_process = FALSE)
+        run: pkgdown::deploy_to_branch(new_process = FALSE, clean = TRUE)
         shell: Rscript {0}
