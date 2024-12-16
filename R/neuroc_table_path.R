@@ -29,8 +29,8 @@ neuroc_table_path = function(
     table_path = switch(
       user,
       neuroconductor = "https://neuroconductor.org/neurocPackages",
-      "neuroconductor-devel" = "http://neuroconductor.org:8080/neurocPackages",
-      "neuroconductor-devel-releases" = "http://neuroconductor.org:8080/neurocReleasePackages",
+      "neuroconductor-devel" = "http://162.129.222.11/neurocPackages",
+      "neuroconductor-devel-releases" = "http://162.129.222.11/neurocReleasePackages",
       "neuroconductor-releases" = "https://neuroconductor.org/neurocReleasePackages",
       oslerinhealth = "https://oslerinhealth.org/oslerPackages",
       "oslerinhealth-releases" = "https://oslerinhealth.org/oslerReleasePackages"
