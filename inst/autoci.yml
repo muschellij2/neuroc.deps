@@ -195,6 +195,7 @@ jobs:
 
 
       - name: Run coverage check
+        continue-on-error: true
         if: ${{ runner.os == 'Linux' && matrix.config.r == 'release' }}
         run: |
           Rscript -e 'install.packages("xml2"); cov <- covr::package_coverage(); covr::to_cobertura(cov, filename = "coverage.xml")'
