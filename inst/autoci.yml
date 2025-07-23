@@ -42,12 +42,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'oldrel',  r_ver: '4.3.3', latex: "true", vdiffr: false}
-          - {os: macOS-latest,   r: 'release', r_ver: '4.4.3', latex: "true", vdiffr: false}
-          - {os: windows-latest, r: 'oldrel',  r_ver: '4.3.3'}
-          - {os: windows-latest, r: 'release', r_ver: '4.4.0'}
-          - {os: ubuntu-22.04,   r: 'oldrel',  r_ver: '4.3.3', latex: "true"}
-          - {os: ubuntu-22.04,   r: 'release', r_ver: '4.4.3', latex: "true"}
+          - {os: macOS-latest,   r: 'oldrel',  r_ver: '4.4.3', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'release', r_ver: '4.5.1', latex: "true", vdiffr: false}
+          - {os: windows-latest, r: 'oldrel',  r_ver: '4.4.3'}
+          - {os: windows-latest, r: 'release', r_ver: '4.5.1'}
+          - {os: ubuntu-22.04,   r: 'oldrel',  r_ver: '4.4.3', latex: "true"}
+          - {os: ubuntu-22.04,   r: 'release', r_ver: '4.5.1', latex: "true"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -204,5 +204,6 @@ jobs:
 
       - name: Upload coverage to Coveralls
         #if: ${{ runner.os == 'Linux' && matrix.config.r == 'release' }}
+        continue-on-error: true
         if: steps.coverage.outcome == 'success' 
         uses: coverallsapp/github-action@v2
