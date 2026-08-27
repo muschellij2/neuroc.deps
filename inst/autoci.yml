@@ -181,7 +181,7 @@ jobs:
           cp ${{ steps.get-release-asset.outputs.asset_path }} ${{ steps.get-release-asset.outputs.asset_rename }}
 
       - name: Upload Release Asset
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
